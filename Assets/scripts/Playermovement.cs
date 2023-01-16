@@ -9,9 +9,9 @@ public class Playermovement : MonoBehaviour
     float horizontal_value;
     Vector2 ref_velocity = Vector2.zero;
 
-    float jumpForce = 12f;
+    float jumpForce = 5f;
 
-    [SerializeField] float moveSpeed_horizontal = 400.0f;
+    [SerializeField] float moveSpeed_horizontal = 700.0f;
     [SerializeField] bool is_jumping = false;
     [SerializeField] bool can_jump = false;
     [Range(0, 1)][SerializeField] float smooth_time = 0.5f;
@@ -47,7 +47,7 @@ public class Playermovement : MonoBehaviour
             can_jump = false;
         }
         Vector2 target_velocity = new Vector2(horizontal_value * moveSpeed_horizontal * Time.fixedDeltaTime, rb.velocity.y);
-        rb.velocity = Vector2.SmoothDamp(rb.velocity, target_velocity, ref ref_velocity, 0.005f);
+        rb.velocity = Vector2.SmoothDamp(rb.velocity, target_velocity, ref ref_velocity, 0.3f);
         
     }
     private void OnTriggerStay2D(Collider2D collision)
