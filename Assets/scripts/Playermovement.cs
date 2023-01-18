@@ -19,6 +19,7 @@ public class Playermovement : MonoBehaviour
     [Range(0, 1)][SerializeField] float smooth_time = 0.5f;
 
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,13 +54,25 @@ public class Playermovement : MonoBehaviour
         rb.velocity = Vector2.SmoothDamp(rb.velocity, target_velocity, ref ref_velocity, 0.3f);
 
         if (vertical_value < 0) {
-            Vector2 target_velocity_falling = new Vector2(rb.velocity.x , vertical_value * moveSpeed_vertical * Time.fixedDeltaTime);
-            rb.velocity = Vector2.SmoothDamp(rb.velocity, target_velocity_falling, ref ref_velocity, 0.5f);
+
+            rb.gravityScale = Mathf.Lerp(1f, 6f, 2000f * Time.deltaTime);
+            //Vector2 target_velocity_falling = new Vector2(rb.velocity.x , vertical_value * moveSpeed_vertical * Time.fixedDeltaTime);
+            //rb.velocity = Vector2.SmoothDamp(rb.velocity, target_velocity_falling, ref ref_velocity, 0.5f);
+        }
+        else
+        {
+            rb.gravityScale = 1f;
         }
         
     }
-    private void OnTriggerStay2D(Collider2D collision)
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
+        
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {     
         can_jump = true;
     }
 }
