@@ -7,7 +7,6 @@ public class Playermovement : MonoBehaviour
     Rigidbody2D rb;
     SpriteRenderer sr;
     float horizontal_value;
-    float vertical_value;
     Vector2 ref_velocity = Vector2.zero;
 
     float jumpForce = 10f;
@@ -16,6 +15,7 @@ public class Playermovement : MonoBehaviour
     [SerializeField] float moveSpeed_vertical = 700.0f;
     [SerializeField] bool is_jumping = false;
     [SerializeField] bool can_jump = false;
+    bool fastFalling = false;
     [Range(0, 1)][SerializeField] float smooth_time = 0.5f;
 
 
@@ -32,7 +32,6 @@ public class Playermovement : MonoBehaviour
     void Update()
     {
         horizontal_value = Input.GetAxis("Horizontal");
-        vertical_value = Input.GetAxis("Vertical");
 
         if(horizontal_value > 0) sr.flipX = false;
         else if (horizontal_value < 0) sr.flipX = true;
@@ -41,6 +40,16 @@ public class Playermovement : MonoBehaviour
         {
             is_jumping = true;
         }
+
+        if(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+        {
+            fastFalling = true;
+        } else
+        {
+            fastFalling = false;
+        }
+
+        
     }
     void FixedUpdate()
     {
@@ -53,7 +62,8 @@ public class Playermovement : MonoBehaviour
         Vector2 target_velocity = new Vector2(horizontal_value * moveSpeed_horizontal * Time.fixedDeltaTime, rb.velocity.y);
         rb.velocity = Vector2.SmoothDamp(rb.velocity, target_velocity, ref ref_velocity, 0.3f);
 
-        if (vertical_value < 0) {
+        if (fastFalling)
+        {
 
             rb.gravityScale = Mathf.Lerp(1f, 6f, 2000f * Time.deltaTime);
             //Vector2 target_velocity_falling = new Vector2(rb.velocity.x , vertical_value * moveSpeed_vertical * Time.fixedDeltaTime);
@@ -63,11 +73,6 @@ public class Playermovement : MonoBehaviour
         {
             rb.gravityScale = 1f;
         }
-        
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
         
     }
 
