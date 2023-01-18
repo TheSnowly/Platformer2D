@@ -62,10 +62,10 @@ public class Playermovement : MonoBehaviour
         Vector2 target_velocity = new Vector2(horizontal_value * moveSpeed_horizontal * Time.fixedDeltaTime, rb.velocity.y);
         rb.velocity = Vector2.SmoothDamp(rb.velocity, target_velocity, ref ref_velocity, 0.3f);
 
-        if (fastFalling)
+        if (fastFalling && can_jump == false)
         {
 
-            rb.gravityScale = Mathf.Lerp(1f, 6f, 2000f * Time.deltaTime);
+            rb.gravityScale = Mathf.Lerp(1f, 6f, 1000f * Time.deltaTime);
             //Vector2 target_velocity_falling = new Vector2(rb.velocity.x , vertical_value * moveSpeed_vertical * Time.fixedDeltaTime);
             //rb.velocity = Vector2.SmoothDamp(rb.velocity, target_velocity_falling, ref ref_velocity, 0.5f);
         }
