@@ -9,16 +9,25 @@ public class Playermovement : MonoBehaviour
     float horizontal_value;
     Vector2 ref_velocity = Vector2.zero;
 
+    //Jump variables
     float jumpForce = 10f;
-
-    [SerializeField] float moveSpeed_horizontal = 700.0f;
-    [SerializeField] float moveSpeed_vertical = 700.0f;
+    bool fastFalling = false;
+    float max_Jump_Time = 0.3f;
+    float current_Jump_Time;
     [SerializeField] bool is_jumping = false;
     [SerializeField] bool can_jump = false;
-    bool fastFalling = false;
+    Vector2 moveDirectionJump = Vector2.zero;
+    bool CanContinueJump
+    {
+        get
+        {
+            return current_Jump_Time <= max_Jump_Time && can_jump == false;
+        }
+    }
+
+
+    [SerializeField] float moveSpeed_horizontal = 1000.0f;
     [Range(0, 1)][SerializeField] float smooth_time = 0.5f;
-
-
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +47,22 @@ public class Playermovement : MonoBehaviour
    
         if (Input.GetButtonDown("Jump") && can_jump)
         {
+            current_Jump_Time = 0f;
             is_jumping = true;
+        }
+
+        if (Input.GetButton("Jump") && is_jumping) 
+        {
+            if (current_Jump_Time < max_Jump_Time) {
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                current_Jump_Time += Time.deltaTime;
+            } else {
+                is_jumping = false;
+            }
+        }
+
+        if (Input.GetButtonUp("Jump")) {
+            is_jumping = false;
         }
 
         if(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
@@ -53,25 +77,26 @@ public class Playermovement : MonoBehaviour
     }
     void FixedUpdate()
     {
+
+        //jumping
         if (is_jumping && can_jump)
-        {           
-            is_jumping = false;
-            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+        {             
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             can_jump = false;
         }
+
+        //horizontal movement
         Vector2 target_velocity = new Vector2(horizontal_value * moveSpeed_horizontal * Time.fixedDeltaTime, rb.velocity.y);
         rb.velocity = Vector2.SmoothDamp(rb.velocity, target_velocity, ref ref_velocity, 0.3f);
 
+        //fastfalling
         if (fastFalling && can_jump == false)
         {
-
-            rb.gravityScale = Mathf.Lerp(1f, 6f, 1000f * Time.deltaTime);
-            //Vector2 target_velocity_falling = new Vector2(rb.velocity.x , vertical_value * moveSpeed_vertical * Time.fixedDeltaTime);
-            //rb.velocity = Vector2.SmoothDamp(rb.velocity, target_velocity_falling, ref ref_velocity, 0.5f);
+            rb.gravityScale = Mathf.Lerp(4f, 7f, 1000f * Time.fixedDeltaTime); 
         }
         else
         {
-            rb.gravityScale = 1f;
+            rb.gravityScale = 4f;
         }
         
     }
