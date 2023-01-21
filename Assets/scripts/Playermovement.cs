@@ -23,6 +23,10 @@ public class Playermovement : MonoBehaviour
     [SerializeField] bool can_Double_Jump = false;
     bool double_Jumping = false;
 
+    //run variables
+    [SerializeField] float moveSpeed_Run = 2000.0f;
+    [SerializeField] float moveSpeed_horizontal_default = 1000.0f;
+
     [SerializeField] float moveSpeed_horizontal = 1000.0f;
     [Range(0, 1)][SerializeField] float smooth_time = 0.5f;
 
@@ -41,6 +45,15 @@ public class Playermovement : MonoBehaviour
 
         if(horizontal_value > 0) sr.flipX = false;
         else if (horizontal_value < 0) sr.flipX = true;
+
+        //running
+        if (Input.GetKeyDown(KeyCode.R)) {
+
+            moveSpeed_horizontal = moveSpeed_Run;
+            StartCoroutine(Run(3f));
+        
+        //} else if (Input.GetKeyUp(KeyCode.R)) {
+        }
 
         //double jump
         if (Input.GetKeyDown(KeyCode.E)) {
@@ -85,6 +98,15 @@ public class Playermovement : MonoBehaviour
 
         
     }
+
+    //Run timer
+    IEnumerator Run(float time) {
+        Debug.Log("hello");
+        yield return new WaitForSeconds(time);
+        Debug.Log("fini");
+        moveSpeed_horizontal = moveSpeed_horizontal_default;
+    }
+
     void FixedUpdate()
     {
 
