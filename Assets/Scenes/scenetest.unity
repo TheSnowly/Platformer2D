@@ -455,10 +455,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86f92da3432355045aa9a3c88fbe8948, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed_horizontal: 700
-  moveSpeed_vertical: 1000
   is_jumping: 0
   can_jump: 0
+  base_Gravity: 4
+  fastfalling_Gravity: 8
+  can_Double_Jump: 0
+  moveSpeed_horizontal: 900
   smooth_time: 1
 --- !u!61 &2069422398
 BoxCollider2D:
