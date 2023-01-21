@@ -16,15 +16,12 @@ public class Playermovement : MonoBehaviour
     float current_Jump_Time;
     [SerializeField] bool is_jumping = false;
     [SerializeField] bool can_jump = false;
-    Vector2 moveDirectionJump = Vector2.zero;
-    bool CanContinueJump
-    {
-        get
-        {
-            return current_Jump_Time <= max_Jump_Time && can_jump == false;
-        }
-    }
+    [SerializeField] float base_Gravity = 4f;
+    [SerializeField] float fastfalling_Gravity = 8f;
 
+    //Double Jump variables
+    [SerializeField] bool can_Double_Jump = false;
+    bool double_Jumping = false;
 
     [SerializeField] float moveSpeed_horizontal = 1000.0f;
     [Range(0, 1)][SerializeField] float smooth_time = 0.5f;
@@ -44,23 +41,36 @@ public class Playermovement : MonoBehaviour
 
         if(horizontal_value > 0) sr.flipX = false;
         else if (horizontal_value < 0) sr.flipX = true;
+
+        //double jump
+        if (Input.GetKeyDown(KeyCode.E)) {
+            can_Double_Jump = true;
+        }
+
+        if (can_Double_Jump && can_jump == false) {
+            double_Jumping = true;
+            can_Double_Jump= false;
+        }
    
+        //jump
         if (Input.GetButtonDown("Jump") && can_jump)
         {
             current_Jump_Time = 0f;
             is_jumping = true;
         }
 
+        //hold Jump
         if (Input.GetButton("Jump") && is_jumping) 
         {
             if (current_Jump_Time < max_Jump_Time) {
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 current_Jump_Time += Time.deltaTime;
             } else {
-                is_jumping = false;
+                    is_jumping = false;
             }
         }
 
+        //finish jump
         if (Input.GetButtonUp("Jump")) {
             is_jumping = false;
         }
@@ -79,10 +89,18 @@ public class Playermovement : MonoBehaviour
     {
 
         //jumping
-        if (is_jumping && can_jump)
+        if (is_jumping && can_jump) 
         {             
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             can_jump = false;
+        }
+
+        //double jumping
+        if (double_Jumping) 
+        {             
+            rb.velocity = new Vector2(rb.velocity.x / 3, 0);
+            rb.AddForce(new Vector2(rb.velocity.x, jumpForce * 2), ForceMode2D.Impulse);
+            double_Jumping = false;
         }
 
         //horizontal movement
@@ -92,11 +110,11 @@ public class Playermovement : MonoBehaviour
         //fastfalling
         if (fastFalling && can_jump == false)
         {
-            rb.gravityScale = Mathf.Lerp(4f, 7f, 1000f * Time.fixedDeltaTime); 
+            rb.gravityScale = Mathf.Lerp(base_Gravity, fastfalling_Gravity, 1000f * Time.fixedDeltaTime); 
         }
         else
         {
-            rb.gravityScale = 4f;
+            rb.gravityScale = base_Gravity;
         }
         
     }
