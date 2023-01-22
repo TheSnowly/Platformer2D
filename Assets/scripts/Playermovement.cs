@@ -27,6 +27,12 @@ public class Playermovement : MonoBehaviour
     [SerializeField] float moveSpeed_Run = 2000.0f;
     [SerializeField] float moveSpeed_horizontal_default = 1000.0f;
 
+    //Ennemy Slam variables
+    bool ennemy_Slam = false;
+    bool ennemy_Slam_Active = false;
+    int slam_Force = 50;
+    float stocked_Velocity_x;
+
     [SerializeField] float moveSpeed_horizontal = 1000.0f;
     [Range(0, 1)][SerializeField] float smooth_time = 0.5f;
 
@@ -46,13 +52,16 @@ public class Playermovement : MonoBehaviour
         if(horizontal_value > 0) sr.flipX = false;
         else if (horizontal_value < 0) sr.flipX = true;
 
+        //ennemy Slam
+        if (Input.GetKeyDown(KeyCode.C)) {
+            ennemy_Slam = true;
+        }
+
         //running
         if (Input.GetKeyDown(KeyCode.R)) {
 
             moveSpeed_horizontal = moveSpeed_Run;
             StartCoroutine(Run(3f));
-        
-        //} else if (Input.GetKeyUp(KeyCode.R)) {
         }
 
         //double jump
@@ -101,14 +110,21 @@ public class Playermovement : MonoBehaviour
 
     //Run timer
     IEnumerator Run(float time) {
-        Debug.Log("hello");
         yield return new WaitForSeconds(time);
-        Debug.Log("fini");
         moveSpeed_horizontal = moveSpeed_horizontal_default;
     }
 
     void FixedUpdate()
     {
+
+        //ennemy slam
+        if (ennemy_Slam) {
+            stocked_Velocity_x = rb.velocity.x;
+            rb.velocity = new Vector2(rb.velocity.x / 3, 0);
+            rb.AddForce(new Vector2(30 * (rb.velocity.x / Mathf.Abs(rb.velocity.x)), -slam_Force), ForceMode2D.Impulse);
+            ennemy_Slam_Active = true;
+            ennemy_Slam = false;
+        }
 
         //jumping
         if (is_jumping && can_jump) 
@@ -141,8 +157,18 @@ public class Playermovement : MonoBehaviour
         
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        //Check Ennemy for the ennemy slam
+        if (other.tag == "Ennemy" && ennemy_Slam_Active) {
+            rb.velocity = new Vector2(0, 2);
+            rb.AddForce(new Vector2(stocked_Velocity_x * 4, 10), ForceMode2D.Impulse);
+        }
+    }
+
     private void OnTriggerStay2D(Collider2D collision)
     {     
+        ennemy_Slam_Active = false;
         can_jump = true;
     }
 }
