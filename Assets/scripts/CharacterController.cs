@@ -20,6 +20,11 @@ public class CharacterController : MonoBehaviour
     float max_Jump_Time = 0.3f;
     float current_Jump_Time;
 
+    //fastfalling variables
+    bool fastFalling;
+    float base_Gravity = 4f;
+    float fastfalling_Gravity = 8f;
+
     // x movement variables
     float horizontal_value;
     float moveSpeed_horizontal = 1000.0f;
@@ -60,12 +65,29 @@ public class CharacterController : MonoBehaviour
             current_Jump_Time = 0f;
         }
 
+        fastFalling = (isGrounded == false) ? true : false;
+
     }
 
     void FixedUpdate()
     {       
         Jump();
         Move();
+        FastFall();
+
+    }
+
+
+    private void FastFall()
+    {
+        if (fastFalling)
+        {
+            rb.gravityScale = Mathf.Lerp(base_Gravity, fastfalling_Gravity, 1000f * Time.fixedDeltaTime);
+        }
+        else
+        {
+            rb.gravityScale = base_Gravity;
+        }
     }
 
     //hold jump
