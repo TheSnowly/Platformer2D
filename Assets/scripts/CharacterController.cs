@@ -13,11 +13,15 @@ public class CharacterController : MonoBehaviour
     [SerializeField] bool isGrounded;
     [SerializeField] Transform feetPos;
 
+    //run variable
+    float moveSpeed_Run = 2000.0f;
+    float moveSpeed_horizontal_default = 1000.0f;
+
     // jumping variables
     [SerializeField] bool can_Still_Jump;
     [SerializeField] bool is_jumping;
     float jumpForce = 10f;
-    float max_Jump_Time = 0.3f;
+    float max_Jump_Time = 0.2f;
     float current_Jump_Time;
 
     //fastfalling variables
@@ -65,8 +69,13 @@ public class CharacterController : MonoBehaviour
             current_Jump_Time = 0f;
         }
 
-        fastFalling = (isGrounded == false) ? true : false;
+        //Cheking if the player is able to fast fall
+        fastFalling = (isGrounded == false && (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))) ? true : false;
 
+        if (Input.GetMouseButtonDown(0))
+        {
+            StartCoroutine(Run(3f));
+        }
     }
 
     void FixedUpdate()
@@ -77,7 +86,22 @@ public class CharacterController : MonoBehaviour
 
     }
 
+    //Run timer
+    IEnumerator Run(float time)
+    {
+        moveSpeed_horizontal = moveSpeed_Run;
+        yield return new WaitForSeconds(time);
+        moveSpeed_horizontal = moveSpeed_horizontal_default;
+    }
 
+    //double Jump
+    private void double_Jump()
+    {
+        rb.velocity = new Vector2(rb.velocity.x / 3, 0);
+        rb.AddForce(new Vector2(rb.velocity.x, jumpForce * 2), ForceMode2D.Impulse);
+    }
+
+    //fast falling
     private void FastFall()
     {
         if (fastFalling)
