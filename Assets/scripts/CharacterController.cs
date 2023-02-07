@@ -29,6 +29,11 @@ public class CharacterController : MonoBehaviour
     float base_Gravity = 4f;
     float fastfalling_Gravity = 8f;
 
+    //Ennemy Slam variables
+    bool ennemy_Slam_Active = false;
+    int slam_Force = 50;
+    float stocked_Velocity_x;
+
     // x movement variables
     float horizontal_value;
     float moveSpeed_horizontal = 1000.0f;
@@ -59,6 +64,7 @@ public class CharacterController : MonoBehaviour
         }
         if (isGrounded) {
             can_Still_Jump = true;
+            ennemy_Slam_Active = false;
         }
         is_jumping = (Input.GetButton("Jump") && isGrounded == false && current_Jump_Time < max_Jump_Time && can_Still_Jump) ? true : false;
 
@@ -74,7 +80,7 @@ public class CharacterController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            StartCoroutine(Run(3f));
+            ennemy_Slam();
         }
     }
 
@@ -84,6 +90,14 @@ public class CharacterController : MonoBehaviour
         Move();
         FastFall();
 
+    }
+
+    //ennemy slam
+    private void ennemy_Slam() {
+        stocked_Velocity_x = rb.velocity.x;
+        rb.velocity = new Vector2(rb.velocity.x / 3, 0);
+        rb.AddForce(new Vector2(30 * (rb.velocity.x / Mathf.Abs(rb.velocity.x)), -slam_Force), ForceMode2D.Impulse);
+        ennemy_Slam_Active = true;
     }
 
     //Run timer
@@ -129,4 +143,14 @@ public class CharacterController : MonoBehaviour
         Vector2 target_velocity = new Vector2(horizontal_value * moveSpeed_horizontal * Time.fixedDeltaTime, rb.velocity.y);
         rb.velocity = Vector2.SmoothDamp(rb.velocity, target_velocity, ref ref_velocity, 0.08f);
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        //Check Ennemy for the ennemy slam
+        if (other.tag == "Ennemy" && ennemy_Slam_Active) {
+            rb.velocity = new Vector2(0, 2);
+            rb.AddForce(new Vector2(stocked_Velocity_x * 4, 10), ForceMode2D.Impulse);
+        }
+    }
+
 }
