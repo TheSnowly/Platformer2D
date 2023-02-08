@@ -8,6 +8,7 @@ public class CharacterController : MonoBehaviour
     Rigidbody2D rb;
     SpriteRenderer sr;
 
+    //Deck variable
     public CardManager CardManager;
     GameObject DestroyCard;
 
@@ -90,24 +91,21 @@ public class CharacterController : MonoBehaviour
             {
                 if (CardManager.Deck.Peek() == "Ennemy_Slam")
                 {
+                    Destroy(GameObject.Find("Card_" + CardManager.Deck.Count));
                     CardManager.Deck.Pop();
                     ennemy_Slam();
-                    Destroy(GameObject.Find("Card_" + CardManager.DeckCanvas.Count));
-                    CardManager.DeckCanvas.Pop();
                 }
                 else if (CardManager.Deck.Peek() == "Double_Jump")
                 {
+                    Destroy(GameObject.Find("Card_" + CardManager.Deck.Count));
                     CardManager.Deck.Pop();
                     double_Jump();
-                    Destroy(GameObject.Find("Card_" + CardManager.DeckCanvas.Count));
-                    CardManager.DeckCanvas.Pop();
                 }
                 else if (CardManager.Deck.Peek() == "Run")
                 {
+                    Destroy(GameObject.Find("Card_" + CardManager.Deck.Count));
                     CardManager.Deck.Pop();
                     StartCoroutine(Run(3f));
-                    Destroy(GameObject.Find("Card_" + CardManager.DeckCanvas.Count));
-                    CardManager.DeckCanvas.Pop();
                 }
             } else
             {

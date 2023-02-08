@@ -24,16 +24,19 @@ public class CardManager : MonoBehaviour
         Deck.Push("Ennemy_Slam");
         Deck.Push("Double_Jump");
      
-
+        //creating cards in the canvas and stoking them in their own Stack
         foreach (var item in Deck)
         {
-            GameObject Card = GameObject.Instantiate(CardPrefab, new Vector3(cardX, 95f, 0f), Quaternion.identity, GameObject.FindGameObjectWithTag("Canvas").transform);
+            GameObject Card = GameObject.Instantiate(CardPrefab, Vector3.zero, Quaternion.identity, GameObject.FindGameObjectWithTag("Canvas").transform);
             Card.name = "Card_" + n;
-            DeckCanvas.Push(Card);
-            cardX += 180f;
-            Debug.Log(DeckCanvas.Count);
+            //cardX += 180f;
             n++;
         }
+    }
+
+    private void PlaceCards()
+    {
+
     }
 
     // Update is called once per frame
