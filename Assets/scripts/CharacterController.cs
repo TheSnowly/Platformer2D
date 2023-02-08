@@ -8,6 +8,9 @@ public class CharacterController : MonoBehaviour
     Rigidbody2D rb;
     SpriteRenderer sr;
 
+    public CardManager CardManager;
+    GameObject DestroyCard;
+
     //collision variable
     [SerializeField] LayerMask ground;
     [SerializeField] bool isGrounded;
@@ -41,8 +44,10 @@ public class CharacterController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+
     }
 
     // Update is called once per frame
@@ -78,9 +83,37 @@ public class CharacterController : MonoBehaviour
         //Cheking if the player is able to fast fall
         fastFalling = (isGrounded == false && (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))) ? true : false;
 
+        //make a card effect
         if (Input.GetMouseButtonDown(0))
         {
-            ennemy_Slam();
+            if (CardManager.Deck.Count != 0)
+            {
+                if (CardManager.Deck.Peek() == "Ennemy_Slam")
+                {
+                    CardManager.Deck.Pop();
+                    ennemy_Slam();
+                    Destroy(GameObject.Find("Card_" + CardManager.DeckCanvas.Count));
+                    CardManager.DeckCanvas.Pop();
+                }
+                else if (CardManager.Deck.Peek() == "Double_Jump")
+                {
+                    CardManager.Deck.Pop();
+                    double_Jump();
+                    Destroy(GameObject.Find("Card_" + CardManager.DeckCanvas.Count));
+                    CardManager.DeckCanvas.Pop();
+                }
+                else if (CardManager.Deck.Peek() == "Run")
+                {
+                    CardManager.Deck.Pop();
+                    StartCoroutine(Run(3f));
+                    Destroy(GameObject.Find("Card_" + CardManager.DeckCanvas.Count));
+                    CardManager.DeckCanvas.Pop();
+                }
+            } else
+            {
+                Debug.Log("plus de cartes");
+            }
+
         }
     }
 
