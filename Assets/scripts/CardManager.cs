@@ -6,25 +6,25 @@ public class CardManager : MonoBehaviour
 {
 
     public Stack Deck = new Stack();
-
-    public Stack DeckCanvas = new Stack();
-
     [SerializeField] GameObject CardPrefab;
 
+    int deck_Size;
+
+    //card name var
     int n;
-    float cardX = 433f;
 
     // Start is called before the first frame update
     void Start()
     {
         n = 1;
 
+        //creating cards
         Deck.Push("Double_Jump");
         Deck.Push("Run");
         Deck.Push("Ennemy_Slam");
         Deck.Push("Double_Jump");
      
-        //creating cards in the canvas and stoking them in their own Stack
+        //creating cards in the canvas and stocking them in their own Stack
         foreach (var item in Deck)
         {
             GameObject Card = GameObject.Instantiate(CardPrefab, Vector3.zero, Quaternion.identity, GameObject.FindGameObjectWithTag("Canvas").transform);
@@ -32,11 +32,30 @@ public class CardManager : MonoBehaviour
             //cardX += 180f;
             n++;
         }
+
+        PlaceCards();
     }
 
     private void PlaceCards()
     {
+        deck_Size = Deck.Count;
+        Vector3 ref_velocity = Vector3.zero;
 
+        int card_Distance = 200 / deck_Size;
+        float prev_Card_pos_x = 50f;
+
+        for(int i = 1; i <= deck_Size - 1; i++) {
+            
+            while (GameObject.Find("Card_" + i).transform.position != new Vector3(prev_Card_pos_x + card_Distance, 100, 0)) {
+                Debug.Log("Ã§a bouge");
+                GameObject.Find("Card_" + i).transform.position = Vector3.SmoothDamp(GameObject.Find("Card_" + i).transform.position, new Vector3(prev_Card_pos_x + card_Distance, 100, 0) , ref ref_velocity, 0.01f);
+            }
+            
+            //GameObject.Find("Card_" + i).transform.position = new Vector3(prev_Card_pos_x + card_Distance, 100, 0);
+            prev_Card_pos_x = GameObject.Find("Card_" + i).transform.position.x;
+        }
+
+        GameObject.Find("Card_" + deck_Size).transform.position = new Vector3(630, 100, 0);
     }
 
     // Update is called once per frame
@@ -44,7 +63,7 @@ public class CardManager : MonoBehaviour
     {
     }
     /* Au lieu de mettre la ligne 8 en public
-     Créer 2 méthodes, une push et une pull
+     Crï¿½er 2 mï¿½thodes, une push et une pull
     
     public void pushCard(carte)
     {
@@ -56,7 +75,7 @@ public class CardManager : MonoBehaviour
         Deck.Pull(carte);
     }
 
-    comme ça t'as aucune variable en public donc elles sont "protégées"
+    comme ï¿½a t'as aucune variable en public donc elles sont "protï¿½gï¿½es"
     fin, jsp si tu vois ce que je veux dire
     */
 }
