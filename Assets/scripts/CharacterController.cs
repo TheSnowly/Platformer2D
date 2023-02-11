@@ -94,18 +94,21 @@ public class CharacterController : MonoBehaviour
                     Destroy(GameObject.Find("Card_" + CardManager.Deck.Count));
                     CardManager.Deck.Pop();
                     ennemy_Slam();
+                    CardManager.PlaceCards();
                 }
                 else if (CardManager.Deck.Peek() == "Double_Jump")
                 {
                     Destroy(GameObject.Find("Card_" + CardManager.Deck.Count));
                     CardManager.Deck.Pop();
                     double_Jump();
+                    CardManager.PlaceCards();
                 }
                 else if (CardManager.Deck.Peek() == "Run")
                 {
                     Destroy(GameObject.Find("Card_" + CardManager.Deck.Count));
                     CardManager.Deck.Pop();
                     StartCoroutine(Run(3f));
+                    CardManager.PlaceCards();
                 }
             } else
             {
