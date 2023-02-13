@@ -28,14 +28,6 @@ public class CardManager : MonoBehaviour
         Deck.Push("Run");
         Deck.Push("Ennemy_Slam");
         Deck.Push("Double_Jump");
-        Deck.Push("Double_Jump");
-        Deck.Push("Run");
-        Deck.Push("Ennemy_Slam");
-        Deck.Push("Double_Jump");
-        Deck.Push("Double_Jump");
-        Deck.Push("Run");
-        Deck.Push("Ennemy_Slam");
-        Deck.Push("Double_Jump");
      
         //creating cards in the canvas and stocking them in their own Stack
         foreach (var item in Deck)
@@ -69,10 +61,11 @@ public class CardManager : MonoBehaviour
     }
 
     IEnumerator MoveCardsSmooth(Vector3 targetPosition, GameObject Card) {
-        while (Card.transform.position != targetPosition && Card) {
-            Card.transform.position = Vector3.SmoothDamp(Card.transform.position, targetPosition, ref ref_velocity, 0.09f);        
+        while ((Card.transform.position != targetPosition) && (Card)) {
+            Card.transform.position = Vector3.SmoothDamp(Card.transform.position, targetPosition, ref ref_velocity, 0.09f);          
             yield return null;
         }
+        yield return null;
     }
 
     IEnumerator MoveCards(Vector3 targetPosition, GameObject Card) {
