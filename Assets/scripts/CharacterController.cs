@@ -18,7 +18,7 @@ public class CharacterController : MonoBehaviour
     [SerializeField] Transform feetPos;
 
     //run variable
-    float moveSpeed_Run = 2000.0f;
+    float moveSpeed_Run = 1500.0f;
     float moveSpeed_horizontal_default = 1000.0f;
 
     // jumping variables
@@ -27,6 +27,14 @@ public class CharacterController : MonoBehaviour
     float jumpForce = 10f;
     float max_Jump_Time = 0.2f;
     float current_Jump_Time;
+
+    //coyote time variables
+    float coyoteTime = 0.15f;
+    float coyoteTimeTimer;
+
+    //jump buffer variables
+    float jumpBuffer = 0.15f;
+    float jumpBufferTimer;
 
     //fastfalling variables
     bool fastFalling;
@@ -62,22 +70,34 @@ public class CharacterController : MonoBehaviour
         else if (horizontal_value < 0) sr.flipX = true;
 
         //Checking if the player touch the floor
-        isGrounded = Physics2D.OverlapCircle(feetPos.position, 0.4f, ground);
+        isGrounded = Physics2D.OverlapCircle(feetPos.position, 0.2f, ground);
+
+        if (Input.GetButtonDown("Jump")) {
+            jumpBufferTimer = jumpBuffer;
+        } else {
+            jumpBufferTimer -= Time.deltaTime;
+        }
 
         //checking if the player is jumping and can still do the hold 
         if (Input.GetButtonUp("Jump") && isGrounded == false) {
             can_Still_Jump = false;
         }
         if (isGrounded) {
+            coyoteTimeTimer = coyoteTime;
             can_Still_Jump = true;
             ennemy_Slam_Active = false;
+        } else {
+            coyoteTimeTimer -= Time.deltaTime;
         }
         is_jumping = (Input.GetButton("Jump") && isGrounded == false && current_Jump_Time < max_Jump_Time && can_Still_Jump) ? true : false;
 
-        //resetting few varuables when jumping
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        //resetting few variables when jumping and first jump
+        if (jumpBufferTimer > 0f && coyoteTimeTimer > 0f)
         {
+            Debug.Log("gigi");
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            jumpBufferTimer = 0f;
+            coyoteTimeTimer = 0f;
             current_Jump_Time = 0f;
         }
 
@@ -110,7 +130,8 @@ public class CharacterController : MonoBehaviour
                     StartCoroutine(Run(3f));
                     CardManager.PlaceCards();
                 }
-            } else
+            } 
+            else
             {
                 Debug.Log("plus de cartes");
             }
