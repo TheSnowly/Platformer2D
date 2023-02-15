@@ -94,7 +94,6 @@ public class CharacterController : MonoBehaviour
         //resetting few variables when jumping and first jump
         if (jumpBufferTimer > 0f && coyoteTimeTimer > 0f)
         {
-            Debug.Log("gigi");
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             jumpBufferTimer = 0f;
             coyoteTimeTimer = 0f;
