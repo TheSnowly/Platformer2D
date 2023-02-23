@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CardManager : MonoBehaviour
 {
 
     public Stack Deck = new Stack();
     [SerializeField] GameObject CardPrefab;
+
+    [SerializeField] Sprite card_RUN;
+    [SerializeField] Sprite card_SLAM;
+    [SerializeField] Sprite card_JUMP;
 
     int card_Distance;
     int deck_Size;
@@ -32,7 +37,7 @@ public class CardManager : MonoBehaviour
         //creating cards in the canvas and stocking them in their own Stack
         foreach (var item in Deck)
         {
-            GameObject Card = GameObject.Instantiate(CardPrefab, Vector3.zero, Quaternion.identity, GameObject.FindGameObjectWithTag("Canvas").transform);
+            GameObject Card = GameObject.Instantiate(CardPrefab, Vector3.zero, Quaternion.Euler(0, 180, 0), GameObject.FindGameObjectWithTag("Canvas").transform);
             Card.name = "Card_" + n;
             n++;
         }
@@ -61,10 +66,25 @@ public class CardManager : MonoBehaviour
     }
 
     IEnumerator MoveCardsSmooth(Vector3 targetPosition, GameObject Card) {
-        while ((Card.transform.position != targetPosition) && (Card)) {
-            Card.transform.position = Vector3.SmoothDamp(Card.transform.position, targetPosition, ref ref_velocity, 0.09f);          
+
+        float target = targetPosition.x - 0.001f;
+
+        while ((Card.transform.position.x != target) && (Card) && (Card.transform.rotation != Quaternion.Euler(0,0,0))) {
+            Card.transform.position = Vector3.SmoothDamp(Card.transform.position, targetPosition, ref ref_velocity, 0.09f); 
+            Card.transform.rotation = Quaternion.Lerp(Card.transform.rotation, Quaternion.Euler(0,0,0), 0.018f);
+            if ((Card.transform.rotation.eulerAngles.y > 259) && (Card.transform.rotation.eulerAngles.y < 261)) {
+                if (Deck.Peek() == "Double_Jump") {
+                    Card.GetComponent<Image>().sprite = card_JUMP;
+                } else if (Deck.Peek() == "Ennemy_Slam") {
+                    Card.GetComponent<Image>().sprite = card_SLAM;
+                } else if (Deck.Peek() == "Run") {
+                    Card.GetComponent<Image>().sprite = card_RUN;
+                }
+            }       
             yield return null;
         }
+        Card.transform.position = targetPosition;
+        Card.transform.rotation = Quaternion.Euler(0,0,0);
         yield return null;
     }
 
@@ -77,8 +97,8 @@ public class CardManager : MonoBehaviour
             timeElapsed += Time.deltaTime;
             yield return null;
         }
-        transform.position = targetPosition;
-        
+        transform.position = targetPosition;  
+        yield return null;     
     }
 
     // Update is called once per frame
