@@ -13,7 +13,6 @@ public class CardManager : MonoBehaviour
     [SerializeField] Sprite card_SLAM;
     [SerializeField] Sprite card_JUMP;
 
-    int card_Distance;
     int deck_Size;
     float duration = 1;
     float prev_Card_pos_x;
@@ -34,7 +33,7 @@ public class CardManager : MonoBehaviour
         Deck.Push("Ennemy_Slam");
         Deck.Push("Double_Jump");
      
-        //creating cards in the canvas and stocking them in their own Stack
+        //creating cards in the canvas
         foreach (var item in Deck)
         {
             GameObject Card = GameObject.Instantiate(CardPrefab, Vector3.zero, Quaternion.Euler(0, 180, 0), GameObject.FindGameObjectWithTag("Canvas").transform);
@@ -80,9 +79,17 @@ public class CardManager : MonoBehaviour
                 } else if (Deck.Peek() == "Run") {
                     Card.GetComponent<Image>().sprite = card_RUN;
                 }
+                if (Card.transform.position.x == target) {
+                    Debug.Log("carte déplacée");
+                }
+                if (Card.transform.rotation == Quaternion.Euler(0,0,0)) {
+                    Debug.Log("carte rotatée");
+                }
             }       
             yield return null;
         }
+
+        Debug.Log("finito");
         Card.transform.position = targetPosition;
         Card.transform.rotation = Quaternion.Euler(0,0,0);
         yield return null;
@@ -105,20 +112,4 @@ public class CardManager : MonoBehaviour
     void Update()
     {
     }
-    /* Au lieu de mettre la ligne 8 en public
-     Cr�er 2 m�thodes, une push et une pull
-    
-    public void pushCard(carte)
-    {
-        Deck.Push(carte);
-    }
-
-    public void pullCard(carte)
-    {
-        Deck.Pull(carte);
-    }
-
-    comme �a t'as aucune variable en public donc elles sont "prot�g�es"
-    fin, jsp si tu vois ce que je veux dire
-    */
 }

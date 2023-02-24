@@ -129,6 +129,7 @@ public class CharacterController : MonoBehaviour
                     StartCoroutine(Run(3f));
                     CardManager.PlaceCards();
                 }
+
             } 
             else
             {
