@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class CardManager : MonoBehaviour
 {
 
-    public Stack Deck = new Stack();
+    public Stack<string> Deck = new Stack<string>();
+    public List<string> shuffled_Deck = new List<string>();
     [SerializeField] GameObject CardPrefab;
 
     [SerializeField] Sprite card_RUN;
@@ -24,22 +25,28 @@ public class CardManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         Vector3 ref_velocity = Vector3.zero;
         n = 1;
 
         //creating cards
-        Deck.Push("Double_Jump");
-        Deck.Push("Run");
-        Deck.Push("Ennemy_Slam");
-        Deck.Push("Double_Jump");
+        shuffled_Deck.Insert(Random.Range(0, shuffled_Deck.Count), "Double_Jump");
+        shuffled_Deck.Insert(Random.Range(0, shuffled_Deck.Count), "Ennemy_Slam");
+        shuffled_Deck.Insert(Random.Range(0, shuffled_Deck.Count), "Double_Jump");
+        shuffled_Deck.Insert(Random.Range(0, shuffled_Deck.Count), "Ennemy_Slam");
+
+
      
-        //creating cards in the canvas
-        foreach (var item in Deck)
+        //creating cards in the canvas and pushing them in a deck
+        foreach (var item in shuffled_Deck)
         {
+            Deck.Push(item);
             GameObject Card = GameObject.Instantiate(CardPrefab, Vector3.zero, Quaternion.Euler(0, 180, 0), GameObject.FindGameObjectWithTag("Canvas").transform);
             Card.name = "Card_" + n;
             n++;
         }
+
+        shuffled_Deck.Clear();
 
         PlaceCards();
     }
@@ -79,17 +86,9 @@ public class CardManager : MonoBehaviour
                 } else if (Deck.Peek() == "Run") {
                     Card.GetComponent<Image>().sprite = card_RUN;
                 }
-                if (Card.transform.position.x == target) {
-                    Debug.Log("carte déplacée");
-                }
-                if (Card.transform.rotation == Quaternion.Euler(0,0,0)) {
-                    Debug.Log("carte rotatée");
-                }
             }       
             yield return null;
         }
-
-        Debug.Log("finito");
         Card.transform.position = targetPosition;
         Card.transform.rotation = Quaternion.Euler(0,0,0);
         yield return null;

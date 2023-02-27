@@ -18,7 +18,7 @@ public class CharacterController : MonoBehaviour
     [SerializeField] Transform feetPos;
 
     //run variable
-    float moveSpeed_Run = 1500.0f;
+    float moveSpeed_Run = 1300.0f;
     float moveSpeed_horizontal_default = 1000.0f;
 
     // jumping variables
@@ -53,7 +53,6 @@ public class CharacterController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
 
@@ -72,6 +71,7 @@ public class CharacterController : MonoBehaviour
         //Checking if the player touch the floor
         isGrounded = Physics2D.OverlapCircle(feetPos.position, 0.2f, ground);
 
+        //jump buffer timer
         if (Input.GetButtonDown("Jump")) {
             jumpBufferTimer = jumpBuffer;
         } else {
@@ -111,6 +111,7 @@ public class CharacterController : MonoBehaviour
                 if (CardManager.Deck.Peek() == "Ennemy_Slam")
                 {
                     Destroy(GameObject.Find("Card_" + CardManager.Deck.Count));
+                    CardManager.shuffled_Deck.Insert(Random.Range(0, CardManager.shuffled_Deck.Count), CardManager.Deck.Peek());
                     CardManager.Deck.Pop();
                     ennemy_Slam();
                     CardManager.PlaceCards();
@@ -118,6 +119,7 @@ public class CharacterController : MonoBehaviour
                 else if (CardManager.Deck.Peek() == "Double_Jump")
                 {
                     Destroy(GameObject.Find("Card_" + CardManager.Deck.Count));
+                    CardManager.shuffled_Deck.Insert(Random.Range(0, CardManager.shuffled_Deck.Count), CardManager.Deck.Peek());
                     CardManager.Deck.Pop();
                     double_Jump();
                     CardManager.PlaceCards();
@@ -125,6 +127,7 @@ public class CharacterController : MonoBehaviour
                 else if (CardManager.Deck.Peek() == "Run")
                 {
                     Destroy(GameObject.Find("Card_" + CardManager.Deck.Count));
+                    CardManager.shuffled_Deck.Insert(Random.Range(0, CardManager.shuffled_Deck.Count), CardManager.Deck.Peek());
                     CardManager.Deck.Pop();
                     StartCoroutine(Run(3f));
                     CardManager.PlaceCards();
