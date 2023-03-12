@@ -19,9 +19,9 @@ public class Collectible : MonoBehaviour
         
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.tag == "Player") {
+        if (other.gameObject.tag == "Player") {
             CardManager.shuffled_Deck.Insert(Random.Range(0, CardManager.shuffled_Deck.Count), "Run");
             Destroy(this.gameObject);
         }
