@@ -10,14 +10,13 @@ public class BezierFollow : MonoBehaviour
 
     [SerializeField] GameObject Player; 
 
-    private int routeToGo;
-
     private float tParam;
 
     private Vector2 objectPosition;
 
     private float speedModifier;
 
+    [SerializeField]
     private bool coroutineAllowed;
 
     [SerializeField]
@@ -31,7 +30,6 @@ public class BezierFollow : MonoBehaviour
     void Start()
     {
         Restart = false;
-        routeToGo = 0;
         tParam = 0f;
         coroutineAllowed = true;
         random = UnityEngine.Random.Range(1f, 1.5f);
@@ -44,7 +42,7 @@ public class BezierFollow : MonoBehaviour
     void Update()
     {
         float e = Player.transform.position.y * 100;
-        int d = Convert.ToInt32(e);
+        float d = Convert.ToInt32(e);
         float f = (float)d / 100;
 
         if (Restart && f == RestartPos)
@@ -54,11 +52,11 @@ public class BezierFollow : MonoBehaviour
         }
         if (coroutineAllowed)
         {
-            StartCoroutine(GoByTheRoute(routeToGo));
+            StartCoroutine(GoByTheRoute());
         }
     }
 
-    private IEnumerator GoByTheRoute(int routeNum)
+    private IEnumerator GoByTheRoute()
     {
         coroutineAllowed = false;
 
@@ -81,14 +79,6 @@ public class BezierFollow : MonoBehaviour
         }
 
         tParam = 0f;
-
-        routeToGo += 1;
-
-        if (routeToGo > routes.Length - 1)
-        {
-            routeToGo = 0;
-        }
-
 
         Player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         Player.GetComponent<Rigidbody2D>().AddForce(new Vector2(-2, 3), ForceMode2D.Impulse);
