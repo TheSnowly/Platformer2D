@@ -72,8 +72,6 @@ public class CardManager : MonoBehaviour
     IEnumerator MoveCardsSmooth(Vector3 targetPosition, GameObject Card) {
 
         float target = targetPosition.x - 0.001f;
-        Debug.Log("Lezgo");
-        //Debug.Log(Card.name);
 
         /*
         Vector3 start_Pos = Card.transform.position;
@@ -118,13 +116,11 @@ public class CardManager : MonoBehaviour
                     }
                 }
             } else {
-                Debug.Log("c'est tchao");
                 break;
             }
             yield return null;
         }
         if (Card != null) {
-            Debug.Log("jui quand même là");
             Card.transform.position = targetPosition;
             Card.transform.rotation = Quaternion.Euler(0,0,0);
         }   

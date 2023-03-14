@@ -32,7 +32,7 @@ public class BezierFollow : MonoBehaviour
         Restart = false;
         tParam = 0f;
         coroutineAllowed = true;
-        random = UnityEngine.Random.Range(1f, 1.5f);
+        random = UnityEngine.Random.Range(0.5f, 1.5f);
         speedModifier = random;
         RestartPos = Player.transform.position.y;
 
@@ -44,12 +44,18 @@ public class BezierFollow : MonoBehaviour
         float e = Player.transform.position.y * 100;
         float d = Convert.ToInt32(e);
         float f = (float)d / 100;
-
+        if (f == RestartPos)
+        {
+            Debug.Log("lezgongue");
+        }
+        /*
         if (Restart && f == RestartPos)
         {
             Restart = false;
             coroutineAllowed = true;
         }
+        */
+
         if (coroutineAllowed)
         {
             StartCoroutine(GoByTheRoute());
@@ -64,9 +70,9 @@ public class BezierFollow : MonoBehaviour
         Player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
 
         Vector2 p0 = Player.transform.position;
-        Vector2 p1 = new Vector2(Player.transform.position.x, Player.transform.position.y - 2);
-        Vector2 p2 = new Vector2(Player.transform.position.x - 5, Player.transform.position.y);
-        Vector2 p3 = new Vector2(Player.transform.position.x - 5, Player.transform.position.y + 2f);
+        Vector2 p1 = new Vector2(Player.transform.position.x, Player.transform.position.y - 2f);
+        Vector2 p2 = new Vector2(Player.transform.position.x - 5f, Player.transform.position.y - 2f);
+        Vector2 p3 = new Vector2(Player.transform.position.x - 5f, Player.transform.position.y);
 
         while (tParam < 1)
         {
@@ -79,10 +85,11 @@ public class BezierFollow : MonoBehaviour
         }
 
         tParam = 0f;
+        coroutineAllowed = true;
 
-        Player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-        Player.GetComponent<Rigidbody2D>().AddForce(new Vector2(-2, 3), ForceMode2D.Impulse);
-        Restart = true;
+        //Player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        //Player.GetComponent<Rigidbody2D>().AddForce(new Vector2(-2, 10), ForceMode2D.Impulse);
+        //Restart = true;
 
     }
 }
