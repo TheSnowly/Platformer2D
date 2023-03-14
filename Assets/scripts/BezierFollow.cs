@@ -32,7 +32,7 @@ public class BezierFollow : MonoBehaviour
         Restart = false;
         tParam = 0f;
         coroutineAllowed = true;
-        random = UnityEngine.Random.Range(0.5f, 1.5f);
+        random = UnityEngine.Random.Range(0.3f, 0.5f);
         speedModifier = random;
         RestartPos = Player.transform.position.y;
 
@@ -70,9 +70,9 @@ public class BezierFollow : MonoBehaviour
         Player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
 
         Vector2 p0 = Player.transform.position;
-        Vector2 p1 = new Vector2(Player.transform.position.x, Player.transform.position.y - 2f);
-        Vector2 p2 = new Vector2(Player.transform.position.x - 5f, Player.transform.position.y - 2f);
-        Vector2 p3 = new Vector2(Player.transform.position.x - 5f, Player.transform.position.y);
+        Vector2 p1 = new Vector2(Player.transform.position.x - 1.5f, Player.transform.position.y - 2f);
+        Vector2 p2 = new Vector2(Player.transform.position.x - 6.5f, Player.transform.position.y + 2f);
+        Vector2 p3 = new Vector2(Player.transform.position.x - 8f, Player.transform.position.y);
 
         while (tParam < 1)
         {
