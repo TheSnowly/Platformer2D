@@ -50,17 +50,25 @@ public class CharacterController : MonoBehaviour
     float horizontal_value;
     float moveSpeed_horizontal = 1000.0f;
 
+    Vector2 RayPoint;
+    [SerializeField] GameObject Card_Thrown_prefab;
+    [SerializeField] Camera mainCamera;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
-
     }
 
     // Update is called once per frame
     void Update()
     {
+        Vector2 mouse = Input.mousePosition;
+        RayPoint = mainCamera.ScreenToWorldPoint(mouse);
+
+        Debug.Log(RayPoint);
+
         //Value for the player x movement
         horizontal_value = Input.GetAxis("Horizontal");
 
@@ -104,10 +112,9 @@ public class CharacterController : MonoBehaviour
         fastFalling = (isGrounded == false && (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))) ? true : false;
 
         //make a card effect
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (CardManager.Deck.Count != 0)
-            {
+        if (CardManager.Deck.Count != 0) {
+
+            if (Input.GetMouseButtonDown(0)) {
                 if (CardManager.Deck.Peek() == "Ennemy_Slam")
                 {
                     Destroy(GameObject.Find("Card_" + CardManager.Deck.Count));
@@ -129,16 +136,14 @@ public class CharacterController : MonoBehaviour
                     Destroy(GameObject.Find("Card_" + CardManager.Deck.Count));
                     CardManager.shuffled_Deck.Insert(Random.Range(0, CardManager.shuffled_Deck.Count), CardManager.Deck.Peek());
                     CardManager.Deck.Pop();
-                    StartCoroutine(Run(3f));
+                    StartCoroutine(RunTimer(3f));
                     CardManager.PlaceCards();
                 }
-
-            } 
-            else
-            {
-                Debug.Log("plus de cartes");
             }
 
+            if (Input.GetMouseButtonDown(1)) {
+                Instantiate(Card_Thrown_prefab, transform.position, Quaternion.identity);
+            }
         }
     }
 
@@ -158,8 +163,12 @@ public class CharacterController : MonoBehaviour
         ennemy_Slam_Active = true;
     }
 
+    private void Run() {
+        StartCoroutine(RunTimer(3f));
+    }
+
     //Run timer
-    IEnumerator Run(float time)
+    IEnumerator RunTimer(float time)
     {
         moveSpeed_horizontal = moveSpeed_Run;
         yield return new WaitForSeconds(time);
