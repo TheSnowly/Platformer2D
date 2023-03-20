@@ -64,10 +64,10 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 mouse = Input.mousePosition;
-        RayPoint = mainCamera.ScreenToWorldPoint(mouse);
+        //Vector2 mouse = Input.mousePosition;
+        //RayPoint = mainCamera.ScreenToWorldPoint(mouse);
 
-        Debug.Log(RayPoint);
+        //Debug.Log(RayPoint);
 
         //Value for the player x movement
         horizontal_value = Input.GetAxis("Horizontal");

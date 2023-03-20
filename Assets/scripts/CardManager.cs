@@ -72,6 +72,7 @@ public class CardManager : MonoBehaviour
     IEnumerator MoveCardsSmooth(Vector3 targetPosition, GameObject Card) {
 
         float target = targetPosition.x - 0.001f;
+        //Debug.Log(Card.name);
 
         /*
         Vector3 start_Pos = Card.transform.position;
@@ -100,13 +101,12 @@ public class CardManager : MonoBehaviour
             yield return null;
         }
         */
+
         
         while (Card != null) {
             if ((Card.transform.position.x != target) || (!(Card.transform.rotation.eulerAngles.y > -1 && Card.transform.rotation.eulerAngles.y < 1))) {
-
                 Card.transform.position = Vector3.SmoothDamp(Card.transform.position, targetPosition, ref ref_velocity, 0.09f);
                 Card.transform.rotation = Quaternion.Lerp(Card.transform.rotation, Quaternion.Euler(0,0,0), 0.018f);
-
                 if ((Card.transform.rotation.eulerAngles.y > 259) && (Card.transform.rotation.eulerAngles.y < 261)) {
                     if (Deck.Peek() == "Double_Jump") {
                         Card.GetComponent<Image>().sprite = card_JUMP;
