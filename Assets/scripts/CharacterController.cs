@@ -1,6 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class CharacterController : MonoBehaviour
 {
@@ -59,13 +59,14 @@ public class CharacterController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Vector2 mouse = Input.mousePosition;
-        //RayPoint = mainCamera.ScreenToWorldPoint(mouse);
+        Vector2 mouse = Input.mousePosition;
+        //Vector3 mousePos = mainCamera.ScreenToWorldPoint(mouse);
 
         //Debug.Log(RayPoint);
 
@@ -214,10 +215,30 @@ public class CharacterController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         //Check Ennemy for the ennemy slam
-        if (other.tag == "Ennemy" && ennemy_Slam_Active) {
-            rb.velocity = new Vector2(0, 2);
-            rb.AddForce(new Vector2(stocked_Velocity_x * 4, 10), ForceMode2D.Impulse);
+        if (other.tag == "Ennemy") {
+
+            if (ennemy_Slam_Active)
+            {
+                rb.velocity = new Vector2(0, 2);
+                rb.AddForce(new Vector2(stocked_Velocity_x * 4, 10), ForceMode2D.Impulse);
+                Destroy(other.gameObject);
+                StartCoroutine(Wait(0.1f));
+                Debug.Log("1");
+
+            } else
+            {
+                rb.velocity = new Vector2(rb.velocity.x / 3, 0);
+                rb.AddForce(new Vector2(rb.velocity.x/2, jumpForce * 1.5f), ForceMode2D.Impulse);
+                Destroy(other.gameObject);
+                Debug.Log("2");
+            }
         }
+    }
+
+    IEnumerator Wait(float time)
+    {
+        yield return new WaitForSeconds(time);
+        ennemy_Slam_Active = false;
     }
 
 }

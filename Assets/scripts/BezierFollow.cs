@@ -44,10 +44,6 @@ public class BezierFollow : MonoBehaviour
         float e = Player.transform.position.y * 100;
         float d = Convert.ToInt32(e);
         float f = (float)d / 100;
-        if (f == RestartPos)
-        {
-            Debug.Log("lezgongue");
-        }
         /*
         if (Restart && f == RestartPos)
         {
