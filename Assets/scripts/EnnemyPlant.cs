@@ -9,6 +9,7 @@ public class EnnemyPlant : MonoBehaviour
     [SerializeField] Sprite ClosedSprite;
     [SerializeField] GameObject Damage;
     string CurrentState;
+    bool CanCouroutine;
 
     // Start is called before the first frame update
     void Start()
@@ -18,8 +19,9 @@ public class EnnemyPlant : MonoBehaviour
     }
 
     IEnumerator ChangeState(float time) {
-        float timeElapsed = 5f;
-        if (timeElapsed < 0) {
+        CanCouroutine = false;
+        float timeElapsed = time;
+        while (timeElapsed > 0) {
             timeElapsed -= Time.deltaTime;
             yield return null;
         }
@@ -29,20 +31,21 @@ public class EnnemyPlant : MonoBehaviour
             GetComponent<BoxCollider2D>().enabled = false;
             Damage.GetComponent<BoxCollider2D>().enabled = true;
             CurrentState = "Closed";
-            StartCoroutine(ChangeState(2f));
         }
         if (CurrentState == "Closed") {
             GetComponent<SpriteRenderer>().sprite = OpenSprite;
             GetComponent<BoxCollider2D>().enabled = true;
             Damage.GetComponent<BoxCollider2D>().enabled = false;
             CurrentState = "Open";
-            StartCoroutine(ChangeState(2f));
         }
+        CanCouroutine = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (CanCouroutine == true) {
+            StartCoroutine(ChangeState(2f));
+        }
     }
 }
