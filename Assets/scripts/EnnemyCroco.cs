@@ -27,8 +27,8 @@ public class EnnemyCroco : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(changing_Side_Pos.position, 0.2f, ground);
 
         if(!(isGrounded)) {
-            transform.localScale = new Vector3(-transform.localScale.y, transform.localScale.y, transform.localScale.z);
-            direction = direction * -1;
+            transform.localScale = new Vector3(transform.localScale.y * -1f, transform.localScale.y, transform.localScale.z);
+            direction = -direction;
         }
     }
 
