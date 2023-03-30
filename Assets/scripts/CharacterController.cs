@@ -52,13 +52,14 @@ public class CharacterController : MonoBehaviour
 
     Vector2 RayPoint;
     [SerializeField] GameObject Card_Thrown_prefab;
-    [SerializeField] Camera mainCamera;
+    //Camera mainCamera;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        //mainCamera = Camera.main;
         
     }
 
@@ -66,7 +67,7 @@ public class CharacterController : MonoBehaviour
     void Update()
     {
         Vector2 mouse = Input.mousePosition;
-        //Vector3 mousePos = mainCamera.ScreenToWorldPoint(mouse);
+        Vector3 mousePos = UnityEngine.Camera.main.ScreenToWorldPoint(mouse);
 
         //Debug.Log(RayPoint);
 
@@ -118,7 +119,7 @@ public class CharacterController : MonoBehaviour
             if (Input.GetMouseButtonDown(0)) {
                 if (CardManager.Deck.Peek() == "Ennemy_Slam")
                 {
-                    Destroy(GameObject.Find("Card_" + CardManager.Deck.Count));
+                    Destroy(GameObject.Find("Card_" + (CardManager.Deck.Count-1)));
                     CardManager.shuffled_Deck.Insert(Random.Range(0, CardManager.shuffled_Deck.Count), CardManager.Deck.Peek());
                     CardManager.Deck.Pop();
                     ennemy_Slam();
@@ -126,7 +127,7 @@ public class CharacterController : MonoBehaviour
                 }
                 else if (CardManager.Deck.Peek() == "Double_Jump")
                 {
-                    Destroy(GameObject.Find("Card_" + CardManager.Deck.Count));
+                    Destroy(GameObject.Find("Card_" + (CardManager.Deck.Count - 1)));
                     CardManager.shuffled_Deck.Insert(Random.Range(0, CardManager.shuffled_Deck.Count), CardManager.Deck.Peek());
                     CardManager.Deck.Pop();
                     double_Jump();
@@ -134,10 +135,10 @@ public class CharacterController : MonoBehaviour
                 }
                 else if (CardManager.Deck.Peek() == "Run")
                 {
-                    Destroy(GameObject.Find("Card_" + CardManager.Deck.Count));
+                    Destroy(GameObject.Find("Card_" + (CardManager.Deck.Count - 1)));
                     CardManager.shuffled_Deck.Insert(Random.Range(0, CardManager.shuffled_Deck.Count), CardManager.Deck.Peek());
                     CardManager.Deck.Pop();
-                    StartCoroutine(RunTimer(3f));
+                    //StartCoroutine(RunTimer(3f));
                     CardManager.PlaceCards();
                 }
             }
@@ -215,7 +216,7 @@ public class CharacterController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         //Check Ennemy for the ennemy slam
-        if (other.tag == "Ennemy") {
+        if (other.tag == "Ennemy" && other.tag != "Damage") {
 
             if (ennemy_Slam_Active)
             {
@@ -223,14 +224,13 @@ public class CharacterController : MonoBehaviour
                 rb.AddForce(new Vector2(stocked_Velocity_x * 4, 10), ForceMode2D.Impulse);
                 Destroy(other.gameObject);
                 StartCoroutine(Wait(0.1f));
-                Debug.Log("1");
 
             } else
             {
+                Debug.Log("boup");
                 rb.velocity = new Vector2(rb.velocity.x / 3, 0);
                 rb.AddForce(new Vector2(rb.velocity.x/2, jumpForce * 1.5f), ForceMode2D.Impulse);
                 Destroy(other.gameObject);
-                Debug.Log("2");
             }
         }
     }

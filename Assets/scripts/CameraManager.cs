@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Camera : MonoBehaviour
+public class CameraManager : MonoBehaviour
 {
     [SerializeField] GameObject playerRef;
     Vector3 refVelocity = Vector3.zero;

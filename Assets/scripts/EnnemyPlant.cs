@@ -10,12 +10,14 @@ public class EnnemyPlant : MonoBehaviour
     [SerializeField] GameObject Damage;
     string CurrentState;
     bool CanCouroutine;
+    bool ispremierforme;
 
     // Start is called before the first frame update
     void Start()
     {
         CurrentState = "Open";
-        StartCoroutine(ChangeState(2f));
+        StartCoroutine(ChangeState(4f));
+        ispremierforme = true;
     }
 
     IEnumerator ChangeState(float time) {
@@ -25,27 +27,26 @@ public class EnnemyPlant : MonoBehaviour
             timeElapsed -= Time.deltaTime;
             yield return null;
         }
-        Debug.Log("ça part de là");
-        if (CurrentState == "Open") {
-            GetComponent<SpriteRenderer>().sprite = ClosedSprite;
-            GetComponent<BoxCollider2D>().enabled = false;
-            Damage.GetComponent<BoxCollider2D>().enabled = true;
-            CurrentState = "Closed";
-        }
-        if (CurrentState == "Closed") {
-            GetComponent<SpriteRenderer>().sprite = OpenSprite;
-            GetComponent<BoxCollider2D>().enabled = true;
-            Damage.GetComponent<BoxCollider2D>().enabled = false;
-            CurrentState = "Open";
-        }
-        CanCouroutine = true;
+        ispremierforme = !ispremierforme;
+        StartCoroutine(ChangeState(4f));
     }
+
+
 
     // Update is called once per frame
     void Update()
     {
-        if (CanCouroutine == true) {
-            StartCoroutine(ChangeState(2f));
+        if(ispremierforme)
+        {
+            GetComponent<SpriteRenderer>().sprite = OpenSprite;
+            GetComponent<BoxCollider2D>().enabled = false;
+            Damage.GetComponent<BoxCollider2D>().enabled = true;
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().sprite = ClosedSprite;
+            GetComponent<BoxCollider2D>().enabled = true;
+            Damage.GetComponent<BoxCollider2D>().enabled = false;
         }
     }
 }
