@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -46,20 +47,19 @@ public class CharacterController : MonoBehaviour
     int slam_Force = 50;
     float stocked_Velocity_x;
 
-    // x movement variables
+    //x movement variables
     float horizontal_value;
     float moveSpeed_horizontal = 1000.0f;
 
-    Vector2 RayPoint;
+    Vector3 RayPoint;
     [SerializeField] GameObject Card_Thrown_prefab;
-    //Camera mainCamera;
+    [SerializeField] Camera CameraM;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
-        //mainCamera = Camera.main;
         
     }
 
@@ -67,15 +67,17 @@ public class CharacterController : MonoBehaviour
     void Update()
     {
         Vector2 mouse = Input.mousePosition;
-        Vector3 mousePos = UnityEngine.Camera.main.ScreenToWorldPoint(mouse);
-
-        //Debug.Log(RayPoint);
+        Vector3 mousePos = CameraM.ScreenToWorldPoint(mouse);
+        RaycastHit2D Raycast = Physics2D.Raycast(transform.position, mousePos);
+        RayPoint = Raycast.point;
+        Debug.Log(Raycast);
+        Debug.DrawRay(transform.position, mousePos, Color.green);
 
         //Value for the player x movement
         horizontal_value = Input.GetAxis("Horizontal");
 
         //flip character sprite depending on the direction the character goes in
-        if(horizontal_value > 0) sr.flipX = false;
+        if (horizontal_value > 0) sr.flipX = false;
         else if (horizontal_value < 0) sr.flipX = true;
 
         //Checking if the player touch the floor
@@ -119,32 +121,29 @@ public class CharacterController : MonoBehaviour
             if (Input.GetMouseButtonDown(0)) {
                 if (CardManager.Deck.Peek() == "Ennemy_Slam")
                 {
-                    Destroy(GameObject.Find("Card_" + (CardManager.Deck.Count-1)));
-                    CardManager.shuffled_Deck.Insert(Random.Range(0, CardManager.shuffled_Deck.Count), CardManager.Deck.Peek());
-                    CardManager.Deck.Pop();
+                    CardManage();
                     ennemy_Slam();
                     CardManager.PlaceCards();
                 }
                 else if (CardManager.Deck.Peek() == "Double_Jump")
                 {
-                    Destroy(GameObject.Find("Card_" + (CardManager.Deck.Count - 1)));
-                    CardManager.shuffled_Deck.Insert(Random.Range(0, CardManager.shuffled_Deck.Count), CardManager.Deck.Peek());
-                    CardManager.Deck.Pop();
+                    CardManage();
                     double_Jump();
                     CardManager.PlaceCards();
                 }
                 else if (CardManager.Deck.Peek() == "Run")
                 {
-                    Destroy(GameObject.Find("Card_" + (CardManager.Deck.Count - 1)));
-                    CardManager.shuffled_Deck.Insert(Random.Range(0, CardManager.shuffled_Deck.Count), CardManager.Deck.Peek());
-                    CardManager.Deck.Pop();
-                    //StartCoroutine(RunTimer(3f));
+                    CardManage();
+                    StartCoroutine(RunTimer(3f));
                     CardManager.PlaceCards();
                 }
             }
 
             if (Input.GetMouseButtonDown(1)) {
-                Instantiate(Card_Thrown_prefab, transform.position, Quaternion.identity);
+                GameObject Card_Thrown = Instantiate(Card_Thrown_prefab, transform.position, Quaternion.identity);
+                Debug.Log(RayPoint);
+                StartCoroutine(Move_Thrown_Card(Card_Thrown, RayPoint));
+
             }
         }
     }
@@ -163,10 +162,6 @@ public class CharacterController : MonoBehaviour
         rb.velocity = new Vector2(rb.velocity.x / 3, 0);
         rb.AddForce(new Vector2(30 * (rb.velocity.x / Mathf.Abs(rb.velocity.x)), -slam_Force), ForceMode2D.Impulse);
         ennemy_Slam_Active = true;
-    }
-
-    private void Run() {
-        StartCoroutine(RunTimer(3f));
     }
 
     //Run timer
@@ -227,11 +222,27 @@ public class CharacterController : MonoBehaviour
 
             } else
             {
-                Debug.Log("boup");
                 rb.velocity = new Vector2(rb.velocity.x / 3, 0);
                 rb.AddForce(new Vector2(rb.velocity.x/2, jumpForce * 1.5f), ForceMode2D.Impulse);
                 Destroy(other.gameObject);
             }
+        }
+    }
+
+    //Card manager system, delete card when used and put the card in the shuffled deck
+    private void CardManage() {
+        Destroy(GameObject.Find("Card_" + (CardManager.Deck.Count - 1)));
+        if(CardManager.Game_Cards.Length > 1) {
+            CardManager.Game_Cards = CardManager.Game_Cards.Take(CardManager.Game_Cards.Length-1).ToArray();
+        }
+        CardManager.shuffled_Deck.Insert(Random.Range(0, CardManager.shuffled_Deck.Count), CardManager.Deck.Peek());
+        CardManager.Deck.Pop();
+    }
+
+    IEnumerator Move_Thrown_Card(GameObject card, Vector3 target){
+        while (card.transform.position != target) {
+            card.transform.position = Vector3.MoveTowards(card.transform.position, target, 0.5f);
+            yield return null;
         }
     }
 

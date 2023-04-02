@@ -612,7 +612,6 @@ MonoBehaviour:
   can_Still_Jump: 0
   is_jumping: 0
   Card_Thrown_prefab: {fileID: 0}
-  mainCamera: {fileID: 0}
 --- !u!70 &634173922
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1305,6 +1304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 530f835fc14c95f438cef90bfcad61d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Game_Cards: []
   CardPrefab: {fileID: 3650992500932007715, guid: 2b022a8e7c737cf4a82ef92bd16a6b92, type: 3}
   card_RUN: {fileID: 21300000, guid: c227b588794064241a904d71718ff7db, type: 3}
   card_SLAM: {fileID: 21300000, guid: 26a6c4b9f943e734c9d8849ff7b8e522, type: 3}
@@ -1447,13 +1447,14 @@ GameObject:
   - component: {fileID: 2052729860}
   - component: {fileID: 2052729859}
   - component: {fileID: 2052729858}
+  - component: {fileID: 2052729862}
   m_Layer: 0
   m_Name: Square (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &2052729858
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1560,6 +1561,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2052729862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2052729857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3277b12621ffdac418ece156c7296b8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CardManager: {fileID: 0}
 --- !u!1001 &3873869123862487913
 PrefabInstance:
   m_ObjectHideFlags: 0
