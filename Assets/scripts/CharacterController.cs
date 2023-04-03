@@ -52,6 +52,7 @@ public class CharacterController : MonoBehaviour
     float moveSpeed_horizontal = 1000.0f;
 
     Vector3 RayPoint;
+    RaycastHit2D Hit;
     [SerializeField] GameObject Card_Thrown_prefab;
     [SerializeField] Camera CameraM;
 
@@ -60,7 +61,6 @@ public class CharacterController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
-        
     }
 
     // Update is called once per frame
@@ -68,10 +68,9 @@ public class CharacterController : MonoBehaviour
     {
         Vector2 mouse = Input.mousePosition;
         Vector3 mousePos = CameraM.ScreenToWorldPoint(mouse);
-        RaycastHit2D Raycast = Physics2D.Raycast(transform.position, mousePos);
-        RayPoint = Raycast.point;
-        Debug.Log(Raycast);
-        Debug.DrawRay(transform.position, mousePos, Color.green);
+        Vector2 direction = (((Vector2)mousePos - (Vector2)transform.position));
+        Hit = Physics2D.Raycast(transform.position, direction, Mathf.Infinity);
+        Debug.DrawRay(transform.position, direction, Color.green);
 
         //Value for the player x movement
         horizontal_value = Input.GetAxis("Horizontal");
@@ -140,9 +139,10 @@ public class CharacterController : MonoBehaviour
             }
 
             if (Input.GetMouseButtonDown(1)) {
+                CardManage();
                 GameObject Card_Thrown = Instantiate(Card_Thrown_prefab, transform.position, Quaternion.identity);
-                Debug.Log(RayPoint);
-                StartCoroutine(Move_Thrown_Card(Card_Thrown, RayPoint));
+                StartCoroutine(Move_Thrown_Card(Card_Thrown, Hit.point));
+                CardManager.PlaceCards();
 
             }
         }
@@ -239,9 +239,10 @@ public class CharacterController : MonoBehaviour
         CardManager.Deck.Pop();
     }
 
+    //the card move towards the raycast end point
     IEnumerator Move_Thrown_Card(GameObject card, Vector3 target){
         while (card.transform.position != target) {
-            card.transform.position = Vector3.MoveTowards(card.transform.position, target, 0.5f);
+            card.transform.position = Vector3.MoveTowards(card.transform.position, target, 40f * Time.deltaTime);
             yield return null;
         }
     }

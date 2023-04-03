@@ -9,6 +9,8 @@ TagManager:
   - Canvas
   - Checkpoint
   - Damage
+  - Breakable
+  - Card
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   - Water
   - UI
   - Ground
-  - 
+  - Border
   - 
   - 
   - 
