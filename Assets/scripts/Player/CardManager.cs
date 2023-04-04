@@ -15,6 +15,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] Sprite card_RUN;
     [SerializeField] Sprite card_SLAM;
     [SerializeField] Sprite card_JUMP;
+    [SerializeField] Sprite card_KEY;
 
     int deck_Size;
     float duration = 1;
@@ -84,6 +85,8 @@ public class CardManager : MonoBehaviour
                         Card.GetComponent<Image>().sprite = card_SLAM;
                     } else if (Deck.Peek() == "Run") {
                         Card.GetComponent<Image>().sprite = card_RUN;
+                    } else if (Deck.Peek() == "Key") {
+                        Card.GetComponent<Image>().sprite = card_KEY;
                     }
                 }
             } else {

@@ -51,10 +51,11 @@ public class CharacterController : MonoBehaviour
     float horizontal_value;
     float moveSpeed_horizontal = 1000.0f;
 
-    Vector3 RayPoint;
-    RaycastHit2D Hit;
+    //Card throw variable
     [SerializeField] GameObject Card_Thrown_prefab;
-    [SerializeField] Camera CameraM;
+
+    //Key variable
+    [SerializeField] GameObject Key;
 
     // Start is called before the first frame update
     void Start()
@@ -66,12 +67,6 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 mouse = Input.mousePosition;
-        Vector3 mousePos = CameraM.ScreenToWorldPoint(mouse);
-        Vector2 direction = (((Vector2)mousePos - (Vector2)transform.position));
-        Hit = Physics2D.Raycast(transform.position, direction, Mathf.Infinity);
-        Debug.DrawRay(transform.position, direction, Color.green);
-
         //Value for the player x movement
         horizontal_value = Input.GetAxis("Horizontal");
 
@@ -117,6 +112,12 @@ public class CharacterController : MonoBehaviour
         //make a card effect
         if (CardManager.Deck.Count != 0) {
 
+            if (CardManager.Deck.Peek() == "Key") {
+                Key.SetActive(true);
+            } else {
+                Key.SetActive(false);
+            }
+
             if (Input.GetMouseButtonDown(0)) {
                 if (CardManager.Deck.Peek() == "Ennemy_Slam")
                 {
@@ -140,11 +141,12 @@ public class CharacterController : MonoBehaviour
 
             if (Input.GetMouseButtonDown(1)) {
                 CardManage();
-                GameObject Card_Thrown = Instantiate(Card_Thrown_prefab, transform.position, Quaternion.identity);
-                StartCoroutine(Move_Thrown_Card(Card_Thrown, Hit.point));
+                GameObject Card_Thrown = Instantiate(Card_Thrown_prefab, new Vector2(transform.position.x + 1.5f, transform.position.y), Quaternion.identity);
                 CardManager.PlaceCards();
 
             }
+        } else {
+            Key.SetActive(false);
         }
     }
 
@@ -237,14 +239,6 @@ public class CharacterController : MonoBehaviour
         }
         CardManager.shuffled_Deck.Insert(Random.Range(0, CardManager.shuffled_Deck.Count), CardManager.Deck.Peek());
         CardManager.Deck.Pop();
-    }
-
-    //the card move towards the raycast end point
-    IEnumerator Move_Thrown_Card(GameObject card, Vector3 target){
-        while (card.transform.position != target) {
-            card.transform.position = Vector3.MoveTowards(card.transform.position, target, 40f * Time.deltaTime);
-            yield return null;
-        }
     }
 
     IEnumerator Wait(float time)
