@@ -11,10 +11,14 @@ public class Card_Thrown : MonoBehaviour
         
     }
 
+    void FixedUpdate()
+    {
+        GetComponent<Rigidbody2D>().velocity = new Vector2(3500* Time.deltaTime, 0); 
+    }
+
     // Update is called once per frame
     void Update()
     {
-
     }
 
 
@@ -30,14 +34,4 @@ public class Card_Thrown : MonoBehaviour
             }
         }
     }
-/*
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Card")
-        {
-            Destroy(this.gameObject);
-            Destroy(collision.gameObject);
-        }
-    }
-*/
 }

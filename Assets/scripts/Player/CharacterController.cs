@@ -140,14 +140,14 @@ public class CharacterController : MonoBehaviour
             }
 
             if (Input.GetMouseButtonDown(1)) {
+                Instantiate(Card_Thrown_prefab, new Vector2(transform.position.x + 1.5f, transform.position.y), Quaternion.identity);
                 CardManage();
-                GameObject Card_Thrown = Instantiate(Card_Thrown_prefab, new Vector2(transform.position.x + 1.5f, transform.position.y), Quaternion.identity);
                 CardManager.PlaceCards();
-
             }
-        } else {
+        }else {
             Key.SetActive(false);
         }
+
     }
 
     void FixedUpdate()
