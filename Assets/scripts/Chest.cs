@@ -23,12 +23,15 @@ public class Chest : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player" && CardManager.Deck.Peek() == "Key")
+        if (CardManager.Deck.Count > 0)
         {
-            CharacterController.Key.gameObject.SetActive(false);
-            CharacterController.CardManage();
-            CardManager.PlaceCards();
-            Give_Card();
+            if (collision.gameObject.tag == "Player" && CardManager.Deck.Peek() == "Key")
+            {
+                CharacterController.Key.gameObject.SetActive(false);
+                CharacterController.CardManage();
+                CardManager.PlaceCards();
+                Give_Card();
+            }
         }
     }
 
@@ -36,8 +39,8 @@ public class Chest : MonoBehaviour
     {
         for(int i = 1; i <= Num_Of_Card; i++)
         {
-            GameObject Card = Instantiate(Card_prefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
-            Card.GetComponent<Rigidbody2D>().AddForce(new Vector2(3, 0));
+            GameObject Card = Instantiate(Card_prefab, new Vector2(transform.position.x, transform.position.y + 2), Quaternion.identity);
+            Card.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-5, 5),5), ForceMode2D.Impulse);
         }
     }
 }
