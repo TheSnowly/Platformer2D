@@ -55,7 +55,7 @@ public class CharacterController : MonoBehaviour
     [SerializeField] GameObject Card_Thrown_prefab;
 
     //Key variable
-    [SerializeField] GameObject Key;
+    [SerializeField] public GameObject Key;
 
     // Start is called before the first frame update
     void Start()
@@ -232,7 +232,7 @@ public class CharacterController : MonoBehaviour
     }
 
     //Card manager system, delete card when used and put the card in the shuffled deck
-    private void CardManage() {
+    public void CardManage() {
         Destroy(GameObject.Find("Card_" + (CardManager.Deck.Count - 1)));
         if(CardManager.Game_Cards.Length > 1) {
             CardManager.Game_Cards = CardManager.Game_Cards.Take(CardManager.Game_Cards.Length-1).ToArray();
