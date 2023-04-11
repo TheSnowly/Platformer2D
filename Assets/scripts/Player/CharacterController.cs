@@ -25,7 +25,7 @@ public class CharacterController : MonoBehaviour
     // jumping variables
     [SerializeField] bool can_Still_Jump;
     [SerializeField] bool is_jumping;
-    float jumpForce = 10f;
+    float jumpForce = 15f;
     float max_Jump_Time = 0.2f;
     float current_Jump_Time;
 
@@ -40,7 +40,7 @@ public class CharacterController : MonoBehaviour
     //fastfalling variables
     bool fastFalling;
     float base_Gravity = 4f;
-    float fastfalling_Gravity = 8f;
+    float fastfalling_Gravity = 12f;
 
     //Ennemy Slam variables
     bool ennemy_Slam_Active = false;
@@ -84,10 +84,6 @@ public class CharacterController : MonoBehaviour
             jumpBufferTimer -= Time.deltaTime;
         }
 
-        //checking if the player is jumping and can still do the hold 
-        if (Input.GetButtonUp("Jump") && isGrounded == false) {
-            can_Still_Jump = false;
-        }
         if (isGrounded) {
             coyoteTimeTimer = coyoteTime;
             can_Still_Jump = true;
@@ -95,12 +91,17 @@ public class CharacterController : MonoBehaviour
         } else {
             coyoteTimeTimer -= Time.deltaTime;
         }
-        is_jumping = (Input.GetButton("Jump") && isGrounded == false && current_Jump_Time < max_Jump_Time && can_Still_Jump) ? true : false;
+
+        if(Input.GetButton("Jump")) {
+            rb.gravityScale = 4f;
+        } else {
+            rb.gravityScale = 6.5f;
+        }
 
         //resetting few variables when jumping and first jump
         if (jumpBufferTimer > 0f && coyoteTimeTimer > 0f)
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce * 1.5f);
             jumpBufferTimer = 0f;
             coyoteTimeTimer = 0f;
             current_Jump_Time = 0f;
@@ -152,7 +153,6 @@ public class CharacterController : MonoBehaviour
 
     void FixedUpdate()
     {       
-        Jump();
         Move();
         FastFall();
 
@@ -178,7 +178,7 @@ public class CharacterController : MonoBehaviour
     private void double_Jump()
     {
         rb.velocity = new Vector2(rb.velocity.x / 3, 0);
-        rb.AddForce(new Vector2(rb.velocity.x, jumpForce * 2), ForceMode2D.Impulse);
+        rb.AddForce(new Vector2(rb.velocity.x, jumpForce * 1.8f), ForceMode2D.Impulse);
     }
 
     //fast falling
@@ -187,19 +187,6 @@ public class CharacterController : MonoBehaviour
         if (fastFalling)
         {
             rb.gravityScale = Mathf.Lerp(base_Gravity, fastfalling_Gravity, 1000f * Time.fixedDeltaTime);
-        }
-        else
-        {
-            rb.gravityScale = base_Gravity;
-        }
-    }
-
-    //hold jump
-    private void Jump() {
-        if (is_jumping) 
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            current_Jump_Time += Time.fixedDeltaTime;
         }
     }
 
