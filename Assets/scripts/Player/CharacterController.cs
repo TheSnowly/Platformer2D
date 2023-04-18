@@ -23,11 +23,8 @@ public class CharacterController : MonoBehaviour
     float moveSpeed_horizontal_default = 1000.0f;
 
     // jumping variables
-    [SerializeField] bool can_Still_Jump;
     [SerializeField] bool is_jumping;
     float jumpForce = 15f;
-    float max_Jump_Time = 0.2f;
-    float current_Jump_Time;
 
     //coyote time variables
     float coyoteTime = 0.15f;
@@ -56,6 +53,9 @@ public class CharacterController : MonoBehaviour
 
     //Key variable
     [SerializeField] public GameObject Key;
+
+    //misc
+    public PlayerDamage PlayerDamage;
 
     // Start is called before the first frame update
     void Start()
@@ -86,7 +86,6 @@ public class CharacterController : MonoBehaviour
 
         if (isGrounded) {
             coyoteTimeTimer = coyoteTime;
-            can_Still_Jump = true;
             ennemy_Slam_Active = false;
         } else {
             coyoteTimeTimer -= Time.deltaTime;
@@ -104,7 +103,6 @@ public class CharacterController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpForce * 1.5f);
             jumpBufferTimer = 0f;
             coyoteTimeTimer = 0f;
-            current_Jump_Time = 0f;
         }
 
         //Cheking if the player is able to fast fall
@@ -200,21 +198,24 @@ public class CharacterController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         //Check Ennemy for the ennemy slam
-        if (other.tag == "Ennemy" && other.tag != "Damage") {
+        if (other.tag == "Ennemy" && other.tag != "Damage" && PlayerDamage.isDying == false) {
+
+            other.gameObject.GetComponentInChildren<Collider2D>().enabled = false;
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
 
             if (ennemy_Slam_Active)
             {
                 rb.velocity = new Vector2(0, 2);
                 rb.AddForce(new Vector2(stocked_Velocity_x * 4, 10), ForceMode2D.Impulse);
-                Destroy(other.gameObject);
-                StartCoroutine(Wait(0.1f));
 
             } else
             {
                 rb.velocity = new Vector2(rb.velocity.x / 3, 0);
                 rb.AddForce(new Vector2(rb.velocity.x/2, jumpForce * 1.5f), ForceMode2D.Impulse);
-                Destroy(other.gameObject);
             }
+            Destroy(other.gameObject);
+            StartCoroutine(Wait(0.1f));
         }
     }
 
@@ -232,6 +233,8 @@ public class CharacterController : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         ennemy_Slam_Active = false;
+        gameObject.GetComponent<BoxCollider2D>().enabled = true;
+        gameObject.GetComponent<CapsuleCollider2D>().enabled = true;
     }
 
 }

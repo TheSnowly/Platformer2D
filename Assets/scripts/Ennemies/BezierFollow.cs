@@ -19,9 +19,6 @@ public class BezierFollow : MonoBehaviour
     [SerializeField]
     private bool coroutineAllowed;
 
-    [SerializeField]
-    bool Restart;
-
     float random;
 
     float RestartPos;
@@ -29,7 +26,6 @@ public class BezierFollow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Restart = false;
         tParam = 0f;
         coroutineAllowed = true;
         random = UnityEngine.Random.Range(0.3f, 0.5f);

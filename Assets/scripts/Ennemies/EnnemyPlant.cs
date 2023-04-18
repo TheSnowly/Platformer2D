@@ -8,20 +8,16 @@ public class EnnemyPlant : MonoBehaviour
     [SerializeField] Sprite OpenSprite;
     [SerializeField] Sprite ClosedSprite;
     [SerializeField] GameObject Damage;
-    string CurrentState;
-    bool CanCouroutine;
     bool ispremierforme;
 
     // Start is called before the first frame update
     void Start()
     {
-        CurrentState = "Open";
         StartCoroutine(ChangeState(4f));
         ispremierforme = true;
     }
 
     IEnumerator ChangeState(float time) {
-        CanCouroutine = false;
         float timeElapsed = time;
         while (timeElapsed > 0) {
             timeElapsed -= Time.deltaTime;
