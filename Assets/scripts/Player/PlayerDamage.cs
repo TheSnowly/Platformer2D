@@ -36,7 +36,6 @@ public class PlayerDamage : MonoBehaviour
 
         //When the player collide a Damage Zone, he dies.
         if(col.gameObject.tag == "Damage") {
-            Debug.Log("okaye");
             EnnemyWhoKilled = col.gameObject;
             EnnemyWhoKilled.GetComponent<Collider2D>().enabled = false;
             gameObject.GetComponent<BoxCollider2D>().enabled = false;

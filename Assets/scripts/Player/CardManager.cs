@@ -7,15 +7,17 @@ using UnityEngine.UI;
 public class CardManager : MonoBehaviour
 {
 
+    public Stack<string> NewCards = new Stack<string>();
+
     static public Stack<string> Deck = new Stack<string>();
     static public List<string> shuffled_Deck = new List<string>();
     public GameObject[] Game_Cards;
     [SerializeField] GameObject CardPrefab;
 
-    [SerializeField] Sprite card_RUN;
-    [SerializeField] Sprite card_SLAM;
-    [SerializeField] Sprite card_JUMP;
-    [SerializeField] Sprite card_KEY;
+    [SerializeField] public Sprite card_RUN;
+    [SerializeField] public Sprite card_SLAM;
+    [SerializeField] public Sprite card_JUMP;
+    [SerializeField] public Sprite card_KEY;
 
     int deck_Size;
     float duration = 1;

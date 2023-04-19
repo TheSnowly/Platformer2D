@@ -21,6 +21,18 @@ public class Card_Thrown : MonoBehaviour
     {
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag != "Player")
+        {
+            if (other.gameObject.tag == "Breakable" || other.gameObject.tag == "Ennemy")
+            {
+                Destroy(this.gameObject);
+                Destroy(other.gameObject);
+            }
+        }
+    }
+
 
     void OnCollisionEnter2D(Collision2D other)
     {
