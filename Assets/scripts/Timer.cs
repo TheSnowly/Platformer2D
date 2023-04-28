@@ -7,19 +7,22 @@ using UnityEngine.UI;
 public class Timer : MonoBehaviour
 {
 
-    float time =300;
+    static float time =300;
     [SerializeField] TextMeshProUGUI timeText;
+    public bool StopTime;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        StopTime = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        time -= Time.deltaTime;
+        if(StopTime == false) {
+            time -= Time.deltaTime;
+        }
         DisplayTime(time);
     }
 

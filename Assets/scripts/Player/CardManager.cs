@@ -12,7 +12,7 @@ public class CardManager : MonoBehaviour
     static public Stack<string> Deck = new Stack<string>();
     static public List<string> shuffled_Deck = new List<string>();
     public GameObject[] Game_Cards;
-    [SerializeField] GameObject CardPrefab;
+    public GameObject CardPrefab;
 
     [SerializeField] public Sprite card_RUN;
     [SerializeField] public Sprite card_SLAM;
@@ -28,14 +28,6 @@ public class CardManager : MonoBehaviour
     void Start()
     {
         ref_velocity = Vector3.zero;
-
-        if (Deck.Count > 0) {
-            int DS = Deck.Count;
-            for (int i = 0; i < DS; i++) {
-                shuffled_Deck.Insert(Random.Range(0, shuffled_Deck.Count), Deck.Peek());
-                Deck.Pop();
-            }
-        }
 
         Game_Cards = new GameObject[shuffled_Deck.Count];
      
@@ -56,6 +48,7 @@ public class CardManager : MonoBehaviour
     public void PlaceCards()
     {
         deck_Size = Deck.Count;
+        Debug.Log(deck_Size);
         int card_Distance;
 
         if (deck_Size >= 1) {
@@ -66,6 +59,7 @@ public class CardManager : MonoBehaviour
         float prev_Card_pos_x = 50f;
         
         for(int i = 0; i < deck_Size - 1; i++) {
+            Debug.Log(i);
             prev_Card_pos_x = prev_Card_pos_x + card_Distance;
             StartCoroutine(MoveCards(new Vector3(prev_Card_pos_x + card_Distance, 100, 0), Game_Cards[i].gameObject));
         }
@@ -77,10 +71,13 @@ public class CardManager : MonoBehaviour
         float target = targetPosition.x - 0.001f;
         
         while (Card != null) {
-            if ((Card.transform.position.x != target) && (!(Card.transform.rotation.eulerAngles.y > -1 && Card.transform.rotation.eulerAngles.y < 1))) {
-                Card.transform.rotation = Quaternion.Lerp(Card.transform.rotation, Quaternion.Euler(0,0,0), 0.03f);
-                Card.transform.position = Vector3.SmoothDamp(Card.transform.position, targetPosition, ref ref_velocity, 0.09f);
-                if ((Card.transform.rotation.eulerAngles.y > 259) && (Card.transform.rotation.eulerAngles.y < 261)) {
+            if ((Card.transform.position.x != target) && (!(Card.transform.rotation.eulerAngles.y > -5 && Card.transform.rotation.eulerAngles.y < 5))) {
+
+                Card.transform.rotation = Quaternion.Lerp(Card.transform.rotation, Quaternion.Euler(0,0,0), 10f * Time.deltaTime);
+
+                Card.transform.position = Vector3.Lerp(Card.transform.position, targetPosition, 10f * Time.deltaTime);
+
+                if ((Card.transform.rotation.eulerAngles.y > 250) && (Card.transform.rotation.eulerAngles.y < 270)) {
                     if (Deck.Peek() == "Double_Jump") {
                         Card.GetComponent<Image>().sprite = card_JUMP;
                     } else if (Deck.Peek() == "Ennemy_Slam") {
@@ -96,6 +93,7 @@ public class CardManager : MonoBehaviour
             }
             yield return null;
         }
+
         if (Card != null) {
             Card.transform.position = targetPosition;
             Card.transform.rotation = Quaternion.Euler(0,0,0);
@@ -120,10 +118,5 @@ public class CardManager : MonoBehaviour
         } else {
             yield return null;
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 }

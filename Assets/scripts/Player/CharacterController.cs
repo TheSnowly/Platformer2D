@@ -8,6 +8,7 @@ public class CharacterController : MonoBehaviour
 
     Rigidbody2D rb;
     SpriteRenderer sr;
+    Animator animator;
 
     //Deck variable
     public CardManager CardManager;
@@ -60,6 +61,7 @@ public class CharacterController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
     }
@@ -85,10 +87,13 @@ public class CharacterController : MonoBehaviour
         }
 
         if (isGrounded) {
+            animator.SetBool("Run", true);
             coyoteTimeTimer = coyoteTime;
             ennemy_Slam_Active = false;
+            animator.SetBool("Fall", false);
         } else {
             coyoteTimeTimer -= Time.deltaTime;
+            animator.SetBool("Run", false);
         }
 
         if(Input.GetButton("Jump")) {
@@ -100,6 +105,7 @@ public class CharacterController : MonoBehaviour
         //resetting few variables when jumping and first jump
         if (jumpBufferTimer > 0f && coyoteTimeTimer > 0f)
         {
+            animator.SetTrigger("Jump");
             rb.velocity = new Vector2(rb.velocity.x, jumpForce * 1.5f);
             jumpBufferTimer = 0f;
             coyoteTimeTimer = 0f;
@@ -107,6 +113,12 @@ public class CharacterController : MonoBehaviour
 
         //Cheking if the player is able to fast fall
         fastFalling = (isGrounded == false && (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))) ? true : false;
+
+        //checking if the player is falling, play the fall animation if yes
+        if (rb.velocity.y < 0)
+        {
+            animator.SetBool("Fall", true);
+        }
 
         //make a card effect
         if (CardManager.Deck.Count != 0) {

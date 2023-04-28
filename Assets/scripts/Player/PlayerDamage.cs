@@ -70,13 +70,4 @@ public class PlayerDamage : MonoBehaviour
         gameObject.transform.position = CurrentCheckpoint;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //in case the player is stuck
-        if (Input.GetKeyDown(KeyCode.T)) {
-            Respawn();
-        }
-    }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Collectible : MonoBehaviour
 {
@@ -18,21 +19,37 @@ public class Collectible : MonoBehaviour
     {
         
     }
+
     void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.tag == "Player") {
 
-            int C = Random.Range(1, 4);
+            int C = UnityEngine.Random.Range(1, 4);
             if (C==1) {
-                CardManager.NewCards.Push("Run");
+                CardManager.Deck.Push("Run");
             } else if (C==2) {
-                CardManager.NewCards.Push("Ennemy_Slam");
+                CardManager.Deck.Push("Double_Jump");
             } else if (C==3) {
-                CardManager.NewCards.Push("Double_Jump");
+                CardManager.Deck.Push("Ennemy_Slam");
             } else if (C==4) {
-                CardManager.NewCards.Push("Key");
+                CardManager.Deck.Push("Key");
             }
+
+            NewCardCollectible();
             Destroy(this.gameObject);
         }
+    }
+
+    void NewCardCollectible() {
+
+        Array.Resize(ref CardManager.Game_Cards, CardManager.Game_Cards.Length + 1);
+
+        for (int i = CardManager.Game_Cards.Length - 2; i >= 0; i--) {
+            CardManager.Game_Cards[i] = CardManager.Game_Cards[i + 1];
+            GameObject.Find("Card_" + i).name = "Card_" + (i + 1);
+        }
+        CardManager.Game_Cards[0] = GameObject.Instantiate(CardManager.CardPrefab, Vector3.zero, Quaternion.Euler(0, 180, 0), GameObject.FindGameObjectWithTag("Canvas").transform);
+        CardManager.Game_Cards[0].name = "Card_" + 0;
+        CardManager.PlaceCards();
     }
 }
