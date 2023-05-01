@@ -54,6 +54,15 @@ public class CardManagerSingle : MonoBehaviour
                     }
                 }
             } else {
+                if (CardManager.Deck.Peek() == "Double_Jump") {
+                    Card.GetComponent<Image>().sprite = CardManager.card_JUMP;
+                } else if (CardManager.Deck.Peek() == "Ennemy_Slam") {
+                    Card.GetComponent<Image>().sprite = CardManager.card_SLAM;
+                } else if (CardManager.Deck.Peek() == "Run") {
+                    Card.GetComponent<Image>().sprite = CardManager.card_RUN;
+                } else if (CardManager.Deck.Peek() == "Key") {
+                    Card.GetComponent<Image>().sprite = CardManager.card_KEY;
+                }
                 break;
             }
             yield return null;
