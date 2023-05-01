@@ -8,18 +8,6 @@ public class Collectible : MonoBehaviour
 
     [SerializeField] public CardManager CardManager;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.tag == "Player") {
@@ -42,14 +30,14 @@ public class Collectible : MonoBehaviour
 
     void NewCardCollectible() {
 
-        Array.Resize(ref CardManager.Game_Cards, CardManager.Game_Cards.Length + 1);
-
-        for (int i = CardManager.Game_Cards.Length - 2; i >= 0; i--) {
-            CardManager.Game_Cards[i] = CardManager.Game_Cards[i + 1];
+        for (int i = CardManager.Deck.Count - 2; i >= 0; i--) {
+            GameObject.Find("Card_" + i).GetComponent<CardManagerSingle>().CardNb = GameObject.Find("Card_" + i).GetComponent<CardManagerSingle>().CardNb + 1;
             GameObject.Find("Card_" + i).name = "Card_" + (i + 1);
         }
-        CardManager.Game_Cards[0] = GameObject.Instantiate(CardManager.CardPrefab, Vector3.zero, Quaternion.Euler(0, 180, 0), GameObject.FindGameObjectWithTag("Canvas").transform);
-        CardManager.Game_Cards[0].name = "Card_" + 0;
+
+        GameObject Card = GameObject.Instantiate(CardManager.CardPrefab, Vector3.zero, Quaternion.Euler(0, 180, 0), GameObject.FindGameObjectWithTag("Canvas").transform);
+        Card.GetComponent<CardManagerSingle>().CardNb = 0;
+        Card.name = "Card_" + 0;
         CardManager.PlaceCards();
     }
 }

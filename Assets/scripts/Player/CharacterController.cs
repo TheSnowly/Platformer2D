@@ -234,9 +234,11 @@ public class CharacterController : MonoBehaviour
     //Card manager system, delete card when used and put the card in the shuffled deck
     public void CardManage() {
         Destroy(GameObject.Find("Card_" + (CardManager.Deck.Count - 1)));
+        /*
         if(CardManager.Game_Cards.Length > 1) {
             CardManager.Game_Cards = CardManager.Game_Cards.Take(CardManager.Game_Cards.Length-1).ToArray();
         }
+        */
         CardManager.shuffled_Deck.Insert(Random.Range(0, CardManager.shuffled_Deck.Count), CardManager.Deck.Peek());
         CardManager.Deck.Pop();
     }
