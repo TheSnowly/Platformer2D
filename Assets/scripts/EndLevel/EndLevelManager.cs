@@ -14,6 +14,8 @@ public class EndLevelManager : MonoBehaviour
 
     bool Switch;
 
+    static public int NbOfLevelPlayed;
+
 
     // Start is called before the first frame update
     void Start()
@@ -24,17 +26,19 @@ public class EndLevelManager : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if (Switch == false && other.tag == "Player") {
+            NbOfLevelPlayed += 1;
+            Debug.Log(NbOfLevelPlayed);
             Timer.StopTime = true;
             EndLevel.SetActive(true);
             other.gameObject.SetActive(false);
-            NextLevelChoice();
+            if (NbOfLevelPlayed < 5) {
+                NextLevelChoice();
+            }
             Switch = true;
         }
     }
 
     void NextLevelChoice() {
-
-
 
         if (CardManager.Deck.Count > 0) {
             int DS = CardManager.Deck.Count;

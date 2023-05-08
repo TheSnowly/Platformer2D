@@ -21,7 +21,7 @@ public class TutoSpawner : MonoBehaviour
             yield return null;
         }
         if (Card == null) {
-            Card = GameObject.Instantiate(CardSpawned, transform.position, Quaternion.identity, GameObject.FindGameObjectWithTag("Canvas").transform);
+            Card = GameObject.Instantiate(CardSpawned, transform.position, Quaternion.identity);
         }
         StartCoroutine(ChangeState(4f));
     }

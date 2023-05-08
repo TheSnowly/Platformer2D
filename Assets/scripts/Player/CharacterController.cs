@@ -10,6 +10,9 @@ public class CharacterController : MonoBehaviour
     SpriteRenderer sr;
     Animator animator;
 
+    //cinematics variable
+    public bool CanMove;
+
     //Deck variable
     public CardManager CardManager;
     GameObject DestroyCard;
@@ -61,6 +64,7 @@ public class CharacterController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        CanMove = true;
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
@@ -69,102 +73,106 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Value for the player x movement
-        horizontal_value = Input.GetAxis("Horizontal");
+        if (CanMove) {
 
-        //flip character sprite depending on the direction the character goes in
-        if (horizontal_value > 0) sr.flipX = false;
-        else if (horizontal_value < 0) sr.flipX = true;
+            //Value for the player x movement
+            horizontal_value = Input.GetAxis("Horizontal");
 
-        //Checking if the player touch the floor
-        isGrounded = Physics2D.OverlapCircle(feetPos.position, 0.2f, ground);
+            //flip character sprite depending on the direction the character goes in
+            if (horizontal_value > 0) sr.flipX = false;
+            else if (horizontal_value < 0) sr.flipX = true;
 
-        //jump buffer timer
-        if (Input.GetButtonDown("Jump")) {
-            jumpBufferTimer = jumpBuffer;
-        } else {
-            jumpBufferTimer -= Time.deltaTime;
-        }
+            //Checking if the player touch the floor
+            isGrounded = Physics2D.OverlapCircle(feetPos.position, 0.2f, ground);
 
-        if (isGrounded) {
-            animator.SetBool("Run", true);
-            coyoteTimeTimer = coyoteTime;
-            ennemy_Slam_Active = false;
-            animator.SetBool("Fall", false);
-        } else {
-            coyoteTimeTimer -= Time.deltaTime;
-            animator.SetBool("Run", false);
-        }
-
-        if(Input.GetButton("Jump")) {
-            rb.gravityScale = 4f;
-        } else {
-            rb.gravityScale = 6.5f;
-        }
-
-        //resetting few variables when jumping and first jump
-        if (jumpBufferTimer > 0f && coyoteTimeTimer > 0f)
-        {
-            animator.SetTrigger("Jump");
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce * 1.5f);
-            jumpBufferTimer = 0f;
-            coyoteTimeTimer = 0f;
-        }
-
-        //Cheking if the player is able to fast fall
-        fastFalling = (isGrounded == false && (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))) ? true : false;
-
-        //checking if the player is falling, play the fall animation if yes
-        if (rb.velocity.y < 0)
-        {
-            animator.SetBool("Fall", true);
-        }
-
-        //make a card effect
-        if (CardManager.Deck.Count != 0) {
-
-            if (CardManager.Deck.Peek() == "Key") {
-                Key.SetActive(true);
+            //jump buffer timer
+            if (Input.GetButtonDown("Jump")) {
+                jumpBufferTimer = jumpBuffer;
             } else {
+                jumpBufferTimer -= Time.deltaTime;
+            }
+
+            if (isGrounded) {
+                animator.SetBool("Run", true);
+                coyoteTimeTimer = coyoteTime;
+                ennemy_Slam_Active = false;
+                animator.SetBool("Fall", false);
+            } else {
+                coyoteTimeTimer -= Time.deltaTime;
+                animator.SetBool("Run", false);
+            }
+
+            if(Input.GetButton("Jump")) {
+                rb.gravityScale = 4f;
+            } else {
+                rb.gravityScale = 6.5f;
+            }
+
+            //resetting few variables when jumping and first jump
+            if (jumpBufferTimer > 0f && coyoteTimeTimer > 0f)
+            {
+                animator.SetTrigger("Jump");
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce * 1.5f);
+                jumpBufferTimer = 0f;
+                coyoteTimeTimer = 0f;
+            }
+
+            //Cheking if the player is able to fast fall
+            fastFalling = (isGrounded == false && (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))) ? true : false;
+
+            //checking if the player is falling, play the fall animation if yes
+            if (rb.velocity.y < 0)
+            {
+                animator.SetBool("Fall", true);
+            }
+
+            //make a card effect
+            if (CardManager.Deck.Count != 0) {
+
+                if (CardManager.Deck.Peek() == "Key") {
+                    Key.SetActive(true);
+                } else {
+                    Key.SetActive(false);
+                }
+
+                if (Input.GetMouseButtonDown(0)) {
+                    if (CardManager.Deck.Peek() == "Ennemy_Slam")
+                    {
+                        CardManage();
+                        ennemy_Slam();
+                        CardManager.PlaceCards();
+                    }
+                    else if (CardManager.Deck.Peek() == "Double_Jump")
+                    {
+                        CardManage();
+                        double_Jump();
+                        CardManager.PlaceCards();
+                    }
+                    else if (CardManager.Deck.Peek() == "Run")
+                    {
+                        CardManage();
+                        StartCoroutine(RunTimer(3f));
+                        CardManager.PlaceCards();
+                    }
+                }
+
+                if (Input.GetMouseButtonDown(1)) {
+                    Instantiate(Card_Thrown_prefab, new Vector2(transform.position.x + 1.5f, transform.position.y), Quaternion.identity);
+                    CardManage();
+                    CardManager.PlaceCards();
+                }
+            }else {
                 Key.SetActive(false);
             }
-
-            if (Input.GetMouseButtonDown(0)) {
-                if (CardManager.Deck.Peek() == "Ennemy_Slam")
-                {
-                    CardManage();
-                    ennemy_Slam();
-                    CardManager.PlaceCards();
-                }
-                else if (CardManager.Deck.Peek() == "Double_Jump")
-                {
-                    CardManage();
-                    double_Jump();
-                    CardManager.PlaceCards();
-                }
-                else if (CardManager.Deck.Peek() == "Run")
-                {
-                    CardManage();
-                    StartCoroutine(RunTimer(3f));
-                    CardManager.PlaceCards();
-                }
-            }
-
-            if (Input.GetMouseButtonDown(1)) {
-                Instantiate(Card_Thrown_prefab, new Vector2(transform.position.x + 1.5f, transform.position.y), Quaternion.identity);
-                CardManage();
-                CardManager.PlaceCards();
-            }
-        }else {
-            Key.SetActive(false);
         }
-
     }
 
     void FixedUpdate()
-    {       
-        Move();
-        FastFall();
+    {   
+        if (CanMove) {
+            Move();
+            FastFall();
+        }    
 
     }
 
@@ -234,11 +242,6 @@ public class CharacterController : MonoBehaviour
     //Card manager system, delete card when used and put the card in the shuffled deck
     public void CardManage() {
         Destroy(GameObject.Find("Card_" + (CardManager.Deck.Count - 1)));
-        /*
-        if(CardManager.Game_Cards.Length > 1) {
-            CardManager.Game_Cards = CardManager.Game_Cards.Take(CardManager.Game_Cards.Length-1).ToArray();
-        }
-        */
         CardManager.shuffled_Deck.Insert(Random.Range(0, CardManager.shuffled_Deck.Count), CardManager.Deck.Peek());
         CardManager.Deck.Pop();
     }
