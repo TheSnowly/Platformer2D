@@ -31,7 +31,6 @@ public class PouchCards : MonoBehaviour
         if (CardManager.Deck.Count != 0) {
             int DS = CardManager.Deck.Count;
             for(int i = 0; i <= DS - 1; i++){
-                Debug.Log(i);
                 Destroy(GameObject.Find("Card_" + i));
                 CardManager.Deck.Pop();
             }
