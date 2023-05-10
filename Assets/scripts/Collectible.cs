@@ -12,7 +12,7 @@ public class Collectible : MonoBehaviour
     {
         if (other.gameObject.tag == "Player") {
 
-            int C = UnityEngine.Random.Range(1, 4);
+            int C = UnityEngine.Random.Range(1, 5);
             if (C==1) {
                 CardManager.Deck.Push("Run");
             } else if (C==2) {

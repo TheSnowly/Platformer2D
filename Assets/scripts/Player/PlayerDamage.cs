@@ -10,7 +10,7 @@ public class PlayerDamage : MonoBehaviour
     Vector3 ref_velocity;
 
     //death variables
-    GameObject EnnemyWhoKilled;
+    public GameObject EnnemyWhoKilled;
     public bool isDying;
 
     // Start is called before the first frame update
@@ -33,18 +33,6 @@ public class PlayerDamage : MonoBehaviour
             CurrentCheckpoint = gameObject.transform.position;
             Destroy(col.gameObject);
         }
-
-        //When the player collide a Damage Zone, he dies.
-        /*
-        if(col.gameObject.tag == "Damage") {
-            EnnemyWhoKilled = col.gameObject;
-            EnnemyWhoKilled.GetComponent<Collider2D>().enabled = false;
-            gameObject.GetComponent<BoxCollider2D>().enabled = false;
-            gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
-            isDying = true;
-            StartCoroutine(DeathAnimation());
-        }
-        */
     }
 
     public IEnumerator DeathAnimation() {

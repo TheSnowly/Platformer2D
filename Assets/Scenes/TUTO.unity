@@ -1886,11 +1886,11 @@ BoxCollider2D:
   m_GameObject: {fileID: 634173918}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 9a6b3179c40ea68409569a0d0e7b6cb3, type: 2}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0037368536, y: -0.96598315}
+  m_Offset: {x: -0.007496968, y: -0.94726133}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1901,7 +1901,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.87088263, y: 0.24995017}
+  m_Size: {x: 0.6237538, y: 0.21250653}
   m_EdgeRadius: 0
 --- !u!50 &634173920
 Rigidbody2D:
@@ -2007,7 +2007,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 634173918}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -40.8, y: -2.71, z: 0}
+  m_LocalPosition: {x: -48.4, y: -2, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2027,6 +2027,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 580dd14d3847d464b878d8c7bd5262ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnnemyWhoKilled: {fileID: 0}
   isDying: 0
 --- !u!95 &634173926
 Animator:
@@ -2057,7 +2058,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 634173918}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 9a6b3179c40ea68409569a0d0e7b6cb3, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -3171,7 +3172,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 20.33, y: 13.39, z: 1}
+    m_Scale: {x: 20.33, y: 13.45, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -4574,7 +4575,7 @@ ParticleSystem:
         m_RotationOrder: 4
     inWorldSpace: 0
   InheritVelocityModule:
-    enabled: 0
+    enabled: 1
     m_Mode: 0
     m_Curve:
       serializedVersion: 2
@@ -5722,7 +5723,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
   SizeBySpeedModule:
-    enabled: 1
+    enabled: 0
     curve:
       serializedVersion: 2
       minMaxState: 1
@@ -5735,16 +5736,16 @@ ParticleSystem:
           time: 0
           value: 0
           inSlope: 0
-          outSlope: 1
+          outSlope: 0
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 1
+          time: 0.14935303
           value: 1
           inSlope: 1
-          outSlope: 0
+          outSlope: 1
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
@@ -5787,21 +5788,21 @@ ParticleSystem:
         - serializedVersion: 3
           time: 0
           value: 0
-          inSlope: 0
+          inSlope: 1
           outSlope: 1
-          tangentMode: 0
+          tangentMode: 34
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0
         - serializedVersion: 3
           time: 1
           value: 1
           inSlope: 1
-          outSlope: 0
-          tangentMode: 0
+          outSlope: 1
+          tangentMode: 34
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
@@ -5883,7 +5884,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     range: {x: 1, y: 80}
-    separateAxes: 1
+    separateAxes: 0
   RotationBySpeedModule:
     enabled: 0
     x:
@@ -8991,6 +8992,46 @@ PrefabInstance:
     - target: {fileID: 3829336678432672112, guid: 2ea3d847d46e14f41a20dcac564fdc45, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 3829336678463777647, guid: 2ea3d847d46e14f41a20dcac564fdc45, type: 3}
+      propertyPath: m_Size.x
+      value: 0.8587197
+      objectReference: {fileID: 0}
+    - target: {fileID: 3829336678463777647, guid: 2ea3d847d46e14f41a20dcac564fdc45, type: 3}
+      propertyPath: m_Size.y
+      value: 0.14911556
+      objectReference: {fileID: 0}
+    - target: {fileID: 3829336678463777647, guid: 2ea3d847d46e14f41a20dcac564fdc45, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.007848561
+      objectReference: {fileID: 0}
+    - target: {fileID: 3829336678463777647, guid: 2ea3d847d46e14f41a20dcac564fdc45, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.48050785
+      objectReference: {fileID: 0}
+    - target: {fileID: 3829336678463777647, guid: 2ea3d847d46e14f41a20dcac564fdc45, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3829336678463777647, guid: 2ea3d847d46e14f41a20dcac564fdc45, type: 3}
+      propertyPath: m_UsedByEffector
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3829336679279007329, guid: 2ea3d847d46e14f41a20dcac564fdc45, type: 3}
+      propertyPath: m_Size.x
+      value: 1.0374396
+      objectReference: {fileID: 0}
+    - target: {fileID: 3829336679279007329, guid: 2ea3d847d46e14f41a20dcac564fdc45, type: 3}
+      propertyPath: m_Size.y
+      value: 0.22797303
+      objectReference: {fileID: 0}
+    - target: {fileID: 3829336679279007329, guid: 2ea3d847d46e14f41a20dcac564fdc45, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.0005978346
+      objectReference: {fileID: 0}
+    - target: {fileID: 3829336679279007329, guid: 2ea3d847d46e14f41a20dcac564fdc45, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.013198651
       objectReference: {fileID: 0}
     - target: {fileID: 3829336679329757969, guid: 2ea3d847d46e14f41a20dcac564fdc45, type: 3}
       propertyPath: m_Name

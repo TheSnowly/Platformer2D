@@ -228,6 +228,8 @@ public class CharacterController : MonoBehaviour
         {
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
             gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
+            PlayerDamage.isDying = true;
+            PlayerDamage.EnnemyWhoKilled = other.gameObject;
             StartCoroutine(PlayerDamage.DeathAnimation());
 
         } else if (ennemy_Slam_Active && (other.tag == "Damage" || other.tag == "Ennemy"))
@@ -238,29 +240,7 @@ public class CharacterController : MonoBehaviour
             StartCoroutine(Wait(0.1f));
         }
 
-            //Check Ennemy for the ennemy slam
-            /*
-            if (other.tag == "Ennemy" && other.tag != "Damage" && PlayerDamage.isDying == false) {
-
-                other.gameObject.GetComponentInChildren<Collider2D>().enabled = false;
-                gameObject.GetComponent<BoxCollider2D>().enabled = false;
-                gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
-
-                if (ennemy_Slam_Active)
-                {
-                    rb.velocity = new Vector2(0, 2);
-                    rb.AddForce(new Vector2(stocked_Velocity_x * 4, 10), ForceMode2D.Impulse);
-
-                } else
-                {
-                    rb.velocity = new Vector2(rb.velocity.x / 3, 0);
-                    rb.AddForce(new Vector2(rb.velocity.x/2, jumpForce * 1.5f), ForceMode2D.Impulse);
-                }
-                Destroy(other.gameObject);
-                StartCoroutine(Wait(0.1f));
-            }
-            */
-        }
+    }
 
     //Card manager system, delete card when used and put the card in the shuffled deck
     public void CardManage() {
