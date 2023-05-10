@@ -33,7 +33,7 @@ public class Card_Thrown : MonoBehaviour
         }
     }
 
-
+    /*
     void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.tag != "Player") {
@@ -46,4 +46,5 @@ public class Card_Thrown : MonoBehaviour
             }
         }
     }
+    */
 }

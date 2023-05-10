@@ -6,7 +6,7 @@ public class SpeedLines : MonoBehaviour
 {
 
     GameObject Player;
-    ParticleSystem SpeedL;
+    ParticleSystem SpeedL; 
 
 
     // Start is called before the first frame update
@@ -22,13 +22,22 @@ public class SpeedLines : MonoBehaviour
         var main = SpeedL.main;
         var Emi = SpeedL.emission;
         var VeloLife = SpeedL.velocityOverLifetime;
+        var VeloShape = SpeedL.shape;
 
+        main.startSizeY = 3 + Player.GetComponent<Rigidbody2D>().velocity.x/10;
         Emi.rateOverTime = Player.GetComponent<Rigidbody2D>().velocity.x/2;
-        VeloLife.speedModifier = (Player.GetComponent<Rigidbody2D>().velocity.x/5) + 0.01f;
 
         if (Player.GetComponent<Rigidbody2D>().velocity.x <= 0)
         {
-            GetComponent<ParticleSystemRenderer>().material.color = Color.Lerp(Color.white, new Color(255, 255, 255, 0), 0.5f);
+            GetComponent<ParticleSystemRenderer>().material.color = Color.Lerp(GetComponent<ParticleSystemRenderer>().material.color, new Color(255, 255, 255, 0), 0.01f);
+            VeloShape.radius = Mathf.Lerp(VeloShape.radius, 15, 0.01f);
+            main.simulationSpeed = Mathf.Lerp(main.simulationSpeed, 0.01f, 0.01f);
+
+        } else
+        {
+            GetComponent<ParticleSystemRenderer>().material.color = Color.Lerp(GetComponent<ParticleSystemRenderer>().material.color, Color.white, 0.00001f * Player.GetComponent<Rigidbody2D>().velocity.x);
+            VeloShape.radius = Mathf.Lerp(VeloShape.radius, 10, 0.0001f * Player.GetComponent<Rigidbody2D>().velocity.x);
+            main.simulationSpeed = Mathf.Lerp(main.simulationSpeed, 1 + (Player.GetComponent<Rigidbody2D>().velocity.x/4), 0.001f);
         }
     }
 }

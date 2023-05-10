@@ -35,6 +35,7 @@ public class PlayerDamage : MonoBehaviour
         }
 
         //When the player collide a Damage Zone, he dies.
+        /*
         if(col.gameObject.tag == "Damage") {
             EnnemyWhoKilled = col.gameObject;
             EnnemyWhoKilled.GetComponent<Collider2D>().enabled = false;
@@ -43,9 +44,10 @@ public class PlayerDamage : MonoBehaviour
             isDying = true;
             StartCoroutine(DeathAnimation());
         }
+        */
     }
 
-    IEnumerator DeathAnimation() {
+    public IEnumerator DeathAnimation() {
 
         timeElapsed = 1.5f;
         GetComponent<Rigidbody2D>().gravityScale = 0;
