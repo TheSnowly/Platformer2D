@@ -33,11 +33,10 @@ public class Card_Thrown : MonoBehaviour
         }
     }
 
-
     void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.tag != "Player") {
-            if (other.gameObject.tag == "Breakable" || other.gameObject.tag == "Ennemy")
+            if (other.gameObject.tag == "Breakable")
             {
                 Destroy(this.gameObject);
                 Destroy(other.gameObject);

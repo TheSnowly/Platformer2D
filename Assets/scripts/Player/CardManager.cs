@@ -17,6 +17,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] public Sprite card_SLAM;
     [SerializeField] public Sprite card_JUMP;
     [SerializeField] public Sprite card_KEY;
+    [SerializeField] public Sprite card_BACK;
 
     int deck_Size;
     float prev_Card_pos_x;
@@ -31,6 +32,7 @@ public class CardManager : MonoBehaviour
         for (int i = 0; i < shuffled_Deck.Count; i++) {
             Deck.Push(shuffled_Deck[i]);
             GameObject Card = GameObject.Instantiate(CardPrefab, Vector3.zero, Quaternion.Euler(0, 180, 0), GameObject.FindGameObjectWithTag("Canvas").transform);
+            Card.GetComponent<Image>().sprite = card_BACK;
             Card.name = "Card_" + i;
             Card.GetComponent<CardManagerSingle>().CardNb = i;
 
