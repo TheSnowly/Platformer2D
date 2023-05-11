@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class CardManagerSingle : MonoBehaviour
 {
-
     public CardManager CardManager;
 
     public int CardNb;

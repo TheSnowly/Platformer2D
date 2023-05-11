@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 
 public class Collectible : MonoBehaviour
@@ -36,6 +37,7 @@ public class Collectible : MonoBehaviour
         }
 
         GameObject Card = GameObject.Instantiate(CardManager.CardPrefab, Vector3.zero, Quaternion.Euler(0, 180, 0), GameObject.FindGameObjectWithTag("Canvas").transform);
+        Card.GetComponent<Image>().sprite = CardManager.card_BACK;
         Card.GetComponent<CardManagerSingle>().CardNb = 0;
         Card.name = "Card_" + 0;
         CardManager.PlaceCards();

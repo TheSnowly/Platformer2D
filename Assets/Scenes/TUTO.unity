@@ -9364,6 +9364,7 @@ MonoBehaviour:
   card_SLAM: {fileID: 21300000, guid: 26a6c4b9f943e734c9d8849ff7b8e522, type: 3}
   card_JUMP: {fileID: 21300000, guid: 1c6ef383b4aa1a849898ceae93d410ed, type: 3}
   card_KEY: {fileID: 21300000, guid: f9c418d22db0bbc4cb61433adc0db8a0, type: 3}
+  card_BACK: {fileID: 21300000, guid: e762107964b206a408858b09dd9e486d, type: 3}
 --- !u!4 &1632140664
 Transform:
   m_ObjectHideFlags: 0
