@@ -178,9 +178,14 @@ public class CharacterController : MonoBehaviour
 
     //ennemy slam
     private void ennemy_Slam() {
-        stocked_Velocity_x = rb.velocity.x;
-        rb.velocity = new Vector2(rb.velocity.x / 3, 0);
-        rb.AddForce(new Vector2(30 * (rb.velocity.x / Mathf.Abs(rb.velocity.x)), -slam_Force), ForceMode2D.Impulse);
+        if (rb.velocity.x != 0) {
+            stocked_Velocity_x = rb.velocity.x;
+            rb.velocity = new Vector2(rb.velocity.x / 3, 0);
+            rb.AddForce(new Vector2(30 * (rb.velocity.x / Mathf.Abs(rb.velocity.x)), -slam_Force), ForceMode2D.Impulse);
+        } else {
+            stocked_Velocity_x = 20;
+            rb.AddForce(new Vector2(30, -slam_Force), ForceMode2D.Impulse);
+        }
         ennemy_Slam_Active = true;
     }
 
@@ -224,7 +229,7 @@ public class CharacterController : MonoBehaviour
             rb.AddForce(new Vector2(rb.velocity.x / 2, jumpForce * 1.5f), ForceMode2D.Impulse);
             Destroy(other.gameObject);
 
-        } else if (other.tag == "Damage" && other.tag != "Ennemy" && PlayerDamage.isDying == false && ennemy_Slam_Active == false)
+        } else if ((other.tag == "Damage" || other.tag == "Spike") && other.tag != "Ennemy" && PlayerDamage.isDying == false)
         {
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
             gameObject.GetComponent<CapsuleCollider2D>().enabled = false;

@@ -7,15 +7,23 @@ public class CollectibleTuto : MonoBehaviour
     
     [SerializeField] public CardManager CardManager;
     [SerializeField] string CardTypeT;
+    bool Switch;
 
-    void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.tag == "Player") {
-            
-            CardManager.Deck.Push(CardTypeT);
+    void Start() {
+        Switch = true;
+    }
 
-            NewCardCollectible();
-            Destroy(this.gameObject);
+    void OnTriggerEnter2D(Collider2D other) {
+        if (Switch == true) {
+
+            Switch = false;
+
+            if (other.gameObject.tag == "Player") {
+                CardManager.Deck.Push(CardTypeT);
+
+                NewCardCollectible();
+                Destroy(this.gameObject);
+            }
         }
     }
 

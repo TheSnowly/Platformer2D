@@ -11,6 +11,7 @@ TagManager:
   - Damage
   - Breakable
   - Card
+  - Spike
   layers:
   - Default
   - TransparentFX

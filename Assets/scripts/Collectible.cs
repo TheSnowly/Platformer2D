@@ -8,24 +8,35 @@ public class Collectible : MonoBehaviour
 {
 
     [SerializeField] public CardManager CardManager;
+    bool Switch;
 
-    void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.tag == "Player") {
+    void Start() {
+        Switch = true;
+    }
 
-            int C = UnityEngine.Random.Range(1, 5);
-            if (C==1) {
-                CardManager.Deck.Push("Run");
-            } else if (C==2) {
-                CardManager.Deck.Push("Double_Jump");
-            } else if (C==3) {
-                CardManager.Deck.Push("Ennemy_Slam");
-            } else if (C==4) {
-                CardManager.Deck.Push("Key");
+    void OnTriggerEnter2D(Collider2D other) {
+        if (Switch == true) {
+
+            Debug.Log("in");
+            Switch = false;
+
+            if (other.gameObject.tag == "Player") {
+
+                int C = UnityEngine.Random.Range(1, 5);
+
+                if (C==1) {
+                    CardManager.Deck.Push("Run");
+                } else if (C==2) {
+                    CardManager.Deck.Push("Double_Jump");
+                } else if (C==3) {
+                    CardManager.Deck.Push("Ennemy_Slam");
+                } else if (C==4) {
+                    CardManager.Deck.Push("Key");
+                }
+
+                NewCardCollectible();
+                Destroy(this.gameObject);
             }
-
-            NewCardCollectible();
-            Destroy(this.gameObject);
         }
     }
 
