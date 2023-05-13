@@ -12,7 +12,6 @@ public class SpeedLines : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Alpha = 255;
         Player = GameObject.Find("Player");
         SpeedL = GetComponent<ParticleSystem>();
     }
@@ -40,9 +39,6 @@ public class SpeedLines : MonoBehaviour
             VeloShape.radius = Mathf.Lerp(VeloShape.radius, 10, 0.0001f * Player.GetComponent<Rigidbody2D>().velocity.x);
             main.simulationSpeed = Mathf.Lerp(main.simulationSpeed, 1 + (Player.GetComponent<Rigidbody2D>().velocity.x/4), 0.001f);
         }
-        Debug.Log(Alpha);
-        Color Cur = new Color(255, 255, 255, Alpha);
-        GetComponent<ParticleSystemRenderer>().material.color = Cur;
     }
 }
 

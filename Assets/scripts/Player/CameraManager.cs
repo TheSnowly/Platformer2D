@@ -17,8 +17,15 @@ public class CameraManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float Velo = GameObject.Find("Player").GetComponent<Rigidbody2D>().velocity.x/5;
-        Vector3 targetPosition = new Vector3(playerRef.transform.position.x + Velo, playerRef.transform.position.y, -10);
+        float VeloX = GameObject.Find("Player").GetComponent<Rigidbody2D>().velocity.x/5;
+        float VeloY = GameObject.Find("Player").GetComponent<Rigidbody2D>().velocity.y/4;
+        Vector3 targetPosition;
+
+        if (VeloY >= 0 ) {
+            targetPosition = new Vector3(playerRef.transform.position.x + VeloX, playerRef.transform.position.y + 4, -10);
+        } else {
+            targetPosition = new Vector3(playerRef.transform.position.x + VeloX, playerRef.transform.position.y + (4 - (float)Math.Sqrt(VeloY*VeloY)), -10);
+        }
         gameObject.transform.position = Vector3.SmoothDamp(gameObject.transform.position, targetPosition, ref refVelocity, smoothTime);
     }
 }
