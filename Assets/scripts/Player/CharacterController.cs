@@ -229,6 +229,12 @@ public class CharacterController : MonoBehaviour
             rb.AddForce(new Vector2(rb.velocity.x / 2, jumpForce * 1.5f), ForceMode2D.Impulse);
             Destroy(other.gameObject);
 
+        } else if (ennemy_Slam_Active && (other.tag == "Damage" || other.tag == "Ennemy"))
+        {
+            rb.velocity = new Vector2(0, 2);
+            rb.AddForce(new Vector2(stocked_Velocity_x * 4, 10), ForceMode2D.Impulse);
+            Destroy(other.gameObject);
+            StartCoroutine(Wait(0.1f));
         } else if ((other.tag == "Damage" || other.tag == "Spike") && other.tag != "Ennemy" && PlayerDamage.isDying == false)
         {
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
@@ -236,14 +242,8 @@ public class CharacterController : MonoBehaviour
             PlayerDamage.isDying = true;
             PlayerDamage.EnnemyWhoKilled = other.gameObject;
             StartCoroutine(PlayerDamage.DeathAnimation());
-
-        } else if (ennemy_Slam_Active && (other.tag == "Damage" || other.tag == "Ennemy"))
-        {
-            rb.velocity = new Vector2(0, 2);
-            rb.AddForce(new Vector2(stocked_Velocity_x * 4, 10), ForceMode2D.Impulse);
-            Destroy(other.gameObject);
-            StartCoroutine(Wait(0.1f));
         }
+
 
     }
 
