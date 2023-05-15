@@ -157,7 +157,8 @@ public class CharacterController : MonoBehaviour
                 }
 
                 if (Input.GetMouseButtonDown(1)) {
-                    Instantiate(Card_Thrown_prefab, new Vector2(transform.position.x + 1.5f, transform.position.y), Quaternion.identity);
+                    GameObject thrown = Instantiate(Card_Thrown_prefab, new Vector2(transform.position.x + 1.5f, transform.position.y), Quaternion.identity);
+                    thrown.GetComponent<Card_Thrown>().positionY = transform.position.y;
                     CardManage();
                     CardManager.PlaceCards();
                 }
@@ -241,6 +242,8 @@ public class CharacterController : MonoBehaviour
             gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
             PlayerDamage.isDying = true;
             PlayerDamage.EnnemyWhoKilled = other.gameObject;
+            CanMove = false;
+            rb.gravityScale = 0;
             StartCoroutine(PlayerDamage.DeathAnimation());
         }
 

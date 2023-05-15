@@ -22,10 +22,13 @@ public class CameraManager : MonoBehaviour
         Vector3 targetPosition;
 
         if (VeloY >= 0 ) {
-            targetPosition = new Vector3(playerRef.transform.position.x + VeloX, playerRef.transform.position.y + 4, -10);
+             targetPosition = new Vector3(playerRef.transform.position.x + VeloX, playerRef.transform.position.y + 4, -10);
         } else {
-            targetPosition = new Vector3(playerRef.transform.position.x + VeloX, playerRef.transform.position.y + (4 - (float)Math.Sqrt(VeloY*VeloY)), -10);
+             targetPosition = new Vector3(playerRef.transform.position.x + VeloX, playerRef.transform.position.y + (4 - (float)Math.Sqrt(VeloY*VeloY)), -10);
         }
-        gameObject.transform.position = Vector3.SmoothDamp(gameObject.transform.position, targetPosition, ref refVelocity, smoothTime);
+        if (GameObject.Find("Player").GetComponent<PlayerDamage>().isDying == false)
+        {
+            gameObject.transform.position = Vector3.SmoothDamp(gameObject.transform.position, targetPosition, ref refVelocity, smoothTime);
+        }
     }
 }

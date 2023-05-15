@@ -25,7 +25,7 @@ public class Chest : MonoBehaviour
     {
         if (CardManager.Deck.Count > 0)
         {
-            if (collision.gameObject.tag == "Player" && CardManager.Deck.Peek() == "Key")
+            if (collision.gameObject.tag == "Player" && CharacterController.Key.gameObject.activeSelf)
             {
                 CharacterController.Key.gameObject.SetActive(false);
                 CharacterController.CardManage();
@@ -42,5 +42,6 @@ public class Chest : MonoBehaviour
             GameObject Card = Instantiate(Card_prefab, new Vector2(transform.position.x, transform.position.y + 2), Quaternion.identity);
             Card.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-5, 5),5), ForceMode2D.Impulse);
         }
+        Destroy(GetComponent<Chest>());
     }
 }

@@ -15,6 +15,7 @@ public class EndLevelManager : MonoBehaviour
     bool Switch;
 
     static public int NbOfLevelPlayed;
+    [SerializeField] GameObject transi;
 
 
     // Start is called before the first frame update
@@ -26,11 +27,13 @@ public class EndLevelManager : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if (Switch == false && other.tag == "Player") {
+
+            transi.GetComponent<Animator>().SetTrigger("EndTransi2");
             NbOfLevelPlayed += 1;
             Debug.Log(NbOfLevelPlayed);
             Timer.StopTime = true;
             EndLevel.SetActive(true);
-            other.gameObject.SetActive(false);
+            other.GetComponent<CharacterController>().CanMove = false;
             if (NbOfLevelPlayed < 5) {
                 NextLevelChoice();
             }

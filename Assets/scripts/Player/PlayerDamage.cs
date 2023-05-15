@@ -54,6 +54,7 @@ public class PlayerDamage : MonoBehaviour
     //respawing
     void Respawn() {
         isDying = false;
+        GetComponent<CharacterController>().CanMove = true;
         gameObject.GetComponent<BoxCollider2D>().enabled = true;
         gameObject.GetComponent<CapsuleCollider2D>().enabled = true;
         EnnemyWhoKilled.GetComponent<Collider2D>().enabled = true;

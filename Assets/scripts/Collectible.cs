@@ -8,16 +8,16 @@ public class Collectible : MonoBehaviour
 {
 
     [SerializeField] public CardManager CardManager;
-    bool Switch;
+    [SerializeField] bool Switch;
 
     void Start() {
         Switch = true;
     }
 
     void OnTriggerEnter2D(Collider2D other) {
-        if (Switch == true) {
 
-            Debug.Log("in");
+        if (Switch == true && other.gameObject.tag == "Player") {
+
             Switch = false;
 
             if (other.gameObject.tag == "Player") {

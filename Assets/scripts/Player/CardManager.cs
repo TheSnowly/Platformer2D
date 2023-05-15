@@ -29,7 +29,7 @@ public class CardManager : MonoBehaviour
         ref_velocity = Vector3.zero;
      
         //creating cards in the canvas and pushing them in a deck
-        for (int i = 0; i < shuffled_Deck.Count; i++) {
+        for (int i = shuffled_Deck.Count - 1; i >= 0; i--) {
             Deck.Push(shuffled_Deck[i]);
             GameObject Card = GameObject.Instantiate(CardPrefab, Vector3.zero, Quaternion.Euler(0, 180, 0), GameObject.FindGameObjectWithTag("Canvas").transform);
             Card.GetComponent<Image>().sprite = card_BACK;

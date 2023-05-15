@@ -5,15 +5,12 @@ using UnityEngine;
 public class Card_Thrown : MonoBehaviour
 {
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public float positionY;
 
     void FixedUpdate()
     {
-        GetComponent<Rigidbody2D>().velocity = new Vector2(3500* Time.deltaTime, 0); 
+        //GetComponent<Rigidbody2D>().velocity = new Vector2(3500* Time.deltaTime, 0); 
+        GetComponent<Rigidbody2D>().velocity = Vector2.right * 3500 * Time.deltaTime;
     }
 
     // Update is called once per frame
