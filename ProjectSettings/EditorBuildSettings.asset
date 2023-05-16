@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/JUMP_Level.unity
     guid: 1f306cdc5491bf5408e89ef7408829a4
   - enabled: 1
+    path: Assets/Scenes/BossRoom.unity
+    guid: 779d97386912e6f4eb7011196b62a900
+  - enabled: 1
     path: Assets/Scenes/SLAM_Level.unity
     guid: a20006fd3fcab93408028ebd2d3b8554
   - enabled: 1

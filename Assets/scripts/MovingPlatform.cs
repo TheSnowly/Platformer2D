@@ -7,10 +7,12 @@ public class MovingPlatform : MonoBehaviour
     [SerializeField] Transform position1, position2;
     private float _speed = 3.0f;
     [SerializeField] private bool _switch = false;
+    SpriteRenderer sr;
 
     // Start is called before the first frame update
     void Start()
     {
+        sr = GetComponent<SpriteRenderer>();
     }
 
     private void FixedUpdate()
@@ -26,10 +28,12 @@ public class MovingPlatform : MonoBehaviour
 
         if (transform.position == position1.position)
         {
+            sr.flipX = !sr.flipX;
             _switch = true;
         }
         else if (transform.position == position2.position)
         {
+            sr.flipX = !sr.flipX;
             _switch = false;
         }
     }

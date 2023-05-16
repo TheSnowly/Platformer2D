@@ -35,7 +35,7 @@ public class SpeedLines : MonoBehaviour
 
         } else
         {
-            GetComponent<ParticleSystemRenderer>().material.color = Color.Lerp(GetComponent<ParticleSystemRenderer>().material.color, Color.white, 0.00001f * Player.GetComponent<Rigidbody2D>().velocity.x);
+            GetComponent<ParticleSystemRenderer>().material.color = Color.Lerp(GetComponent<ParticleSystemRenderer>().material.color, new Color(255, 255, 255, 50), 0.01f);
             VeloShape.radius = Mathf.Lerp(VeloShape.radius, 10, 0.0001f * Player.GetComponent<Rigidbody2D>().velocity.x);
             main.simulationSpeed = Mathf.Lerp(main.simulationSpeed, 1 + (Player.GetComponent<Rigidbody2D>().velocity.x/4), 0.001f);
         }

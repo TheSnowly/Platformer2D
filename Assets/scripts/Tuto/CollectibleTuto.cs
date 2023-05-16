@@ -14,16 +14,16 @@ public class CollectibleTuto : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D other) {
-        if (Switch == true) {
 
+        if (other.gameObject.tag == "Player" && Switch == true)
+        {
             Switch = false;
 
-            if (other.gameObject.tag == "Player") {
-                CardManager.Deck.Push(CardTypeT);
+            CardManager.Deck.Push(CardTypeT);
 
-                NewCardCollectible();
-                Destroy(this.gameObject);
-            }
+            NewCardCollectible();
+            Destroy(this.gameObject);
+
         }
     }
 

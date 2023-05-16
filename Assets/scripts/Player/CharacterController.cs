@@ -92,8 +92,22 @@ public class CharacterController : MonoBehaviour
                 jumpBufferTimer -= Time.deltaTime;
             }
 
-            if (isGrounded) {
+
+            if (horizontal_value != 0 && isGrounded && rb.velocity.y == 0)
+            {
                 animator.SetBool("Run", true);
+                animator.SetBool("Idle", false);
+            } else if (horizontal_value == 0 && isGrounded && rb.velocity.y == 0)
+            {
+                animator.SetBool("Run", false);
+                animator.SetBool("Idle", true);
+            } else
+            {
+                animator.SetBool("Idle", false);
+                animator.SetBool("Run", false);
+            }
+
+            if (isGrounded) {
                 coyoteTimeTimer = coyoteTime;
                 ennemy_Slam_Active = false;
                 animator.SetBool("Fall", false);

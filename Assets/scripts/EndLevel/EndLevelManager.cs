@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class EndLevelManager : MonoBehaviour
 {
@@ -36,6 +37,9 @@ public class EndLevelManager : MonoBehaviour
             other.GetComponent<CharacterController>().CanMove = false;
             if (NbOfLevelPlayed < 5) {
                 NextLevelChoice();
+            } else
+            {
+                SceneManager.LoadScene("BossRoom");
             }
             Switch = true;
         }
