@@ -27,10 +27,11 @@ public class Chest : MonoBehaviour
         {
             if (collision.gameObject.tag == "Player" && CharacterController.Key.gameObject.activeSelf)
             {
+                Debug.Log("Collided");
                 CharacterController.Key.gameObject.SetActive(false);
+                Give_Card();
                 CharacterController.CardManage();
                 CardManager.PlaceCards();
-                Give_Card();
             }
         }
     }
@@ -42,6 +43,7 @@ public class Chest : MonoBehaviour
             GameObject Card = Instantiate(Card_prefab, new Vector2(transform.position.x, transform.position.y + 2), Quaternion.identity);
             Card.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-5, 5),5), ForceMode2D.Impulse);
         }
+        Debug.Log("oh waw");
         Destroy(GetComponent<Chest>());
     }
 }

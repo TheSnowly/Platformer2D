@@ -9,12 +9,6 @@ public class Key : MonoBehaviour
     Vector3 refVelocity = Vector3.zero;
     float smoothTime = 0.4f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {

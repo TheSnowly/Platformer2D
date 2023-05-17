@@ -9,10 +9,12 @@ public class EnnemyPlant : MonoBehaviour
     [SerializeField] Sprite ClosedSprite;
     [SerializeField] GameObject Damage;
     bool ispremierforme;
+    Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         StartCoroutine(ChangeState(4f));
         ispremierforme = true;
     }
@@ -23,6 +25,7 @@ public class EnnemyPlant : MonoBehaviour
             timeElapsed -= Time.deltaTime;
             yield return null;
         }
+        animator.SetTrigger("Switch");
         ispremierforme = !ispremierforme;
         StartCoroutine(ChangeState(4f));
     }
