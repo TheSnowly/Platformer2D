@@ -15,12 +15,6 @@ public class Chest : MonoBehaviour
         Num_Of_Card = Random.Range(3, 5);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (CardManager.Deck.Count > 0)
@@ -42,7 +36,6 @@ public class Chest : MonoBehaviour
             GameObject Card = Instantiate(Card_prefab, new Vector2(transform.position.x, transform.position.y + 2), Quaternion.identity);
             Card.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-5, 5),5), ForceMode2D.Impulse);
         }
-        Debug.Log("oh waw");
         Destroy(GetComponent<Chest>());
     }
 }
