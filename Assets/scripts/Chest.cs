@@ -27,7 +27,6 @@ public class Chest : MonoBehaviour
         {
             if (collision.gameObject.tag == "Player" && CharacterController.Key.gameObject.activeSelf)
             {
-                Debug.Log("Collided");
                 CharacterController.Key.gameObject.SetActive(false);
                 Give_Card();
                 CharacterController.CardManage();
