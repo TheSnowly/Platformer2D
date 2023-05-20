@@ -46,6 +46,16 @@ public class Cine1 : MonoBehaviour
 
     void CineManager()
     {
+        if (CardManager.Deck.Count != 0) {
+            int DS = CardManager.Deck.Count;
+            for(int i = 0; i <= DS - 1; i++){
+                Destroy(GameObject.Find("Card_" + i));
+                CardManager.Deck.Pop();
+            }
+        }
+
+        CardManager.shuffled_Deck.Clear();
+
         Stop();
         MoveAnim();
         StartCoroutine(Move(Player, new Vector3(Player.transform.position.x + 10, Player.transform.position.y, 0), 1f));
@@ -89,7 +99,7 @@ public class Cine1 : MonoBehaviour
         yield return new WaitForSeconds(2);
         Grittanim.SetBool("Laugh", false);
         yield return new WaitForSeconds(0.5f);
-        StartCoroutine(Move(Gritta, new Vector3(Gritta.transform.position.x + 20, Gritta.transform.position.y, 0), 1f));
+        StartCoroutine(Move(Gritta, new Vector3(Gritta.transform.position.x + 30, Gritta.transform.position.y, 0), 1f));
         yield return new WaitForSeconds(0.5f);
         CamAnim.SetBool("Cam", false);
         Cinemode.SetBool("Cine", false);

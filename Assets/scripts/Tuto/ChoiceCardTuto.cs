@@ -12,6 +12,7 @@ public class ChoiceCardTuto : MonoBehaviour
     public CharacterController CharacterController;
 
     [SerializeField] GameObject PouchCards;
+    [SerializeField] GameObject text;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +34,8 @@ public class ChoiceCardTuto : MonoBehaviour
         for (int i = 1; i <= 3; i++) {
             Destroy(GameObject.Find("CardCh_" + i));
         }
+
+        Destroy(text);
 
         for (int i = 0; i <= 2; i++) {
             CardManager.Deck.Push(CardTypeTuto);
