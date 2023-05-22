@@ -10,6 +10,7 @@ public class CardClick : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 {
 
     public string CardType;
+    public string NextScene;
     [SerializeField] Sprite Jump_image;
     [SerializeField] Sprite Slam_image;
     [SerializeField] Sprite Run_image;
@@ -38,6 +39,14 @@ public class CardClick : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     }
 
     public void OnClick() {
+        GameObject.Find("Transi").GetComponent<Animator>().SetTrigger("EndTransi3");
+        StartCoroutine(Wait(0.7f));
+    }
+
+    IEnumerator Wait(float time)
+    {
+        yield return new WaitForSeconds(time);
+
         if (CardType == "Double_Jump") {
             SceneManager.LoadScene("JUMP_Level");
         } else if (CardType == "Ennemy_Slam") {

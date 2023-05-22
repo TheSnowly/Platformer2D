@@ -8,6 +8,7 @@ public class EndLevelManager : MonoBehaviour
 {
     [SerializeField] GameObject CardPrefab;
     [SerializeField] GameObject EndLevel;
+    [SerializeField] GameObject BG;
 
     public CardManager CardManager;
     public Timer Timer;
@@ -29,18 +30,14 @@ public class EndLevelManager : MonoBehaviour
     {
         if (Switch == false && other.tag == "Player") {
 
+            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>().Stop();
             transi.GetComponent<Animator>().SetTrigger("EndTransi2");
             NbOfLevelPlayed += 1;
             Debug.Log(NbOfLevelPlayed);
             Timer.StopTime = true;
             EndLevel.SetActive(true);
             other.GetComponent<CharacterController>().CanMove = false;
-            if (NbOfLevelPlayed < 5) {
-                NextLevelChoice();
-            } else
-            {
-                SceneManager.LoadScene("BossRoom");
-            }
+            NextLevelChoice();
             Switch = true;
         }
     }
@@ -59,6 +56,11 @@ public class EndLevelManager : MonoBehaviour
                 CardManager.Deck.Pop();
             }
         }
+
+        if (NbOfLevelPlayed == 5)
+        {
+            SceneManager.LoadScene("BossRoom");
+        }   
 
         for (int i = 1; i <= 2; i++) {
 
