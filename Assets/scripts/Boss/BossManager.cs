@@ -14,12 +14,20 @@ public class BossManager : MonoBehaviour
     [SerializeField] GameObject Cardtransform;
 
     [SerializeField] GameObject BossBG;
+    [SerializeField] GameObject BossBlack;
+    [SerializeField] GameObject Health;
 
     bool Switch;
+    bool boss;
+
+    int DS;
+    public int NbCardThrow;
 
     // Start is called before the first frame update
     void Start()
     {
+        NbCardThrow = 0;
+        boss = false;
         Switch = true;
         CharacterController = GameObject.Find("Player").GetComponent<CharacterController>();
         CardManager.Boss = true;
@@ -27,7 +35,7 @@ public class BossManager : MonoBehaviour
 
     public void GiveCard()
     {
-        Debug.Log(CardManager.shuffled_Deck.Count);
+        DS = CardManager.shuffled_Deck.Count;
 
         //creating cards in the canvas and pushing them in a deck
         for (int i = CardManager.shuffled_Deck.Count - 1; i >= 0; i--)
@@ -40,6 +48,8 @@ public class BossManager : MonoBehaviour
 
         }
 
+        boss = true;
+
         CardManager.shuffled_Deck.Clear();
         CardManager.PlaceCards();
         CharacterController.CanMove = false;
@@ -50,18 +60,24 @@ public class BossManager : MonoBehaviour
     void Update()
     {
 
-        if (CardManager.Deck.Count == 0 && Switch == true)
+        if (DS==NbCardThrow && Switch == true && boss == true)
         {
             Switch = false;
             BossBG.SetActive(false);
-            GameObject.Find("Gritta").GetComponent<Animator>().SetTrigger("Die");
+            BossBlack.SetActive(false);
+            Health.SetActive(false);
+            GameObject.Find("Explosion").GetComponent<Animator>().SetTrigger("Explo");
+            GameObject.Find("Gritta").GetComponent<Animator>().SetTrigger("Dieps");
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        if (CardManager.Deck.Count > 0)
         {
-            GameObject Card = GameObject.Instantiate(CardThrow, Cardtransform.transform.position, Quaternion.Euler(80, 0, 180), GameObject.FindGameObjectWithTag("MainCamera").transform);
-            CharacterController.CardManage();
-            CardManager.PlaceCards();
+            if (Input.GetKeyDown(KeyCode.Mouse1))
+            {
+                GameObject Card = GameObject.Instantiate(CardThrow, Cardtransform.transform.position, Quaternion.Euler(-680, -352, 512), GameObject.FindGameObjectWithTag("MainCamera").transform);
+                CharacterController.CardManage();
+                CardManager.PlaceCards();
+            }
         }
     }
 }

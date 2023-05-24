@@ -12,7 +12,6 @@ public class HealthBar : MonoBehaviour
     public void SetLife()
     {
         Life = 1f / CardManager.Deck.Count;
-        Debug.Log(Life);
     }
 
     // Update is called once per frame

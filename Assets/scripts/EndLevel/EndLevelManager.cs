@@ -40,7 +40,6 @@ public class EndLevelManager : MonoBehaviour
             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>().Stop();
             transi.GetComponent<Animator>().SetTrigger("EndTransi2");
             NbOfLevelPlayed += 1;
-            Debug.Log(NbOfLevelPlayed);
             Timer.StopTime = true;
             EndLevel.SetActive(true);
             other.GetComponent<CharacterController>().CanMove = false;
