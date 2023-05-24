@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class EndLevelManager : MonoBehaviour
 {
     [SerializeField] GameObject CardPrefab;
     [SerializeField] GameObject EndLevel;
     [SerializeField] GameObject BG;
+    [SerializeField] GameObject Progresse;
+    [SerializeField] GameObject ZzzipoProgress;
+    [SerializeField] GameObject TextProgress;
+
+    [SerializeField] GameObject[] ProgressPoints = new GameObject[6];
 
     public CardManager CardManager;
     public Timer Timer;
@@ -18,6 +24,8 @@ public class EndLevelManager : MonoBehaviour
 
     static public int NbOfLevelPlayed;
     [SerializeField] GameObject transi;
+
+    public string nextlvl;
 
 
     // Start is called before the first frame update
@@ -29,7 +37,6 @@ public class EndLevelManager : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if (Switch == false && other.tag == "Player") {
-
             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>().Stop();
             transi.GetComponent<Animator>().SetTrigger("EndTransi2");
             NbOfLevelPlayed += 1;
@@ -39,6 +46,45 @@ public class EndLevelManager : MonoBehaviour
             other.GetComponent<CharacterController>().CanMove = false;
             NextLevelChoice();
             Switch = true;
+        }
+    }
+
+    public void Progress()
+    {
+        Progresse.SetActive(true);
+        EndLevel.SetActive(false);
+        ZzzipoProgress.transform.position = new Vector3(ProgressPoints[NbOfLevelPlayed - 1].transform.position.x, ProgressPoints[NbOfLevelPlayed - 1].transform.position.y + 3, 0);
+        StartCoroutine(MovePlayer());
+    }
+
+    IEnumerator MovePlayer()
+    {
+        float i = 2f;
+
+        while (i > 0)
+        {
+            i -= Time.deltaTime;
+            ZzzipoProgress.transform.position = Vector3.Lerp(ZzzipoProgress.transform.position, new Vector3(ProgressPoints[NbOfLevelPlayed].transform.position.x, ProgressPoints[NbOfLevelPlayed].transform.position.y + 3, 0), 0.002f);
+            yield return null;
+        }
+        yield return new WaitForSeconds(1f);
+        TextProgress.GetComponent<TextMeshProUGUI>().text = (5 - NbOfLevelPlayed) + " more to go!";
+        yield return new WaitForSeconds(1.5f);
+        GameObject.Find("Transi").GetComponent<Animator>().SetTrigger("EndTransi3");
+        TextProgress.GetComponent<TextMeshProUGUI>().text = "";
+        Progresse.SetActive(false);
+        yield return new WaitForSeconds(0.7f);
+        if (nextlvl == "Double_Jump")
+        {
+            SceneManager.LoadScene("JUMP_Level");
+        }
+        else if (nextlvl == "Ennemy_Slam")
+        {
+            SceneManager.LoadScene("SLAM_Level");
+        }
+        else if (nextlvl == "Run")
+        {
+            SceneManager.LoadScene("RUN_Level");
         }
     }
 
@@ -65,6 +111,8 @@ public class EndLevelManager : MonoBehaviour
         for (int i = 1; i <= 2; i++) {
 
             GameObject Card = GameObject.Instantiate(CardPrefab, Vector3.zero, Quaternion.identity, GameObject.FindGameObjectWithTag("Canvas").transform);
+
+            Card.name = "CardEnd_" + i;
 
             string Random_Card = "";
 

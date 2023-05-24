@@ -39,14 +39,19 @@ public class CardClick : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     }
 
     public void OnClick() {
-        GameObject.Find("Transi").GetComponent<Animator>().SetTrigger("EndTransi3");
-        StartCoroutine(Wait(0.7f));
+        //GameObject.Find("Transi").GetComponent<Animator>().SetTrigger("EndTransi3");
+
+        GameObject.Find("ENDLEVEL").GetComponent<EndLevelManager>().nextlvl = CardType;
+        GameObject.Find("ENDLEVEL").GetComponent<EndLevelManager>().Progress();
+
+        for (int i = 1; i <= 2; i++)
+        {
+            Destroy(GameObject.Find("CardEnd_" + i));
+        }
     }
 
     IEnumerator Wait(float time)
     {
-        yield return new WaitForSeconds(time);
-
         if (CardType == "Double_Jump") {
             SceneManager.LoadScene("JUMP_Level");
         } else if (CardType == "Ennemy_Slam") {
@@ -54,6 +59,7 @@ public class CardClick : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         } else if (CardType == "Run") {
             SceneManager.LoadScene("RUN_Level");
         }
+        yield return null;
     }
 
 }

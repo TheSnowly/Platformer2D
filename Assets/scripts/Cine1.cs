@@ -11,7 +11,7 @@ public class Cine1 : MonoBehaviour
     Animator Cinemode;
 
     Animator Grittanim;
-    GameObject Gritta;
+    [SerializeField] GameObject Gritta;
 
     Rigidbody2D rb;
     GameObject Player;
@@ -23,8 +23,6 @@ public class Cine1 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-        Gritta = GameObject.Find("Gritta");
         Player = GameObject.Find("Player");
         rb = Player.GetComponent<Rigidbody2D>();
         PlayerAnimator = Player.GetComponent<Animator>();
@@ -82,6 +80,7 @@ public class Cine1 : MonoBehaviour
             time -= Time.deltaTime;
             yield return null;
         }
+
         if (Char.name == "Player")
         {
             Stop();

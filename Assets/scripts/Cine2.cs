@@ -28,13 +28,6 @@ public class Cine2 : MonoBehaviour
 
     bool Switch = true;
 
-    private void Update()
-    {
-        if (CardManager.shuffled_Deck.Count == 0)
-        {
-            Debug.Log("t'es à 0 bro");
-        }
-    }
 
     // Start is called before the first frame update
     void Start()
