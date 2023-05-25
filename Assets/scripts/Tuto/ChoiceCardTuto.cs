@@ -36,6 +36,8 @@ public class ChoiceCardTuto : MonoBehaviour
         }
 
         Destroy(text);
+        Destroy(GameObject.Find("Black"));
+        Destroy(GameObject.Find("PouchGot"));
 
         for (int i = 0; i <= 2; i++) {
             CardManager.Deck.Push(CardTypeTuto);

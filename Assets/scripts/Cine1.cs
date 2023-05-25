@@ -98,7 +98,8 @@ public class Cine1 : MonoBehaviour
         yield return new WaitForSeconds(2);
         Grittanim.SetBool("Laugh", false);
         yield return new WaitForSeconds(0.5f);
-        StartCoroutine(Move(Gritta, new Vector3(Gritta.transform.position.x + 30, Gritta.transform.position.y, 0), 1f));
+        Grittanim.SetTrigger("Move");
+        //StartCoroutine(Move(Gritta, new Vector3(Gritta.transform.position.x + 30, Gritta.transform.position.y, 0), 1f));
         yield return new WaitForSeconds(0.5f);
         CamAnim.SetBool("Cam", false);
         Cinemode.SetBool("Cine", false);
