@@ -2022,7 +2022,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3861461349942600956, guid: 7296d8e50505d684c98bbfb74ae6ec82, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -28.198711
+      value: -28.198723
       objectReference: {fileID: 0}
     - target: {fileID: 3861461349942600956, guid: 7296d8e50505d684c98bbfb74ae6ec82, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3003,6 +3003,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Piques
       objectReference: {fileID: 0}
+    - target: {fileID: 8510323131361029723, guid: e232946e66178b34fa160b62dc18c633, type: 3}
+      propertyPath: m_TagString
+      value: Spike
+      objectReference: {fileID: 0}
     - target: {fileID: 8510323131361029724, guid: e232946e66178b34fa160b62dc18c633, type: 3}
       propertyPath: m_RootOrder
       value: 12
@@ -3818,11 +3822,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2292939365866376597, guid: 089b05d7664e2274ead2b91fc5bb1084, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -21.645578
+      value: -21.643389
       objectReference: {fileID: 0}
     - target: {fileID: 2292939365866376597, guid: 089b05d7664e2274ead2b91fc5bb1084, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.0056801
+      value: 1.0056901
       objectReference: {fileID: 0}
     - target: {fileID: 2292939365866376597, guid: 089b05d7664e2274ead2b91fc5bb1084, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6111,6 +6115,10 @@ PrefabInstance:
     - target: {fileID: 8510323131361029723, guid: e232946e66178b34fa160b62dc18c633, type: 3}
       propertyPath: m_Name
       value: Piques (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8510323131361029723, guid: e232946e66178b34fa160b62dc18c633, type: 3}
+      propertyPath: m_TagString
+      value: Spike
       objectReference: {fileID: 0}
     - target: {fileID: 8510323131361029724, guid: e232946e66178b34fa160b62dc18c633, type: 3}
       propertyPath: m_RootOrder
@@ -9016,6 +9024,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 100
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1114401854 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2816322453095892482, guid: 9f000ef38a4b87f4c82d3fd6bd2b8d6a, type: 3}
+  m_PrefabInstance: {fileID: 154447688}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1127767466
 GameObject:
   m_ObjectHideFlags: 0
@@ -9870,6 +9889,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2973593290328084442, guid: 73cf83a9953fd2c429d235c661f857b9, type: 3}
+      propertyPath: Slider
+      value: 
+      objectReference: {fileID: 1114401854}
     - target: {fileID: 2973593290328084443, guid: 73cf83a9953fd2c429d235c661f857b9, type: 3}
       propertyPath: m_Name
       value: MapSize
@@ -13831,6 +13854,10 @@ PrefabInstance:
     - target: {fileID: 8510323131361029723, guid: e232946e66178b34fa160b62dc18c633, type: 3}
       propertyPath: m_Name
       value: Piques (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8510323131361029723, guid: e232946e66178b34fa160b62dc18c633, type: 3}
+      propertyPath: m_TagString
+      value: Spike
       objectReference: {fileID: 0}
     - target: {fileID: 8510323131361029724, guid: e232946e66178b34fa160b62dc18c633, type: 3}
       propertyPath: m_RootOrder

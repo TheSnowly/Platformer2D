@@ -999,11 +999,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2292939365866376597, guid: 089b05d7664e2274ead2b91fc5bb1084, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -51.75588
+      value: -51.753708
       objectReference: {fileID: 0}
     - target: {fileID: 2292939365866376597, guid: 089b05d7664e2274ead2b91fc5bb1084, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.30028
+      value: 2.3003097
       objectReference: {fileID: 0}
     - target: {fileID: 2292939365866376597, guid: 089b05d7664e2274ead2b91fc5bb1084, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1343,7 +1343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CamAnim: {fileID: 660913200}
-  Cinemode: {fileID: 1127304452}
+  Cinemode: {fileID: 1322843505}
   BlackScreen: {fileID: 159308376}
   Ghead: {fileID: 1773556555}
   BossBG: {fileID: 1601274351}
@@ -1709,7 +1709,7 @@ PrefabInstance:
       objectReference: {fileID: 64636424}
     - target: {fileID: 6237208705083851434, guid: 26dde02ce9da1c447869df7fb642c276, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6237208705144698343, guid: 26dde02ce9da1c447869df7fb642c276, type: 3}
       propertyPath: m_IsActive
@@ -3721,11 +3721,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &1127304452 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 6282601818632570899, guid: bd06a387071b6fe43a03b5c6c652e6a8, type: 3}
-  m_PrefabInstance: {fileID: 740298613}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1223788705
 GameObject:
   m_ObjectHideFlags: 0
@@ -13691,6 +13686,7 @@ MonoBehaviour:
   BossBG: {fileID: 1601274351}
   BossBlack: {fileID: 159308376}
   Health: {fileID: 1655390084}
+  NbCardThrow: 0
 --- !u!4 &1319143865
 Transform:
   m_ObjectHideFlags: 0
@@ -13706,6 +13702,11 @@ Transform:
   m_Father: {fileID: 1801463085}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1322843505 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6282601818632570899, guid: bd06a387071b6fe43a03b5c6c652e6a8, type: 3}
+  m_PrefabInstance: {fileID: 740298613}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1382070896
 GameObject:
   m_ObjectHideFlags: 0
@@ -14381,7 +14382,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3861461349942600956, guid: 7296d8e50505d684c98bbfb74ae6ec82, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -71.910774
+      value: -71.91079
       objectReference: {fileID: 0}
     - target: {fileID: 3861461349942600956, guid: 7296d8e50505d684c98bbfb74ae6ec82, type: 3}
       propertyPath: m_LocalPosition.y

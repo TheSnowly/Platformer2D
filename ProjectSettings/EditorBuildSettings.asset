@@ -5,15 +5,18 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/scenetest.unity
     guid: 78d40b926a0c83a40ad1138e774a65c3
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Level1.unity
     guid: bc75fe11de143c7469f04359d852c6df
+  - enabled: 1
+    path: Assets/Scenes/Title_Screen 1.unity
+    guid: 8c93fef75bc63f54594a1cf2586fc926
   - enabled: 1
     path: Assets/Scenes/JUMP_Level.unity
     guid: 1f306cdc5491bf5408e89ef7408829a4
@@ -32,4 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/RUN_Level.unity
     guid: f549eff863339b642a68344c30be73f0
+  - enabled: 1
+    path: Assets/Scenes/End_Scree.unity
+    guid: 4fbfddce0374d7049b789dd2f12f61ad
   m_configObjects: {}

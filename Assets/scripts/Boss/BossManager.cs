@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BossManager : MonoBehaviour
 {
@@ -56,6 +57,12 @@ public class BossManager : MonoBehaviour
         HealthBar.SetLife();
     }
 
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(1.5f);
+        SceneManager.LoadScene("End_Scree");
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -68,6 +75,7 @@ public class BossManager : MonoBehaviour
             Health.SetActive(false);
             GameObject.Find("Explosion").GetComponent<Animator>().SetTrigger("Explo");
             GameObject.Find("Gritta").GetComponent<Animator>().SetTrigger("Dieps");
+            StartCoroutine(Wait());
         }
 
         if (CardManager.Deck.Count > 0)

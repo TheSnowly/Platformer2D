@@ -8,12 +8,14 @@ public class Timer : MonoBehaviour
 {
 
     static float time =300;
+    public int timed;
     [SerializeField] TextMeshProUGUI timeText;
     public bool StopTime;
 
     // Start is called before the first frame update
     void Start()
     {
+        timed = (int)time;
         StopTime = false;
     }
 
