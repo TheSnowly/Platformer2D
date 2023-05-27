@@ -18,7 +18,7 @@ public class CameraScreen : MonoBehaviour
     {
         if (IsCine)
         {
-            transform.position = Vector3.Lerp(transform.position, GameObject.Find("Trcamera").transform.position, 0.0008f);
+            transform.position = Vector3.Lerp(transform.position, GameObject.Find("Trcamera").transform.position, 0.8f*Time.deltaTime);
         }
     }
 }

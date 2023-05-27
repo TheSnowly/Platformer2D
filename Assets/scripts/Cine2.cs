@@ -77,7 +77,7 @@ public class Cine2 : MonoBehaviour
     {
         while(time > 0)
         {
-            Char.transform.position = Vector3.Lerp(Char.transform.position, targetPos, 0.003f);
+            Char.transform.position = Vector3.Lerp(Char.transform.position, targetPos, 1f*Time.deltaTime);
             time -= Time.deltaTime;
             yield return null;
         }

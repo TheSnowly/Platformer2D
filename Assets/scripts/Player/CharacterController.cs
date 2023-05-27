@@ -54,6 +54,7 @@ public class CharacterController : MonoBehaviour
 
     //Card throw variable
     [SerializeField] GameObject Card_Thrown_prefab;
+    int DirectionThrow;
 
     //Key variable
     [SerializeField] public GameObject Key;
@@ -79,8 +80,14 @@ public class CharacterController : MonoBehaviour
             horizontal_value = Input.GetAxis("Horizontal");
 
             //flip character sprite depending on the direction the character goes in
-            if (horizontal_value > 0) sr.flipX = false;
-            else if (horizontal_value < 0) sr.flipX = true;
+            if (horizontal_value > 0){
+                sr.flipX = false;
+                DirectionThrow = 1;
+            } 
+            else if (horizontal_value < 0){
+                sr.flipX = true;
+                DirectionThrow = -1;
+            } 
 
             //Checking if the player touch the floor
             isGrounded = Physics2D.OverlapCircle(feetPos.position, 0.2f, ground);
@@ -171,7 +178,8 @@ public class CharacterController : MonoBehaviour
                 }
 
                 if (Input.GetMouseButtonDown(1)) {
-                    GameObject thrown = Instantiate(Card_Thrown_prefab, new Vector2(transform.position.x + 1.5f, transform.position.y), Quaternion.identity);
+                    GameObject thrown = Instantiate(Card_Thrown_prefab, new Vector2(transform.position.x + (1.5f * DirectionThrow), transform.position.y), Quaternion.identity);
+                    thrown.GetComponent<Card_Thrown>().Direction = DirectionThrow;
                     thrown.GetComponent<Card_Thrown>().positionY = transform.position.y;
                     CardManage();
                     CardManager.PlaceCards();

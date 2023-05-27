@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class Card_Thrown : MonoBehaviour
 {
-
+    public float Direction;
     public float positionY;
 
     void FixedUpdate()
     {
-        //GetComponent<Rigidbody2D>().velocity = new Vector2(3500* Time.deltaTime, 0); 
-        GetComponent<Rigidbody2D>().velocity = Vector2.right * 3500 * Time.deltaTime;
+        GetComponent<Rigidbody2D>().velocity = new Vector2(1 * Direction, 0) * 3500 * Time.deltaTime;
     }
 
     // Update is called once per frame

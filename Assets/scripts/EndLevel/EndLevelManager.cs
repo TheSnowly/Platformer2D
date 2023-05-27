@@ -63,7 +63,7 @@ public class EndLevelManager : MonoBehaviour
         while (i > 0)
         {
             i -= Time.deltaTime;
-            ZzzipoProgress.transform.position = Vector3.Lerp(ZzzipoProgress.transform.position, new Vector3(ProgressPoints[NbOfLevelPlayed].transform.position.x, ProgressPoints[NbOfLevelPlayed].transform.position.y + 3, 0), 0.002f);
+            ZzzipoProgress.transform.position = Vector3.Lerp(ZzzipoProgress.transform.position, new Vector3(ProgressPoints[NbOfLevelPlayed].transform.position.x, ProgressPoints[NbOfLevelPlayed].transform.position.y + 3, 0), 1f*Time.deltaTime);
             yield return null;
         }
         yield return new WaitForSeconds(1f);
