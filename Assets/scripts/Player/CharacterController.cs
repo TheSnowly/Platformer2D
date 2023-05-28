@@ -2,6 +2,7 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 using System.Collections.Generic;
+using Cinemachine;
 
 public class CharacterController : MonoBehaviour
 {
@@ -61,11 +62,14 @@ public class CharacterController : MonoBehaviour
 
     //misc
     public PlayerDamage PlayerDamage;
+    CinemachineImpulseSource NoiseSource;
+    [SerializeField] ParticleSystem Particles;
 
     // Start is called before the first frame update
     void Start()
     {
         CanMove = true;
+        NoiseSource = GetComponent<CinemachineImpulseSource>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
@@ -178,6 +182,7 @@ public class CharacterController : MonoBehaviour
                 }
 
                 if (Input.GetMouseButtonDown(1)) {
+                    NoiseSource.GenerateImpulse();
                     GameObject thrown = Instantiate(Card_Thrown_prefab, new Vector2(transform.position.x + (1.5f * DirectionThrow), transform.position.y), Quaternion.identity);
                     thrown.GetComponent<Card_Thrown>().Direction = DirectionThrow;
                     thrown.GetComponent<Card_Thrown>().positionY = transform.position.y;
@@ -248,16 +253,33 @@ public class CharacterController : MonoBehaviour
 
         if (other.tag == "Ennemy" && other.tag != "Damage" && PlayerDamage.isDying == false && ennemy_Slam_Active == false)
         {
+            Time.timeScale = 0.05f;
+            StartCoroutine(TScale());
+            Particles.Play(true);
+            NoiseSource.GenerateImpulse();
             rb.velocity = new Vector2(rb.velocity.x / 3, 0);
             rb.AddForce(new Vector2(rb.velocity.x / 2, jumpForce * 1.5f), ForceMode2D.Impulse);
-            Destroy(other.gameObject);
+            if (other.transform.parent != null) {
+                other.gameObject.transform.parent.gameObject.GetComponent<EnemyDie>().Die();
+            } else {
+                other.gameObject.GetComponent<EnemyDie>().Die();
+            }
 
         } else if (ennemy_Slam_Active && (other.tag == "Damage" || other.tag == "Ennemy"))
         {
+            Time.timeScale = 0.05f;
+            StartCoroutine(TScale());
+            Particles.Play(true);
+            NoiseSource.GenerateImpulse();
             rb.velocity = new Vector2(0, 2);
             rb.AddForce(new Vector2(stocked_Velocity_x * 4, 10), ForceMode2D.Impulse);
-            Destroy(other.gameObject);
+            if (other.transform.parent != null) {
+                other.gameObject.transform.parent.gameObject.GetComponent<EnemyDie>().Die();
+            } else {
+                other.gameObject.GetComponent<EnemyDie>().Die();
+            }
             StartCoroutine(Wait(0.1f));
+
         } else if ((other.tag == "Damage" || other.tag == "Spike") && other.tag != "Ennemy" && PlayerDamage.isDying == false)
         {
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
@@ -277,6 +299,11 @@ public class CharacterController : MonoBehaviour
         Destroy(GameObject.Find("Card_" + (CardManager.Deck.Count - 1)));
         CardManager.shuffled_Deck.Insert(Random.Range(0, CardManager.shuffled_Deck.Count), CardManager.Deck.Peek());
         CardManager.Deck.Pop();
+    }
+
+    IEnumerator TScale() {
+        yield return new WaitForSeconds(0.008f);
+        Time.timeScale = 1f;
     }
 
     IEnumerator Wait(float time)

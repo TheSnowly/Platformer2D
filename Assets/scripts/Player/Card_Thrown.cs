@@ -24,7 +24,11 @@ public class Card_Thrown : MonoBehaviour
             if (other.gameObject.tag == "Breakable" || other.gameObject.tag == "Ennemy")
             {
                 Destroy(this.gameObject);
-                Destroy(other.gameObject);
+                if (other.transform.parent != null) {
+                    other.gameObject.transform.parent.gameObject.GetComponent<EnemyDie>().Die();
+                } else {
+                    other.gameObject.GetComponent<EnemyDie>().Die();
+                }
             }
         }
     }
@@ -41,4 +45,5 @@ public class Card_Thrown : MonoBehaviour
             }
         }
     }
+
 }

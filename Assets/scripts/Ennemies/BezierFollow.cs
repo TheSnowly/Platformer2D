@@ -40,13 +40,6 @@ public class BezierFollow : MonoBehaviour
         float e = Player.transform.position.y * 100;
         float d = Convert.ToInt32(e);
         float f = (float)d / 100;
-        /*
-        if (Restart && f == RestartPos)
-        {
-            Restart = false;
-            coroutineAllowed = true;
-        }
-        */
 
         if (coroutineAllowed)
         {
@@ -78,10 +71,6 @@ public class BezierFollow : MonoBehaviour
 
         tParam = 0f;
         coroutineAllowed = true;
-
-        //Player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-        //Player.GetComponent<Rigidbody2D>().AddForce(new Vector2(-2, 10), ForceMode2D.Impulse);
-        //Restart = true;
 
     }
 }
