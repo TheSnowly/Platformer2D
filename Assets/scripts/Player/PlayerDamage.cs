@@ -10,16 +10,14 @@ public class PlayerDamage : MonoBehaviour
     Vector3 ref_velocity;
 
     //death variables
-    public GameObject EnnemyWhoKilled;
     public bool isDying;
+
 
     // Start is called before the first frame update
     void Start()
     {
         //the first checkpoint is where the player spawn
         CurrentCheckpoint = gameObject.transform.position;
-
-        timeElapsed = 10;
 
         ref_velocity = Vector3.zero;
 
@@ -37,9 +35,10 @@ public class PlayerDamage : MonoBehaviour
 
     public IEnumerator DeathAnimation() {
 
-        timeElapsed = 1.5f;
+        timeElapsed = 1f;
         GetComponent<Rigidbody2D>().gravityScale = 0;
         Vector3 target = new Vector3(transform.position.x - 2f, transform.position.y + 2, 0);
+        GameObject.Find("TransiDeath").GetComponent<Animator>().SetTrigger("Transi");
 
         //while the timer isn't finished, the player moves a bit
         while(timeElapsed > 0){
@@ -54,10 +53,10 @@ public class PlayerDamage : MonoBehaviour
     //respawing
     void Respawn() {
         isDying = false;
+        GetComponent<Animator>().SetBool("Die", false);
         GetComponent<CharacterController>().CanMove = true;
         gameObject.GetComponent<BoxCollider2D>().enabled = true;
         gameObject.GetComponent<CapsuleCollider2D>().enabled = true;
-        EnnemyWhoKilled.GetComponent<Collider2D>().enabled = true;
         gameObject.transform.position = CurrentCheckpoint;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }

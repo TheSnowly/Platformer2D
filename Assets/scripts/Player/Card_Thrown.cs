@@ -6,15 +6,16 @@ public class Card_Thrown : MonoBehaviour
 {
     public float Direction;
     public float positionY;
+    int Speed;
+
+    private void Start()
+    {
+        Speed = 1;
+    }
 
     void FixedUpdate()
     {
-        GetComponent<Rigidbody2D>().velocity = new Vector2(1 * Direction, 0) * 3500 * Time.deltaTime;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        GetComponent<Rigidbody2D>().velocity = new Vector2(Speed * Direction, 0) * 3500 * Time.deltaTime;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -23,12 +24,14 @@ public class Card_Thrown : MonoBehaviour
         {
             if (other.gameObject.tag == "Breakable" || other.gameObject.tag == "Ennemy")
             {
-                Destroy(this.gameObject);
                 if (other.transform.parent != null) {
+                    other.gameObject.transform.parent.gameObject.GetComponent<EnemyDie>().Direc = Direction;
                     other.gameObject.transform.parent.gameObject.GetComponent<EnemyDie>().Die();
                 } else {
+                    other.gameObject.GetComponent<EnemyDie>().Direc = Direction;
                     other.gameObject.GetComponent<EnemyDie>().Die();
                 }
+                Destroy(this.gameObject);
             }
         }
     }

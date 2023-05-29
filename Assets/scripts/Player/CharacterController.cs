@@ -24,6 +24,7 @@ public class CharacterController : MonoBehaviour
     [SerializeField] Transform feetPos;
 
     //run variable
+    bool run;
     float moveSpeed_Run = 1300.0f;
     float moveSpeed_horizontal_default = 1000.0f;
 
@@ -60,10 +61,17 @@ public class CharacterController : MonoBehaviour
     //Key variable
     [SerializeField] public GameObject Key;
 
+    //effects variables
+    [SerializeField] GameObject Steam_prefab;
+    [SerializeField] float timerMax;
+    [SerializeField] ParticleSystem Particles;
+    [SerializeField] GameObject Steam_Jump_Prefab;
+    public CinemachineImpulseSource NoiseSource;
+    float timer;
+    float timerfall;
+
     //misc
     public PlayerDamage PlayerDamage;
-    CinemachineImpulseSource NoiseSource;
-    [SerializeField] ParticleSystem Particles;
 
     // Start is called before the first frame update
     void Start()
@@ -103,13 +111,28 @@ public class CharacterController : MonoBehaviour
                 jumpBufferTimer -= Time.deltaTime;
             }
 
+            //when the player touch the ground after one second of air time, he gets the fall feedback
+            if (timerfall >= 1f && isGrounded)
+            {
+                GameObject Steam = Instantiate(Steam_Jump_Prefab, new Vector2(feetPos.position.x, feetPos.position.y), Quaternion.identity);
+            }
 
             if (horizontal_value != 0 && isGrounded && rb.velocity.y == 0)
             {
+                timerfall = 0;
+                timer -= Time.deltaTime;
+                if (timer < 0 && (rb.velocity.x >= 10 || rb.velocity.x <= -10))
+                {
+                    GameObject Steam = Instantiate(Steam_prefab, new Vector2(feetPos.position.x - ((1.5f + (DirectionThrow * (rb.velocity.x/40))) * DirectionThrow), feetPos.position.y + 0.3f), Quaternion.identity);
+                    Steam.transform.localScale = new Vector3(Steam.transform.localScale.x * DirectionThrow, Steam.transform.localScale.y, Steam.transform.localScale.z);
+                    timer = timerMax;
+                }
+
                 animator.SetBool("Run", true);
                 animator.SetBool("Idle", false);
             } else if (horizontal_value == 0 && isGrounded && rb.velocity.y == 0)
             {
+                timerfall = 0;
                 animator.SetBool("Run", false);
                 animator.SetBool("Idle", true);
             } else
@@ -122,6 +145,10 @@ public class CharacterController : MonoBehaviour
                 coyoteTimeTimer = coyoteTime;
                 ennemy_Slam_Active = false;
                 animator.SetBool("Fall", false);
+                if (run == false)
+                {
+                    GetComponent<SlamEffect>().UsingEffect = false;
+                }
             } else {
                 coyoteTimeTimer -= Time.deltaTime;
                 animator.SetBool("Run", false);
@@ -137,6 +164,7 @@ public class CharacterController : MonoBehaviour
             if (jumpBufferTimer > 0f && coyoteTimeTimer > 0f)
             {
                 animator.SetTrigger("Jump");
+                GameObject Steam = Instantiate(Steam_Jump_Prefab, new Vector2(feetPos.position.x, feetPos.position.y), Quaternion.identity);
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce * 1.5f);
                 jumpBufferTimer = 0f;
                 coyoteTimeTimer = 0f;
@@ -149,6 +177,7 @@ public class CharacterController : MonoBehaviour
             if (rb.velocity.y < 0)
             {
                 animator.SetBool("Fall", true);
+                timerfall += Time.deltaTime;
             }
 
             //make a card effect
@@ -161,6 +190,7 @@ public class CharacterController : MonoBehaviour
                 }
 
                 if (Input.GetMouseButtonDown(0)) {
+                    NoiseSource.GenerateImpulse();
                     if (CardManager.Deck.Peek() == "Ennemy_Slam")
                     {
                         CardManage();
@@ -183,7 +213,7 @@ public class CharacterController : MonoBehaviour
 
                 if (Input.GetMouseButtonDown(1)) {
                     NoiseSource.GenerateImpulse();
-                    GameObject thrown = Instantiate(Card_Thrown_prefab, new Vector2(transform.position.x + (1.5f * DirectionThrow), transform.position.y), Quaternion.identity);
+                    GameObject thrown = Instantiate(Card_Thrown_prefab, new Vector2(transform.position.x + (1.5f * DirectionThrow), transform.position.y), Quaternion.Euler(0, 0, 90));
                     thrown.GetComponent<Card_Thrown>().Direction = DirectionThrow;
                     thrown.GetComponent<Card_Thrown>().positionY = transform.position.y;
                     CardManage();
@@ -214,6 +244,8 @@ public class CharacterController : MonoBehaviour
             stocked_Velocity_x = 20;
             rb.AddForce(new Vector2(30, -slam_Force), ForceMode2D.Impulse);
         }
+        GetComponent<SlamEffect>().UsingEffect = true;
+        animator.SetTrigger("Slam");
         ennemy_Slam_Active = true;
     }
 
@@ -221,14 +253,20 @@ public class CharacterController : MonoBehaviour
     IEnumerator RunTimer(float time)
     {
         moveSpeed_horizontal = moveSpeed_Run;
+        run = true;
+        GetComponent<SlamEffect>().UsingEffect = true;
         yield return new WaitForSeconds(time);
+        GetComponent<SlamEffect>().UsingEffect = false;
+        run = false;
         moveSpeed_horizontal = moveSpeed_horizontal_default;
     }
 
     //double Jump
     private void double_Jump()
     {
+        GameObject Steam = Instantiate(Steam_Jump_Prefab, new Vector2(feetPos.position.x, feetPos.position.y), Quaternion.identity);
         rb.velocity = new Vector2(rb.velocity.x / 3, 0);
+        animator.SetTrigger("Jump");
         rb.AddForce(new Vector2(rb.velocity.x, jumpForce * 1.8f), ForceMode2D.Impulse);
     }
 
@@ -250,13 +288,12 @@ public class CharacterController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-
         if (other.tag == "Ennemy" && other.tag != "Damage" && PlayerDamage.isDying == false && ennemy_Slam_Active == false)
         {
-            Time.timeScale = 0.05f;
+            animator.SetTrigger("Jump");
+            Time.timeScale = 0.08f;
             StartCoroutine(TScale());
             Particles.Play(true);
-            NoiseSource.GenerateImpulse();
             rb.velocity = new Vector2(rb.velocity.x / 3, 0);
             rb.AddForce(new Vector2(rb.velocity.x / 2, jumpForce * 1.5f), ForceMode2D.Impulse);
             if (other.transform.parent != null) {
@@ -267,10 +304,10 @@ public class CharacterController : MonoBehaviour
 
         } else if (ennemy_Slam_Active && (other.tag == "Damage" || other.tag == "Ennemy"))
         {
-            Time.timeScale = 0.05f;
+            animator.SetTrigger("Jump");
+            Time.timeScale = 0.08f;
             StartCoroutine(TScale());
             Particles.Play(true);
-            NoiseSource.GenerateImpulse();
             rb.velocity = new Vector2(0, 2);
             rb.AddForce(new Vector2(stocked_Velocity_x * 4, 10), ForceMode2D.Impulse);
             if (other.transform.parent != null) {
@@ -282,12 +319,13 @@ public class CharacterController : MonoBehaviour
 
         } else if ((other.tag == "Damage" || other.tag == "Spike") && other.tag != "Ennemy" && PlayerDamage.isDying == false)
         {
+            NoiseSource.GenerateImpulse();
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
             gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
             PlayerDamage.isDying = true;
-            PlayerDamage.EnnemyWhoKilled = other.gameObject;
             CanMove = false;
             rb.gravityScale = 0;
+            animator.SetBool("Die", true);
             StartCoroutine(PlayerDamage.DeathAnimation());
         }
 
