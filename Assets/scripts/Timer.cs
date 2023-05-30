@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Timer : MonoBehaviour
 {
 
-    static float time =300;
+    static float time = 180;
     public int timed;
     [SerializeField] TextMeshProUGUI timeText;
     public bool StopTime;

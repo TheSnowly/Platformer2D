@@ -22,20 +22,23 @@ public class Card_Thrown : MonoBehaviour
     {
         if (other.gameObject.tag != "Player")
         {
-            if (other.gameObject.tag == "Breakable" || other.gameObject.tag == "Ennemy")
+            if (other.gameObject.tag == "Ennemy")
             {
-                if (other.transform.parent != null) {
-                    other.gameObject.transform.parent.gameObject.GetComponent<EnemyDie>().Direc = Direction;
-                    other.gameObject.transform.parent.gameObject.GetComponent<EnemyDie>().Die();
-                } else {
-                    other.gameObject.GetComponent<EnemyDie>().Direc = Direction;
-                    other.gameObject.GetComponent<EnemyDie>().Die();
-                }
+                    if (other.transform.parent != null) {
+                        other.gameObject.transform.parent.gameObject.GetComponent<EnemyDie>().Direc = Direction;
+                        other.gameObject.transform.parent.gameObject.GetComponent<EnemyDie>().Die();
+                    } else {
+                        other.gameObject.GetComponent<EnemyDie>().Direc = Direction;
+                        other.gameObject.GetComponent<EnemyDie>().Die();
+                    }
+                Destroy(this.gameObject);
+            } else if (other.gameObject.tag == "Breakable")
+            {
+                Destroy(other.gameObject);
                 Destroy(this.gameObject);
             }
         }
     }
-
     void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.tag != "Player") {
@@ -48,5 +51,4 @@ public class Card_Thrown : MonoBehaviour
             }
         }
     }
-
 }

@@ -13,13 +13,13 @@ public class Collectible : MonoBehaviour
     bool Key;
 
     void Start() {
+        CheckKey();
         Key = false;
         Switch = true;
     }
 
     void OnTriggerEnter2D(Collider2D other) {
 
-        CheckKey();
 
         if (Switch == true && other.gameObject.tag == "Player") {
 

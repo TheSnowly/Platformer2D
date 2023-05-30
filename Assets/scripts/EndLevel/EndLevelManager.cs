@@ -37,6 +37,8 @@ public class EndLevelManager : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if (Switch == false && other.tag == "Player") {
+            GameObject.Find("ChronoTimer").GetComponent<Animator>().SetTrigger("Fin");
+            GameObject.Find("Slider").GetComponent<Animator>().SetTrigger("End");
             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>().Stop();
             transi.GetComponent<Animator>().SetTrigger("EndTransi2");
             NbOfLevelPlayed += 1;
