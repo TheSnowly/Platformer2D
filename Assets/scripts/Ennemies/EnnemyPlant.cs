@@ -15,7 +15,7 @@ public class EnnemyPlant : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        StartCoroutine(ChangeState(4f));
+        StartCoroutine(ChangeState(2f));
         ispremierforme = true;
     }
 
@@ -27,7 +27,7 @@ public class EnnemyPlant : MonoBehaviour
         }
         animator.SetTrigger("Switch");
         ispremierforme = !ispremierforme;
-        StartCoroutine(ChangeState(4f));
+        StartCoroutine(ChangeState(2f));
     }
 
 

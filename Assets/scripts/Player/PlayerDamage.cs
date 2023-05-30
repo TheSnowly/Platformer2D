@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerDamage : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class PlayerDamage : MonoBehaviour
 
     //death variables
     public bool isDying;
+    public bool TimerOut = false;
 
 
     // Start is called before the first frame update
@@ -33,21 +35,42 @@ public class PlayerDamage : MonoBehaviour
         }
     }
 
+    public void TimerGameOver()
+    {
+        GetComponent<Rigidbody2D>().gravityScale = 0;
+        Vector3 target = new Vector3(transform.position.x - 2f, transform.position.y + 2, 0);
+        GameObject.Find("TransiDeath").GetComponent<Animator>().SetTrigger("Transi");
+        StartCoroutine(Wait());
+    }
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene("GameOver");
+    }
+
     public IEnumerator DeathAnimation() {
 
         timeElapsed = 1f;
         GetComponent<Rigidbody2D>().gravityScale = 0;
         Vector3 target = new Vector3(transform.position.x - 2f, transform.position.y + 2, 0);
         GameObject.Find("TransiDeath").GetComponent<Animator>().SetTrigger("Transi");
+        if (!TimerOut)
+        {
+            //while the timer isn't finished, the player moves a bit
+            while (timeElapsed > 0){
+               transform.position = Vector3.SmoothDamp(transform.position, target, ref ref_velocity, 0.6f); 
+               timeElapsed -= Time.deltaTime;
+               yield return null;
+            }
 
-        //while the timer isn't finished, the player moves a bit
-        while(timeElapsed > 0){
-           transform.position = Vector3.SmoothDamp(transform.position, target, ref ref_velocity, 0.6f); 
-           timeElapsed -= Time.deltaTime;
-           yield return null;
+            //then the player respawn
+            Respawn();
+        } else
+        {
+            //yield return new WaitForSeconds(1f);
+            SceneManager.LoadScene("GameOver");
         }
-        //then the player respawn
-        Respawn();
     }
 
     //respawing
