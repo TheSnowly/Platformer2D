@@ -20,7 +20,7 @@ public class Chest_noKey : MonoBehaviour
     {
         if (Switch && collision.tag == "Player")
         {
-            Give_Card();
+            GetComponent<Animator>().SetTrigger("Trigger");
             Switch = false;
         }
     }

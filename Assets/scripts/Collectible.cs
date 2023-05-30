@@ -10,11 +10,16 @@ public class Collectible : MonoBehaviour
     [SerializeField] public CardManager CardManager;
     [SerializeField] bool Switch;
 
+    bool Key;
+
     void Start() {
+        Key = false;
         Switch = true;
     }
 
     void OnTriggerEnter2D(Collider2D other) {
+
+        CheckKey();
 
         if (Switch == true && other.gameObject.tag == "Player") {
 
@@ -22,7 +27,14 @@ public class Collectible : MonoBehaviour
 
             if (other.gameObject.tag == "Player") {
 
-                int C = UnityEngine.Random.Range(1, 5);
+                int C;
+                if (Key == false)
+                {
+                    C = UnityEngine.Random.Range(1, 5);
+                } else
+                {
+                    C = UnityEngine.Random.Range(1, 4);
+                }
 
                 if (C==1) {
                     CardManager.Deck.Push("Run");
@@ -36,6 +48,30 @@ public class Collectible : MonoBehaviour
 
                 NewCardCollectible();
                 Destroy(this.gameObject);
+            }
+        }
+    }
+
+    void CheckKey()
+    {
+        if (CardManager.Deck.Count > 0)
+        {
+            for (int i = 0; i <= CardManager.Deck.Count -1; i++)
+            {
+                if (CardManager.Deck.Peek() == "Key")
+                {
+                    Key = true;
+                } 
+            }
+        }
+        if (CardManager.shuffled_Deck.Count > 0)
+        {
+            for (int i = 0; i <= CardManager.shuffled_Deck.Count - 1; i++)
+            {
+                if (CardManager.shuffled_Deck[i] == "Key")
+                {
+                    Key = true;
+                }
             }
         }
     }
