@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 531568181579862157}
   - component: {fileID: 531568181579862156}
   - component: {fileID: 531568181579862158}
+  - component: {fileID: 6344037416466752324}
   m_Layer: 0
   m_Name: Steam
   m_TagString: Untagged
@@ -105,3 +106,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &6344037416466752324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 531568181579862155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9541724ce503f44d8907e81925decec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

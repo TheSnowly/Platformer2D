@@ -18,11 +18,15 @@ public class BossManager : MonoBehaviour
     [SerializeField] GameObject BossBlack;
     [SerializeField] GameObject Health;
 
+    public float time;
+
     bool Switch;
     bool boss;
 
     int DS;
     public int NbCardThrow;
+
+    public int precedent;
 
     // Start is called before the first frame update
     void Start()
@@ -66,6 +70,13 @@ public class BossManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (boss && time > 0)
+        {
+            time -= Time.deltaTime;
+        } else if (time < 0)
+        {
+            GameObject.Find("Boss").GetComponent<Animator>().SetTrigger("Idle");
+        }
 
         if (DS==NbCardThrow && Switch == true && boss == true)
         {
@@ -80,9 +91,11 @@ public class BossManager : MonoBehaviour
 
         if (CardManager.Deck.Count > 0)
         {
-            if (Input.GetKeyDown(KeyCode.Mouse1))
+            if (Input.GetButtonDown("Fire2"))
             {
-                GameObject Card = GameObject.Instantiate(CardThrow, Cardtransform.transform.position, Quaternion.Euler(-680, -352, 512), GameObject.FindGameObjectWithTag("MainCamera").transform);
+                GameObject.Find("ZzipoFIGHT").GetComponent<Animator>().SetTrigger("Trigger");
+                GameObject.Find("Player").GetComponent<CharacterController>().NoiseSource.GenerateImpulse();
+                GameObject Card = GameObject.Instantiate(CardThrow, Cardtransform.transform.position, Quaternion.Euler(-680, -352, 512));
                 CharacterController.CardManage();
                 CardManager.PlaceCards();
             }

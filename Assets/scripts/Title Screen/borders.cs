@@ -17,10 +17,4 @@ public class borders : MonoBehaviour
         GameObject.Instantiate(Carreaux);
         StartCoroutine(CaroSpawn());
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

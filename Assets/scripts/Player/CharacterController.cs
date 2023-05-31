@@ -171,7 +171,7 @@ public class CharacterController : MonoBehaviour
             }
 
             //Cheking if the player is able to fast fall
-            fastFalling = (isGrounded == false && (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))) ? true : false;
+            fastFalling = (isGrounded == false && Input.GetAxisRaw("Vertical") < 0) ? true : false;
 
             //checking if the player is falling, play the fall animation if yes
             if (rb.velocity.y < 0)
@@ -189,7 +189,7 @@ public class CharacterController : MonoBehaviour
                     Key.SetActive(false);
                 }
 
-                if (Input.GetMouseButtonDown(0)) {
+                if (Input.GetButtonDown("Fire1")) {
                     NoiseSource.GenerateImpulse();
                     if (CardManager.Deck.Peek() == "Ennemy_Slam")
                     {
@@ -211,7 +211,7 @@ public class CharacterController : MonoBehaviour
                     }
                 }
 
-                if (Input.GetMouseButtonDown(1)) {
+                if (Input.GetButtonDown("Fire2")) {
                     NoiseSource.GenerateImpulse();
                     GameObject thrown = Instantiate(Card_Thrown_prefab, new Vector2(transform.position.x + (1.5f * DirectionThrow), transform.position.y), Quaternion.Euler(0, 0, 90));
                     thrown.GetComponent<Card_Thrown>().Direction = DirectionThrow;

@@ -42,7 +42,7 @@ public class PouchCards : MonoBehaviour
         text.SetActive(true);
 
         for(int i = 1; i <= 3; i++) {
-            GameObject Card = GameObject.Instantiate(ChoiceCardTuto, new Vector3(100 + (100 * i), 50, 0), Quaternion.identity, GameObject.FindGameObjectWithTag("Canvas").transform);
+            GameObject Card = GameObject.Instantiate(ChoiceCardTuto, new Vector3((Screen.width/4)*i, Screen.height/4, 0), Quaternion.identity, GameObject.FindGameObjectWithTag("Canvas").transform);
             Card.GetComponent<ChoiceCardTuto>().CardNB = i;
             Card.name = "CardCh_" + i;
         }

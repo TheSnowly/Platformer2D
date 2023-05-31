@@ -10,5 +10,6 @@ public class Reset : MonoBehaviour
     {
         CardManager.Deck.Clear();
         CardManager.shuffled_Deck.Clear();
+
     }
 }
