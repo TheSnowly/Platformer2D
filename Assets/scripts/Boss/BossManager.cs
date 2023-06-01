@@ -41,7 +41,6 @@ public class BossManager : MonoBehaviour
     public void GiveCard()
     {
         DS = CardManager.shuffled_Deck.Count;
-
         //creating cards in the canvas and pushing them in a deck
         for (int i = CardManager.shuffled_Deck.Count - 1; i >= 0; i--)
         {
@@ -89,6 +88,7 @@ public class BossManager : MonoBehaviour
             BossBG.SetActive(false);
             BossBlack.SetActive(false);
             Health.SetActive(false);
+            GameObject.Find("HealthBar2").SetActive(false);
             GameObject.Find("Explosion").GetComponent<Animator>().SetTrigger("Explo");
             GameObject.Find("Gritta").GetComponent<Animator>().SetTrigger("Dieps");
             StartCoroutine(Wait());

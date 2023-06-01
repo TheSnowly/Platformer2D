@@ -17,6 +17,7 @@ public class Cine2 : MonoBehaviour
     GameObject BossBG;
     [SerializeField]
     GameObject Health;
+    [SerializeField] GameObject Health2;
 
     Animator Grittanim;
     GameObject Gritta;
@@ -105,6 +106,7 @@ public class Cine2 : MonoBehaviour
         yield return new WaitForSeconds(5f);
         BossBG.SetActive(true);
         Health.SetActive(true);
+        Health2.SetActive(true);
         GameObject.Find("BossManager").GetComponent<BossManager>().GiveCard();
     }
 

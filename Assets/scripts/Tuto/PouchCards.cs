@@ -41,7 +41,7 @@ public class PouchCards : MonoBehaviour
             if (Input.GetButtonDown("Fire1"))
             {
                 PouchController = false;
-                GiveCardController("Jump");
+                GiveCardController("Double_Jump");
             } else if (Input.GetButtonDown("Fire2"))
             {
                 PouchController = false;
@@ -114,10 +114,10 @@ public class PouchCards : MonoBehaviour
             {
                 if (i == 1)
                 {
-                    RB = GameObject.Instantiate(RB, new Vector3(Card.transform.position.x, Card.transform.position.y +100, 0), Quaternion.identity, GameObject.FindGameObjectWithTag("Canvas").transform);
+                    LB = GameObject.Instantiate(LB, new Vector3(Card.transform.position.x, Card.transform.position.y +100, 0), Quaternion.identity, GameObject.FindGameObjectWithTag("Canvas").transform);
                 } else if (i == 2)
                 {
-                    LB = GameObject.Instantiate(LB, new Vector3(Card.transform.position.x, Card.transform.position.y +100, 0), Quaternion.identity, GameObject.FindGameObjectWithTag("Canvas").transform);
+                    RB = GameObject.Instantiate(RB, new Vector3(Card.transform.position.x, Card.transform.position.y +100, 0), Quaternion.identity, GameObject.FindGameObjectWithTag("Canvas").transform);
                 } else if (i == 3)
                 {
                     A = GameObject.Instantiate(A, new Vector3(Card.transform.position.x, Card.transform.position.y +100, 0), Quaternion.identity, GameObject.FindGameObjectWithTag("Canvas").transform);
