@@ -12,7 +12,7 @@ public class Timee : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        float timeCleared = 180 - timer.timed;
+        float timeCleared = 120 - timer.timed;
         GameObject.Find("TimeC").GetComponent<TextMeshProUGUI>().text = "Cleared in: " + string.Format("{0:00}:{1:00}", timeCleared/60, timeCleared % 60); ;
     }
 

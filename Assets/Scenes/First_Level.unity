@@ -1058,6 +1058,9 @@ MonoBehaviour:
   Progresse: {fileID: 1269288495}
   ZzzipoProgress: {fileID: 147902354}
   TextProgress: {fileID: 988792858}
+  LB: {fileID: 1556837775}
+  RB: {fileID: 899311527}
+  Confirm: {fileID: 303913712}
   ProgressPoints:
   - {fileID: 893159866}
   - {fileID: 898713654}
@@ -1674,6 +1677,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &303913712 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8920506816374951026, guid: 57c19f41e72d38e43be540a01cccf448, type: 3}
+  m_PrefabInstance: {fileID: 644287575}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &308498591
 GameObject:
   m_ObjectHideFlags: 0
@@ -2074,7 +2082,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2292939365866376597, guid: 089b05d7664e2274ead2b91fc5bb1084, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -15.481416
+      value: -15.482053
       objectReference: {fileID: 0}
     - target: {fileID: 2292939365866376597, guid: 089b05d7664e2274ead2b91fc5bb1084, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3021,7 +3029,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3861461349942600956, guid: 7296d8e50505d684c98bbfb74ae6ec82, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -28.078722
+      value: -28.078718
       objectReference: {fileID: 0}
     - target: {fileID: 3861461349942600956, guid: 7296d8e50505d684c98bbfb74ae6ec82, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3512,10 +3520,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 709092089}
     m_Modifications:
-    - target: {fileID: 2091930422142397582, guid: 57c19f41e72d38e43be540a01cccf448, type: 3}
-      propertyPath: m_text
-      value: Choose de next level (Left click on a card)
-      objectReference: {fileID: 0}
     - target: {fileID: 2091930422640585620, guid: 57c19f41e72d38e43be540a01cccf448, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -4388,6 +4392,11 @@ GameObject:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7798347066485570005, guid: 6770d786fb2ea694286d306c2825b5a5, type: 3}
   m_PrefabInstance: {fileID: 7798347066140635619}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &899311527 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1378521123257294276, guid: 57c19f41e72d38e43be540a01cccf448, type: 3}
+  m_PrefabInstance: {fileID: 644287575}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &907338961
 PrefabInstance:
@@ -5565,6 +5574,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Timer: {fileID: 1837201812}
+  EndLevelManager: {fileID: 0}
 --- !u!1 &1359014082
 GameObject:
   m_ObjectHideFlags: 0
@@ -6151,6 +6161,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 52
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1556837775 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2387929643581867813, guid: 57c19f41e72d38e43be540a01cccf448, type: 3}
+  m_PrefabInstance: {fileID: 644287575}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1566662514
 GameObject:
   m_ObjectHideFlags: 0

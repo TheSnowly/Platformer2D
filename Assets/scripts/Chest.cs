@@ -55,16 +55,19 @@ public class Chest : MonoBehaviour
 
     void Give_Card()
     {
-        Destroy(GameObject.Find("Card_" + (CardManager.Deck.Count - 1)));
-        CardManager.Deck.Pop();
-        CardManager.PlaceCards();
-        Lerp = false;
-        CharacterController.Key.SetActive(false);
-        for(int i = 1; i <= Num_Of_Card; i++)
+        if (CardManager.Deck.Count > 0)
         {
-            GameObject Card = Instantiate(Card_prefab, new Vector2(transform.position.x, transform.position.y + 2), Quaternion.identity);
-            Card.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-5, 5),5), ForceMode2D.Impulse);
+            Destroy(GameObject.Find("Card_" + (CardManager.Deck.Count - 1)));
+            CardManager.Deck.Pop();
+            CardManager.PlaceCards();
+            Lerp = false;
+            CharacterController.Key.SetActive(false);
+            for(int i = 1; i <= Num_Of_Card; i++)
+            {
+                GameObject Card = Instantiate(Card_prefab, new Vector2(transform.position.x, transform.position.y + 2), Quaternion.identity);
+                Card.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-5, 5),5), ForceMode2D.Impulse);
+            }
+            Destroy(GetComponent<Chest>());
         }
-        Destroy(GetComponent<Chest>());
     }
 }

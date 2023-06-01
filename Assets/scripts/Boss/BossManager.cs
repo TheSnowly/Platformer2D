@@ -64,18 +64,23 @@ public class BossManager : MonoBehaviour
     IEnumerator Wait()
     {
         yield return new WaitForSeconds(1.5f);
+        GameObject.Find("BS").GetComponent<Animator>().SetTrigger("Fade");
+        yield return new WaitForSeconds(3f);
         SceneManager.LoadScene("End_Scree");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (boss && time > 0)
+        if (BossBG.activeSelf == true)
         {
-            time -= Time.deltaTime;
-        } else if (time < 0)
-        {
-            GameObject.Find("Boss").GetComponent<Animator>().SetTrigger("Idle");
+            if (boss && time > 0)
+            {
+                time -= Time.deltaTime;
+            } else if (time < 0)
+            {
+                GameObject.Find("Boss").GetComponent<Animator>().SetTrigger("Idle");
+            }
         }
 
         if (DS==NbCardThrow && Switch == true && boss == true)

@@ -14,6 +14,10 @@ public class EndLevelManager : MonoBehaviour
     [SerializeField] GameObject ZzzipoProgress;
     [SerializeField] GameObject TextProgress;
 
+    [SerializeField] public GameObject LB;
+    [SerializeField] public GameObject RB;
+    [SerializeField] public GameObject Confirm;
+
     [SerializeField] GameObject[] ProgressPoints = new GameObject[6];
 
     public CardManager CardManager;
@@ -113,6 +117,7 @@ public class EndLevelManager : MonoBehaviour
 
             GameObject Card = GameObject.Instantiate(CardPrefab, Vector3.zero, Quaternion.identity, GameObject.FindGameObjectWithTag("Canvas").transform);
 
+
             Card.name = "CardEnd_" + i;
 
             string Random_Card = "";
@@ -122,6 +127,7 @@ public class EndLevelManager : MonoBehaviour
             }
 
             Card.GetComponent<CardClick>().CardType = Random_Card;
+            Card.GetComponent<CardClick>().CardNb = i;
 
             if (Random_Card == "Run") {
                 Card.GetComponent<Image>().sprite = CardManager.card_RUN;
@@ -131,7 +137,17 @@ public class EndLevelManager : MonoBehaviour
                 Card.GetComponent<Image>().sprite = CardManager.card_SLAM;
             }
 
-            Card.transform.position = new Vector3(i * 100, 200, -10);
+            Card.transform.position = new Vector3(50 + (i * 150), Screen.height/3, -10);
+            if (Input.GetJoystickNames().Length > 0)
+            {
+                if (i == 1)
+                {
+                    LB = GameObject.Instantiate(LB, new Vector3(Card.transform.position.x, Card.transform.position.y + 100, 0), Quaternion.identity, GameObject.FindGameObjectWithTag("Canvas").transform);
+                } else if (i == 2)
+                {
+                    RB = GameObject.Instantiate(RB, new Vector3(Card.transform.position.x, Card.transform.position.y + 100, 0), Quaternion.identity, GameObject.FindGameObjectWithTag("Canvas").transform);
+                }
+            }
         }
 
     }

@@ -64,6 +64,7 @@ public class Cine2 : MonoBehaviour
     {
         rb.velocity = Vector2.zero;
         PlayerAnimator.SetBool("Run", false);
+        PlayerAnimator.SetBool("Fall", false);
         PlayerAnimator.SetBool("Idle", true);
     }
 

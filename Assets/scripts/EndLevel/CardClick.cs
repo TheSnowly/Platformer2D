@@ -11,35 +11,78 @@ public class CardClick : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public string CardType;
     public string NextScene;
+    public int CardNb;
     [SerializeField] Sprite Jump_image;
     [SerializeField] Sprite Slam_image;
     [SerializeField] Sprite Run_image;
 
-    public void OnPointerEnter(PointerEventData pointerEventData)
+    bool Pressed = false;
+
+    private void Update()
     {
+        if(Input.GetJoystickNames().Length > 0 && CardNb == 1 && Input.GetButtonDown("Fire1"))
+        {
+            GameObject.Find("ENDLEVEL").GetComponent<EndLevelManager>().Confirm.SetActive(true);
+            ShowImage();
+            Pressed = true;
 
-        GameObject.Find("lvlimage").GetComponent<Image>().color = new Color32(255,255,225,255);
 
-        if (CardType == "Double_Jump") {
+        } else if (Input.GetJoystickNames().Length > 0 && CardNb == 2 && Input.GetButtonDown("Fire2"))
+        {
+            GameObject.Find("ENDLEVEL").GetComponent<EndLevelManager>().Confirm.SetActive(true);
+            ShowImage();
+            Pressed = true;
+        }
+
+        if(Input.GetJoystickNames().Length > 0 && Input.GetButtonDown("Jump") && Pressed)
+        {
+            OnClick();
+        }
+
+    }
+
+    void ShowImage()
+    {
+        GameObject.Find("lvlimage").GetComponent<Image>().color = new Color32(255, 255, 225, 255);
+
+        if (CardType == "Double_Jump")
+        {
             GameObject.Find("lvlimage").GetComponent<Image>().sprite = Jump_image;
             GameObject.Find("lvlname").GetComponent<TextMeshProUGUI>().text = "Trial of height";
-        } else if (CardType == "Ennemy_Slam") {
+        }
+        else if (CardType == "Ennemy_Slam")
+        {
             GameObject.Find("lvlimage").GetComponent<Image>().sprite = Slam_image;
             GameObject.Find("lvlname").GetComponent<TextMeshProUGUI>().text = "Trial of stairs";
-        } else if (CardType == "Run") {
+        }
+        else if (CardType == "Run")
+        {
             GameObject.Find("lvlimage").GetComponent<Image>().sprite = Run_image;
             GameObject.Find("lvlname").GetComponent<TextMeshProUGUI>().text = "Trial of endurance";
         }
     }
 
+    public void OnPointerEnter(PointerEventData pointerEventData)
+    {
+        ShowImage();
+    }
+
     public void OnPointerExit(PointerEventData pointerEventData)
     {
-        GameObject.Find("lvlimage").GetComponent<Image>().color = new Color32(255,255,225,0);
-        GameObject.Find("lvlname").GetComponent<TextMeshProUGUI>().text = "";
+        if (Input.GetJoystickNames().Length == 0)
+        {
+            GameObject.Find("lvlimage").GetComponent<Image>().color = new Color32(255,255,225,0);
+            GameObject.Find("lvlname").GetComponent<TextMeshProUGUI>().text = "";
+        }
     }
 
     public void OnClick() {
-        //GameObject.Find("Transi").GetComponent<Animator>().SetTrigger("EndTransi3");
+
+        if (Input.GetJoystickNames().Length > 0)
+        {
+            Destroy(GameObject.Find("ENDLEVEL").GetComponent<EndLevelManager>().RB);
+            Destroy(GameObject.Find("ENDLEVEL").GetComponent<EndLevelManager>().LB);
+        }
 
         GameObject.Find("ENDLEVEL").GetComponent<EndLevelManager>().nextlvl = CardType;
         GameObject.Find("ENDLEVEL").GetComponent<EndLevelManager>().Progress();
