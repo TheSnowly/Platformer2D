@@ -14,7 +14,9 @@ public class Die : MonoBehaviour
     {
         GameObject.Find("Player").GetComponent<CharacterController>().NoiseSource.GenerateImpulse();
         yield return new WaitForSeconds(time);
-      //GameObject.Find("Player").GetComponent<CharacterController>().NoiseSource.GenerateImpulse();
+        GameObject.Find("BossManager").GetComponent<AudioSource>().pitch = GameObject.Find("BossManager").GetComponent<BossManager>().Pitch;
+        GameObject.Find("BossManager").GetComponent<AudioSource>().PlayOneShot(GameObject.Find("BossManager").GetComponent<BossManager>().OrchestraHit);
+        GameObject.Find("BossManager").GetComponent<BossManager>().Pitch = GameObject.Find("BossManager").GetComponent<BossManager>().Pitch + 0.2f;
         GameObject.Find("BossManager").GetComponent<BossManager>().NbCardThrow += 1;
         int c = Random.Range(1, 4);
         while (c == GameObject.Find("BossManager").GetComponent<BossManager>().precedent)

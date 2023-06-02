@@ -16,6 +16,9 @@ public class PouchCards : MonoBehaviour
     [SerializeField] GameObject LB;
     [SerializeField] GameObject A;
 
+    [SerializeField] AudioClip GetPouchS;
+    [SerializeField] public AudioClip UI;
+
     bool PouchController = false;
     bool canchoose = false;
 
@@ -40,14 +43,17 @@ public class PouchCards : MonoBehaviour
         {
             if (Input.GetButtonDown("Fire1"))
             {
+                GameObject.Find("Player").GetComponent<AudioSource>().PlayOneShot(UI);
                 PouchController = false;
                 GiveCardController("Double_Jump");
             } else if (Input.GetButtonDown("Fire2"))
             {
+                GameObject.Find("Player").GetComponent<AudioSource>().PlayOneShot(UI);
                 PouchController = false;
                 GiveCardController("Ennemy_Slam");
             } else if (Input.GetButtonDown("Jump"))
             {
+                GameObject.Find("Player").GetComponent<AudioSource>().PlayOneShot(UI);
                 PouchController = false;
                 GiveCardController("Run");
             }
@@ -78,11 +84,13 @@ public class PouchCards : MonoBehaviour
         Destroy(A);
         Destroy(LB);
         Destroy(RB);
+        GameObject.Find("GO").GetComponent<SpriteRenderer>().enabled = true;
         this.gameObject.SetActive(false);
     }
 
     IEnumerator Wait()
     {
+        GameObject.Find("Player").GetComponent<AudioSource>().PlayOneShot(GetPouchS);
         GameObject.Find("Player").GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         GameObject.Find("Player").GetComponent<Animator>().SetBool("Idle", true);
         GameObject.Find("Player").GetComponent<Animator>().SetBool("Fall", false);

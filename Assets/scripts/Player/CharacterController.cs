@@ -11,6 +11,14 @@ public class CharacterController : MonoBehaviour
     SpriteRenderer sr;
     Animator animator;
 
+    //Sound variables
+    [SerializeField] AudioClip WalkS;
+    [SerializeField] AudioClip JumpS;
+    [SerializeField] AudioClip FeedBackS;
+    [SerializeField] public AudioClip Hit;
+    [SerializeField] AudioClip OrchestraHit;
+    float pitchOH;
+
     //cinematics variable
     public bool CanMove;
 
@@ -123,6 +131,9 @@ public class CharacterController : MonoBehaviour
                 timer -= Time.deltaTime;
                 if (timer < 0 && (rb.velocity.x >= 10 || rb.velocity.x <= -10))
                 {
+                    GetComponent<AudioSource>().pitch = Random.Range(0.9f, 1.2f);
+                    pitchOH = GetComponent<AudioSource>().pitch;
+                    GetComponent<AudioSource>().PlayOneShot(WalkS);
                     GameObject Steam = Instantiate(Steam_prefab, new Vector2(feetPos.position.x - ((1.5f + (DirectionThrow * (rb.velocity.x/40))) * DirectionThrow), feetPos.position.y + 0.3f), Quaternion.identity);
                     Steam.transform.localScale = new Vector3(Steam.transform.localScale.x * DirectionThrow, Steam.transform.localScale.y, Steam.transform.localScale.z);
                     timer = timerMax;
@@ -163,7 +174,9 @@ public class CharacterController : MonoBehaviour
             //resetting few variables when jumping and first jump
             if (jumpBufferTimer > 0f && coyoteTimeTimer > 0f)
             {
+                timer = timerMax;
                 animator.SetTrigger("Jump");
+                GetComponent<AudioSource>().PlayOneShot(JumpS);
                 GameObject Steam = Instantiate(Steam_Jump_Prefab, new Vector2(feetPos.position.x, feetPos.position.y), Quaternion.identity);
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce * 1.5f);
                 jumpBufferTimer = 0f;
@@ -190,7 +203,10 @@ public class CharacterController : MonoBehaviour
                 }
 
                 if (Input.GetButtonDown("Fire1")) {
+
+                    GetComponent<AudioSource>().PlayOneShot(FeedBackS);
                     NoiseSource.GenerateImpulse();
+
                     if (CardManager.Deck.Peek() == "Ennemy_Slam")
                     {
                         CardManage();
@@ -212,6 +228,7 @@ public class CharacterController : MonoBehaviour
                 }
 
                 if (Input.GetButtonDown("Fire2")) {
+                    GetComponent<AudioSource>().PlayOneShot(FeedBackS);
                     NoiseSource.GenerateImpulse();
                     GameObject thrown = Instantiate(Card_Thrown_prefab, new Vector2(transform.position.x + (1.5f * DirectionThrow), transform.position.y), Quaternion.Euler(0, 0, 90));
                     thrown.GetComponent<Card_Thrown>().Direction = DirectionThrow;
@@ -265,6 +282,7 @@ public class CharacterController : MonoBehaviour
     private void double_Jump()
     {
         GameObject Steam = Instantiate(Steam_Jump_Prefab, new Vector2(feetPos.position.x, feetPos.position.y), Quaternion.identity);
+        GetComponent<AudioSource>().PlayOneShot(JumpS);
         rb.velocity = new Vector2(rb.velocity.x / 3, 0);
         animator.SetTrigger("Jump");
         rb.AddForce(new Vector2(rb.velocity.x, jumpForce * 1.8f), ForceMode2D.Impulse);
@@ -288,8 +306,12 @@ public class CharacterController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+
         if (other.tag == "Ennemy" && other.tag != "Damage" && PlayerDamage.isDying == false && ennemy_Slam_Active == false)
         {
+            
+            GetComponent<AudioSource>().PlayOneShot(OrchestraHit);
+            pitchOH = pitchOH + 0.2f;
             animator.SetTrigger("Jump");
             Time.timeScale = 0.08f;
             StartCoroutine(TScale());
@@ -304,6 +326,9 @@ public class CharacterController : MonoBehaviour
 
         } else if (ennemy_Slam_Active && (other.tag == "Damage" || other.tag == "Ennemy"))
         {
+            GetComponent<AudioSource>().pitch = pitchOH;
+            GetComponent<AudioSource>().PlayOneShot(OrchestraHit);
+            pitchOH = pitchOH + 0.2f;
             animator.SetTrigger("Jump");
             Time.timeScale = 0.08f;
             StartCoroutine(TScale());
@@ -319,6 +344,7 @@ public class CharacterController : MonoBehaviour
 
         } else if ((other.tag == "Damage" || other.tag == "Spike") && other.tag != "Ennemy" && PlayerDamage.isDying == false)
         {
+            GetComponent<AudioSource>().PlayOneShot(Hit);
             NoiseSource.GenerateImpulse();
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
             gameObject.GetComponent<CapsuleCollider2D>().enabled = false;

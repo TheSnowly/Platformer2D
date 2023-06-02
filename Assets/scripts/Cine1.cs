@@ -13,6 +13,8 @@ public class Cine1 : MonoBehaviour
     Animator Grittanim;
     [SerializeField] GameObject Gritta;
 
+    [SerializeField] AudioClip Whistle;
+
     Rigidbody2D rb;
     GameObject Player;
     Animator PlayerAnimator;
@@ -95,11 +97,13 @@ public class Cine1 : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         Grittanim.SetBool("Laugh", true);
+        Gritta.GetComponent<GrittaLaugh>().IsLaughing = true;
         yield return new WaitForSeconds(2);
         Grittanim.SetBool("Laugh", false);
+        Gritta.GetComponent<GrittaLaugh>().IsLaughing = false;
         yield return new WaitForSeconds(0.5f);
+        Gritta.GetComponent<AudioSource>().PlayOneShot(Whistle);
         Grittanim.SetTrigger("Move");
-        //StartCoroutine(Move(Gritta, new Vector3(Gritta.transform.position.x + 30, Gritta.transform.position.y, 0), 1f));
         yield return new WaitForSeconds(0.5f);
         CamAnim.SetBool("Cam", false);
         Cinemode.SetBool("Cine", false);

@@ -16,9 +16,11 @@ public class StartGame : MonoBehaviour
 
     public void OnClick()
     {
+
         GameObject.Find("CineManager").GetComponent<CineScreen>().Switch = true;
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraScreen>().IsCine = true;
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>().enabled = false;
+        GameObject.Find("CineManager").GetComponent<AudioSource>().Play();
         GameObject.Find("Clilc").GetComponent<Animator>().SetTrigger("fondu");
         GameObject.Find("Logo").GetComponent<Animator>().SetTrigger("Transi");
         GameObject.Find("Borders").SetActive(false);
@@ -34,6 +36,7 @@ public class StartGame : MonoBehaviour
             GameObject.Find("CineManager").GetComponent<CineScreen>().Switch = true;
             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraScreen>().IsCine = true;
             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>().enabled = false;
+            GameObject.Find("CineManager").GetComponent<AudioSource>().Play();
             GameObject.Find("Clilc").GetComponent<Animator>().SetTrigger("fondu");
             GameObject.Find("Logo").GetComponent<Animator>().SetTrigger("Transi");
             GameObject.Find("Borders").SetActive(false);

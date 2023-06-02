@@ -31,6 +31,8 @@ public class ChoiceCardTuto : MonoBehaviour
 
     public void OnClickTuto() {
 
+        GameObject.Find("Player").GetComponent<AudioSource>().PlayOneShot(GameObject.Find("Pouch").GetComponent<PouchCards>().UI);
+
         for (int i = 1; i <= 3; i++) {
             Destroy(GameObject.Find("CardCh_" + i));
         }
@@ -48,6 +50,7 @@ public class ChoiceCardTuto : MonoBehaviour
         CardManager.PlaceCards();
         CharacterController.CanMove = true;
 
+        GameObject.Find("GO").GetComponent<SpriteRenderer>().enabled = true;
         PouchCards.SetActive(false);
     }
 

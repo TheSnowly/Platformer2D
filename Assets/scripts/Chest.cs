@@ -55,6 +55,7 @@ public class Chest : MonoBehaviour
 
     void Give_Card()
     {
+        GetComponent<AudioSource>().Play();
         if (CardManager.Deck.Count > 0)
         {
             Destroy(GameObject.Find("Card_" + (CardManager.Deck.Count - 1)));

@@ -18,6 +18,11 @@ public class EndLevelManager : MonoBehaviour
     [SerializeField] public GameObject RB;
     [SerializeField] public GameObject Confirm;
 
+    [SerializeField] public AudioClip UI;
+    [SerializeField] AudioClip Feedback;
+
+    static public float timeMusic; 
+
     [SerializeField] GameObject[] ProgressPoints = new GameObject[6];
 
     public CardManager CardManager;
@@ -35,6 +40,8 @@ public class EndLevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>().time = timeMusic;
+        GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>().Play();
         Switch = false;
     }
 
@@ -43,7 +50,9 @@ public class EndLevelManager : MonoBehaviour
         if (Switch == false && other.tag == "Player") {
             GameObject.Find("ChronoTimer").GetComponent<Animator>().SetTrigger("Fin");
             GameObject.Find("Slider").GetComponent<Animator>().SetTrigger("End");
+            timeMusic = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>().time;
             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>().Stop();
+            GetComponent<AudioSource>().Play();
             transi.GetComponent<Animator>().SetTrigger("EndTransi2");
             NbOfLevelPlayed += 1;
             Timer.StopTime = true;
@@ -73,6 +82,7 @@ public class EndLevelManager : MonoBehaviour
             yield return null;
         }
         yield return new WaitForSeconds(1f);
+        GameObject.Find("Player").GetComponent<AudioSource>().PlayOneShot(Feedback);
         TextProgress.GetComponent<TextMeshProUGUI>().text = (5 - NbOfLevelPlayed) + " more to go!";
         yield return new WaitForSeconds(1.5f);
         GameObject.Find("Transi").GetComponent<Animator>().SetTrigger("EndTransi3");

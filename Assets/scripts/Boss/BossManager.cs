@@ -18,6 +18,12 @@ public class BossManager : MonoBehaviour
     [SerializeField] GameObject BossBlack;
     [SerializeField] GameObject Health;
 
+    [SerializeField] AudioClip FeedBack;
+    [SerializeField] public AudioClip OrchestraHit;
+    [SerializeField] AudioClip Hit;
+
+    public float Pitch = 1;
+
     public float time;
 
     bool Switch;
@@ -84,6 +90,8 @@ public class BossManager : MonoBehaviour
 
         if (DS==NbCardThrow && Switch == true && boss == true)
         {
+            GameObject.Find("cine").GetComponent<AudioSource>().Stop();
+            GetComponent<AudioSource>().PlayOneShot(Hit);
             Switch = false;
             BossBG.SetActive(false);
             BossBlack.SetActive(false);
@@ -98,6 +106,7 @@ public class BossManager : MonoBehaviour
         {
             if (Input.GetButtonDown("Fire2"))
             {
+                GetComponent<AudioSource>().PlayOneShot(FeedBack);
                 GameObject.Find("ZzipoFIGHT").GetComponent<Animator>().SetTrigger("Trigger");
                 GameObject.Find("Player").GetComponent<CharacterController>().NoiseSource.GenerateImpulse();
                 GameObject Card = GameObject.Instantiate(CardThrow, Cardtransform.transform.position, Quaternion.Euler(-680, -352, 512));

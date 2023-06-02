@@ -22,6 +22,7 @@ public class CardClick : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         if(Input.GetJoystickNames().Length > 0 && CardNb == 1 && Input.GetButtonDown("Fire1"))
         {
+            GameObject.Find("Player").GetComponent<AudioSource>().PlayOneShot(GameObject.Find("ENDLEVEL").GetComponent<EndLevelManager>().UI);
             GameObject.Find("ENDLEVEL").GetComponent<EndLevelManager>().Confirm.SetActive(true);
             ShowImage();
             Pressed = true;
@@ -29,6 +30,7 @@ public class CardClick : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
         } else if (Input.GetJoystickNames().Length > 0 && CardNb == 2 && Input.GetButtonDown("Fire2"))
         {
+            GameObject.Find("Player").GetComponent<AudioSource>().PlayOneShot(GameObject.Find("ENDLEVEL").GetComponent<EndLevelManager>().UI);
             GameObject.Find("ENDLEVEL").GetComponent<EndLevelManager>().Confirm.SetActive(true);
             ShowImage();
             Pressed = true;
@@ -36,6 +38,7 @@ public class CardClick : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
         if(Input.GetJoystickNames().Length > 0 && Input.GetButtonDown("Jump") && Pressed)
         {
+            GameObject.Find("Player").GetComponent<AudioSource>().PlayOneShot(GameObject.Find("ENDLEVEL").GetComponent<EndLevelManager>().UI);
             OnClick();
         }
 
@@ -78,6 +81,7 @@ public class CardClick : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void OnClick() {
 
+        GameObject.Find("Player").GetComponent<AudioSource>().PlayOneShot(GameObject.Find("ENDLEVEL").GetComponent<EndLevelManager>().UI);
         if (Input.GetJoystickNames().Length > 0)
         {
             Destroy(GameObject.Find("ENDLEVEL").GetComponent<EndLevelManager>().RB);

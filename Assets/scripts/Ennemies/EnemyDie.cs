@@ -27,8 +27,10 @@ public class EnemyDie : MonoBehaviour
             }
         }
         GameObject.Find("Player").GetComponent<CharacterController>().NoiseSource.GenerateImpulse();
+        GameObject.Find("Player").GetComponent<AudioSource>().PlayOneShot(GameObject.Find("Player").GetComponent<CharacterController>().Hit);
         Rigidbody2D rb = GetComponentInChildren<Rigidbody2D>();
         DeleteAllComponents();
+        rb.bodyType = RigidbodyType2D.Dynamic;
         rb.gravityScale = 7;
         rb.AddForce(new Vector2(10 * Direc, 10), ForceMode2D.Impulse);
         StartCoroutine(Waitr());

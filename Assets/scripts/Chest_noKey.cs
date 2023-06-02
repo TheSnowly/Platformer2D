@@ -27,6 +27,7 @@ public class Chest_noKey : MonoBehaviour
 
     void Give_Card()
     {
+        GetComponent<AudioSource>().Play();
         for(int i = 1; i <= Num_Of_Card; i++)
         {
             GameObject Card = Instantiate(Card_prefab, new Vector2(transform.position.x, transform.position.y + 2), Quaternion.identity);

@@ -19,6 +19,10 @@ public class Cine2 : MonoBehaviour
     GameObject Health;
     [SerializeField] GameObject Health2;
 
+    [SerializeField] AudioClip FeedBack;
+    [SerializeField] AudioClip IntroBossM;
+    [SerializeField] AudioClip BossM;
+
     Animator Grittanim;
     GameObject Gritta;
 
@@ -97,13 +101,20 @@ public class Cine2 : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         Grittanim.SetBool("Laugh", true);
+        Gritta.GetComponent<GrittaLaugh>().IsLaughing = true;
         yield return new WaitForSeconds(2);
         Grittanim.SetBool("Laugh", false);
+        Gritta.GetComponent<GrittaLaugh>().IsLaughing = false;
         yield return new WaitForSeconds(1f);
+        GetComponent<AudioSource>().PlayOneShot(FeedBack);
         BlackScreen.SetActive(true);
         yield return new WaitForSeconds(1.5f);
         Ghead.GetComponent<Animator>().SetTrigger("Turn");
         yield return new WaitForSeconds(5f);
+        GetComponent<AudioSource>().PlayOneShot(IntroBossM);
+        yield return new WaitForSeconds(0.5f);
+        GetComponent<AudioSource>().PlayOneShot(BossM);
+        GetComponent<AudioSource>().loop = true;
         BossBG.SetActive(true);
         Health.SetActive(true);
         Health2.SetActive(true);
