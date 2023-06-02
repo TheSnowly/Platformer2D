@@ -15,6 +15,7 @@ public class CineScreen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Screen.SetResolution(1920, 1080, true);
         G = Gritta.GetComponent<Animator>();
         Switch = false;
     }
@@ -35,7 +36,6 @@ public class CineScreen : MonoBehaviour
         G.SetTrigger("Move");
         yield return new WaitForSeconds(1.15f);
         GameObject.Find("ZzzipoSleep").GetComponent<Animator>().SetBool("Bouge", true);
-        Gritta.GetComponent<AudioSource>().PlayOneShot(Hit);
         yield return new WaitForSeconds(0.05f);
         GameObject.Find("ZzzipoSleep").GetComponent<Animator>().SetBool("Bouge", false);
         yield return new WaitForSeconds(2f);
